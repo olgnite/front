@@ -1,0 +1,41 @@
+@import '../../../styles/variables.scss';
+
+.campus-button {
+
+    &__btn {
+        color: $white;
+        width: 100%;
+        border-radius: 16px;
+        font-size: 24px;
+        border: none;
+        cursor: pointer;
+    }
+
+    &__primary {
+        background-color: $grey-dark;
+        padding: 12px 24px;
+
+        &:hover {
+            background-color: $grey-light-v2;
+            transition: 0.5s;
+        }
+    }
+
+    &__secondary {
+        background-color: $purple-light;
+        padding: 12px 24px;
+
+        &:hover {
+            background-color: $purple;
+            transition: 0.5s;
+        }
+    }
+
+    &__tab {
+        background-color: $grey-light;
+        border-radius: 100px;
+        padding: 10px 20px;
+        font-size: 20px;
+        color: $black;
+    }
+}

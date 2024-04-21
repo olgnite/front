@@ -1,0 +1,42 @@
+@import '../../../../../../styles/variables.scss';
+
+.cabinet-footer {
+
+    &__container {
+        padding: 48px;
+    }
+
+    &__title {
+        font-size: 54px;
+        margin-bottom: 40px;
+        font-family: $abel-font;
+    }
+
+    &__contact-icons {
+        display: flex;
+        margin-bottom: 32px;
+    }
+
+    &__tg {
+        margin-right: 16px;
+    }
+
+    &__phone {
+        display: flex;
+        margin-bottom: 16px;
+    }
+
+    &__contact-title {
+        font-size: 18px;
+        font-weight: bold;
+        margin-right: 8px;
+    }
+
+    &__contact-text {
+        font-size: 18px
+    }
+
+    &__email {
+        display: flex;
+    }
+}

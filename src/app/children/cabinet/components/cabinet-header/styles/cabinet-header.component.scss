@@ -1,0 +1,31 @@
+.cabinet-header {
+
+    &__container {
+        width: 100%;
+    }
+
+    &__content {
+        display: flex;
+        align-items: center;
+    }
+
+    &__img-vector {
+        display: block;
+        height: 101px;
+        width: 100%;
+        position: absolute;
+    }
+
+    &__tabs {
+        display: flex;
+        left: 25%;
+        margin-top: 40px;
+        position: relative;
+        transform: translate(-25%, -25%);
+    }
+
+    &__tab {
+        max-height: 45px;
+        margin-right: 16px;
+    }
+}

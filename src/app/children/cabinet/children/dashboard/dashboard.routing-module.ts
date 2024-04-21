@@ -3,16 +3,39 @@ import { LayoutDashboardPage } from "./pages/layout-dashboard/layout-dashboard.p
 import { CommonModule } from "@angular/common"
 import { NgModule } from "@angular/core"
 import { ReactiveFormsModule } from "@angular/forms"
+import { CabinetHeaderComponent } from "../../components/cabinet-header/cabinet-header.component"
+import { UiCampusButtonComponent } from '../../../../ui'
+import { AboutCompanyPage } from './pages/about-company/about-company.page'
+import { CompanyComponent } from './components/company/company.component'
+import { PhotoGalleryComponent } from './components/photo-gallery/photo-gallery.component'
+import { VacanciesComponent } from './components/vacancies/vacancies.component'
+import { CabinetFooterComponent } from '../../components/cabinet-footer/cabinet-footer.component'
 
 const components: any[] = [
     LayoutDashboardPage,
-]
+    CabinetHeaderComponent,
+    CabinetFooterComponent,
+    AboutCompanyPage,
+    CompanyComponent,
+    PhotoGalleryComponent,
+    VacanciesComponent
+];
 
 const dashboardRoutes: Routes = [
     {
         path: '',
         component: LayoutDashboardPage,
-        children: []
+        children: [
+            {
+                path: '',
+                redirectTo: 'abount-company',
+                pathMatch: 'full'
+            },
+            {
+                path: 'abount-company',
+                component: AboutCompanyPage
+            }
+        ]
     }
 ]
 
@@ -25,6 +48,7 @@ const dashboardRoutes: Routes = [
         RouterModule.forChild(dashboardRoutes),
         RouterLinkActive,
         ReactiveFormsModule,
+        UiCampusButtonComponent,
     ],
     providers: []
 })

@@ -1,0 +1,72 @@
+@import '../../../../../../../../styles/variables.scss';
+
+.company {
+
+    &__container {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        padding: 48px;
+    }
+
+    &__company-avatar {
+        display: grid;
+        width: 244px;
+        margin-right: 96px;
+    }
+
+    &__avatar {
+        display: flex;
+        justify-content: center;
+        width: 244px;
+        height: 244px;
+        background-color: #F3F3F3;
+        border-radius: 200px;
+        margin-bottom: 40px;
+    }
+
+    &__photo {
+        margin: auto;
+        width: 84px;
+        height: 74px;
+    }
+
+    &__btn-edit {
+        margin-bottom: 24px;
+    }
+
+    &__about {
+        display: grid;
+        width: 100%;
+    }
+
+    &__title {
+        font-size: 48px;
+        font-family: $abel-font;
+    }
+
+    &__info {
+        display: grid;
+    }
+
+    &__main-info {
+        display: grid;
+    }
+
+    &__company-type {
+        font-size: 18px;
+    }
+
+    &__company-info {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    &__company-description {
+        display: grid;
+    }
+
+    &__desc-title {
+        font-size: 18px;
+    }
+}

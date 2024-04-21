@@ -1,0 +1,8 @@
+<div class="cabinet-header__container">
+    <img class="cabinet-header__img-vector" src="assets/vectors/vector 1.png">
+    <div class="cabinet-header__content">
+        <div class="cabinet-header__tabs" *ngFor="let path of paths">
+            <ui-campus-button class="cabinet-header__tab" [type]="'tab'" [routerLink]="path.path">{{ path.title }}</ui-campus-button>
+        </div>
+    </div>
+</div>

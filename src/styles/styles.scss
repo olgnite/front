@@ -1,0 +1,24 @@
+@import './variables.scss';
+
+body {
+	padding: 0;
+	margin: 0;
+    background-color: $white;
+    font-family: $default-font;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+
+	&:before,
+	&:after {
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+
+	&:focus {
+		outline: none;
+	}
+}

@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutCabinetPage } from './pages/layout-cabinet/layout-cabinet.page.';
 import { HttpClientModule } from '@angular/common/http';
+import { UiCampusButtonComponent } from '../../ui';
+import { CabinetHeaderComponent } from './components/cabinet-header/cabinet-header.component';
 
 const cabinetRoutes: Routes = [
     {
@@ -29,7 +31,7 @@ const cabinetRoutes: Routes = [
         HttpClientModule,
     ],
     declarations: [
-        LayoutCabinetPage
+        LayoutCabinetPage,
     ],
     providers: []
 })
