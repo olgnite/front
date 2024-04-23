@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "kampus-b12ad": {
+      "hosting": {
+        "module": [
+          "kampus-b12ad"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "kampus-b12ad"
+  }
+}
