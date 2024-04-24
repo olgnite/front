@@ -1,0 +1,32 @@
+.vacancy-card {
+
+    &__container {
+        width: 100%;
+        border-radius: 16px;
+        background-color: #fff;
+        font-family: 'Giga Sans';
+        font-size: 24px;
+    }
+
+    &__wrapper {
+        display: flex;
+        align-items: center;
+        padding: 32px 64px;
+        justify-content: space-between;
+        margin-bottom: 24px;
+    }
+
+    &__name {
+        font-weight: bold;
+    }
+
+    &__salary {
+        color: #8269EF;
+
+    }
+
+    &__more {
+        color: #292929;
+        font-size: 18px;
+    }
+}

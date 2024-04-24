@@ -10,6 +10,10 @@
         padding: 16px 64px;
     }
 
+    &__company-abount {
+        padding: 48px 64px;
+    }
+
     &__back {
         font-size: 20px;
         color: white;
@@ -20,5 +24,18 @@
         color: $white;
         font-size: 64px;
         font-family: $abel-font;
+    }
+
+    &__vacancy-title {
+        padding: 48px 64px 40px 0px;
+        font-size: 54px;
+        font-family: 'Giga Sans';
+        color: #21201F;
+    }
+
+    &__vacancies {
+        padding: 48px 64px 48px 64px;
+        background-color: #ECECEC;
+        height: 100%;
     }
 }

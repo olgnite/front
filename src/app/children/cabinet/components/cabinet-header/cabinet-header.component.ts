@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { IPath } from '../../interfaces/path.interface';
 import { paths } from '../../consts/paths';
 

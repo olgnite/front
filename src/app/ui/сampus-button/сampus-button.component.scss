@@ -38,4 +38,10 @@
         font-size: 20px;
         color: $black;
     }
+
+    &__edit {
+        background-color: $grey-light;
+        padding: 12px 24px;
+        color: $black;
+    }
 }

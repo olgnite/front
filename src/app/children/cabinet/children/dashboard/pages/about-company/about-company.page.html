@@ -8,8 +8,16 @@
         <div class="abount-company__company-about">
             <company></company>
         </div>
-        <div class="abount-company__vacancies">
-
+        <div class="abount-company__vacancies-wrapper">
+            <img src="assets/vectors/vector 3.png" [ngStyle]="{'width': '100%'}">
+            <div class="abount-company__vacancies">
+                <div class="abount-company__vacancy-title">Вакансии</div>
+                <vacancy-card></vacancy-card>
+                <vacancy-card></vacancy-card>
+                <vacancy-card></vacancy-card>
+                <ui-campus-button class="abount-company__show-more-btn" [type]="'primary'">Показать все</ui-campus-button>
+            </div>
+            <img src="assets/vectors/vector 4.png" [ngStyle]="{'width': '100%'}">
         </div>
         <div class="abount-company__photo-gallery">
 

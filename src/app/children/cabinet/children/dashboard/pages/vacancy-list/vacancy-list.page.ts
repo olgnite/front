@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-    templateUrl: './not-found.page.html',
-    styleUrls: ['./styles/not-found.page.scss'],
+    templateUrl: './vacancy-list.page.html',
+    styleUrls: ['./styles/vacancy-list.page.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NotFoundPage {
+export class VacancyListPage {
 
 }

@@ -1,7 +1,7 @@
-import { CommonModule } from "@angular/common";
-import { RouterModule, Routes } from "@angular/router";
-import { NotFoundPage } from "./pages/not-found.page";
-import { NgModule } from "@angular/core";
+import { CommonModule } from '@angular/common';
+import { RouterModule, Routes } from '@angular/router';
+import { NotFoundPage } from './pages/not-found.page';
+import { NgModule } from '@angular/core';
 
 const components: any[] = [
     NotFoundPage

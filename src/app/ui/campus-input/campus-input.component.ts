@@ -1,6 +1,6 @@
-import { CommonModule } from "@angular/common";
-import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
-import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
     standalone: true,
@@ -17,7 +17,4 @@ export class UiCampusInputComponent {
 
     @Input()
     public placeholder!: string;
-
-    @Input()
-    public formControl!: FormControl<any | null>;
 }
