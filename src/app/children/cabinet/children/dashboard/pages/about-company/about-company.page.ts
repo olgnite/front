@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
     templateUrl: './about-company.page.html',
@@ -7,4 +8,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 })
 export class AboutCompanyPage {
 
+    public goToBack(): void {
+        history.back();
+    }
 }
