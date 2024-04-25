@@ -1,0 +1,39 @@
+.vacancy-list {
+
+    &__vacancy-name {
+        display: grid;
+        height: 229px;
+        background-color: #8269EF;
+        padding: 16px 0 16px 64px;
+    }
+
+    &__back {
+        font-size: 20px;
+        color: #fff;
+        margin-left: 12px;
+    }
+
+    &__title {
+        color: #fff;
+        font-size: 64px;
+        font-family: 'Abel';
+    }
+
+    &__options {
+        display: flex;
+        width: 100%;
+    }
+
+    &__wrapper {
+        height: 100%;
+        background-color: #ECECEC;
+    }
+
+    &__vacancies {
+        padding: 40px 64px;
+    }
+
+    &__down-vector-img {
+        width: 100%;
+    }
+}

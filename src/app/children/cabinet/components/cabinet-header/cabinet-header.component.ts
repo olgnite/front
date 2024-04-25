@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { IPath } from '../../interfaces/path.interface';
 import { paths } from '../../consts/paths';
 
@@ -9,6 +9,12 @@ import { paths } from '../../consts/paths';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CabinetHeaderComponent {
+
+    @Input()
+    public image!: string;
+
+    @Input()
+    public title!: string;
 
     public paths: IPath[] = paths;
 }

@@ -1,0 +1,33 @@
+.photo-gallery {
+
+    &__container {
+        width: 100%;
+        border-radius: 16px;
+        background-color: #8269EF;
+        font-family: 'Giga Sans';
+    }
+
+    &__title {
+        font-size: 54px;
+        color: #fff;
+        margin-bottom: 40px;
+    }
+
+    &__photo-wrapper {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 40px;
+    }
+
+    &__photo {
+        width: 100%;
+        height: 282px;
+        margin-right: 32px;
+        border-radius: 16px;
+        background-color: #ECECEC;
+
+        &:last-child {
+            margin-right: 0;
+        }
+    }
+}
