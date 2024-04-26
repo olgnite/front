@@ -14,6 +14,7 @@ import { VacancyCardComponent } from './components/vacancy-card/vacancy-card.com
 import { VacancyListPage } from './pages/vacancy-list/vacancy-list.page'
 import { EditCompanyComponent } from './components/edit-company/edit-company.component'
 import { MoreVacancyPage } from './pages/more-vacancy/more-vacancy.page'
+import { CurrentPathService } from '../../services/current-path.service'
 
 const components: any[] = [
     LayoutDashboardPage,
@@ -65,7 +66,9 @@ const dashboardRoutes: Routes = [
         ReactiveFormsModule,
         UiCampusButtonComponent,
     ],
-    providers: []
+    providers: [
+        CurrentPathService
+    ]
 })
 export class DashboardRoutingModule {
 

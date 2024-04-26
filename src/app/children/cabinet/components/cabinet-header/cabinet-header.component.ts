@@ -1,6 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { IPath } from '../../interfaces/path.interface';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { Observable } from 'rxjs';
 import { paths } from '../../consts/paths';
+import { IPath } from '../../interfaces/path.interface';
+import { CurrentPathService } from '../../services/current-path.service';
+import { ImagePathRecord } from '../../types/image-path.type';
 
 @Component({
     selector: 'cabinet-header',
@@ -10,11 +13,9 @@ import { paths } from '../../consts/paths';
 })
 export class CabinetHeaderComponent {
 
-    @Input()
-    public image!: string;
-
-    @Input()
-    public title!: string;
-
     public paths: IPath[] = paths;
+    public imagePathList: Record<string, string> = ImagePathRecord;
+
+    constructor(@Inject(CurrentPathService) public currentPath$: Observable<string>) {
+    }
 }
