@@ -6,6 +6,7 @@ import {DestroyService} from './services/destroy.service';
 import {environment} from "../environments/environment.development";
 import {AngularFireModule} from "@angular/fire/compat";
 import {AngularFireStorageModule} from "@angular/fire/compat/storage";
+import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
 
 @NgModule({
     declarations: [
@@ -15,7 +16,8 @@ import {AngularFireStorageModule} from "@angular/fire/compat/storage";
         BrowserModule,
         AppRoutingModule,
         AngularFireModule.initializeApp(environment.firebase),
-        AngularFireStorageModule
+        AngularFireStorageModule,
+        AngularFireDatabaseModule
     ],
     providers: [
         DestroyService

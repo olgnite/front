@@ -1,0 +1,51 @@
+<div class="edit-company__container">
+    <div class="edit-company__company-name">
+        <span class="edit-company__back" (click)="goToBack()">Назад</span>
+        <p class="edit-company__title">Профиль</p>
+    </div>
+    <div class="edit-company__wrapper">
+        <img class="edit-company__down-vector-img" src="assets/vectors/vector 6.png">
+    </div>
+    <div *ngIf="img$ | async as src" class="edit-company__block">
+        <div class="edit-company__left-block">
+            <div style="display: flex; justify-content: center">
+                <img [src]="src" class="edit-company__avatar">
+            </div>
+            <div class="edit-company__btn">
+                <ui-campus-button type="primary" (click)="uploadImage()">Загрузить</ui-campus-button>
+            </div>
+            <div class="edit-company__btn">
+                <ui-campus-button type="edit" (click)="deleteImage()">Удалить</ui-campus-button>
+            </div>
+        </div>
+        <input type="file" style="display: none" #fileInput class="edit-company__options"
+               (change)="pushMainImage($event)">
+        <form [formGroup]="editForm" style="width: 632px">
+            <div class="edit-company__topic">О компании</div>
+            <div class="edit-company__options">
+                <input formControlName="industry" class="edit-company__option" placeholder="Сфера деятельности*">
+                <input formControlName="yearOfFoundation" class="edit-company__option" placeholder="Год основания">
+                <div class="edit-company__address">
+                    <input formControlName="city" class="edit-company__option" placeholder="Город">
+                    <input formControlName="street" class="edit-company__option" placeholder="Улица">
+                    <input formControlName="house" class="edit-company__option" placeholder="Дом">
+                </div>
+                <input formControlName="numberOfEmployees" class="edit-company__option"
+                       placeholder="Количество сотрудников">
+                <textarea formControlName="aboutCompany" class="edit-company__option"
+                          placeholder="Расскажите о компании*"></textarea>
+            </div>
+            <div class="edit-company__options" style="margin-top: 80px">
+                <div class="edit-company__topic">Контакты и соцсети</div>
+                <input formControlName="site" class="edit-company__option" placeholder="Личный сайт*">
+                <input formControlName="phone" class="edit-company__option" placeholder="Телефон*">
+                <input formControlName="email" class="edit-company__option" placeholder="Email">
+                <input formControlName="link" class="edit-company__option" placeholder="Ссылка на соцсеть">
+            </div>
+            <div class="edit-company__buttons-block">
+                    <ui-campus-button type="primary" [disabled]="editForm.invalid" (click)="onSubmit()">Сохранить</ui-campus-button>
+                    <ui-campus-button type="edit">Отменить</ui-campus-button>
+            </div>
+        </form>
+    </div>
+</div>
