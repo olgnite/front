@@ -16,17 +16,30 @@
         margin-bottom: 24px;
     }
 
+    &__wrapper-title {
+        width: 60%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__wrapper-more {
+        display: flex;
+        align-items: center;
+    }
+
     &__name {
         font-weight: bold;
     }
 
     &__salary {
         color: #8269EF;
-
     }
 
     &__more {
+        cursor: pointer;
         color: #292929;
+        margin-right: 16px;
         font-size: 18px;
     }
 }

@@ -1,7 +1,12 @@
 <div class="vacancy-card__container">
     <div class="vacancy-card__wrapper">
-        <p class="vacancy-card__name">Название вакансии</p>
-        <p class="vacancy-card__salary">з/п</p>
-        <a class="vacancy-card__more">Подробнее</a>
+        <div class="vacancy-card__wrapper-title">
+            <p class="vacancy-card__name">{{vacancyCard.title}}</p>
+            <p class="vacancy-card__salary">{{vacancyCard.salary}}</p>
+        </div>
+        <div class="vacancy-card__wrapper-more">
+            <a class="vacancy-card__more">Подробнее</a>
+            <img class="vacancy-card__arrow" src="assets/icons/arrow.svg">
+        </div>
     </div>
 </div>

@@ -15,6 +15,12 @@
         margin-left: 12px;
     }
 
+    &__wrapper-back {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+    }
+
     &__title {
         color: $white;
         font-size: 64px;

@@ -11,6 +11,12 @@
         font-size: 20px;
         color: #fff;
         margin-left: 12px;
+        cursor: pointer;
+    }
+
+    &__back-wrapper {
+        display: flex;
+        align-items: center;
     }
 
     &__title {
@@ -22,7 +28,7 @@
     &__options {
         display: flex;
         height: 56px;
-        padding: 48px 64px;
+        padding: 48px 64px 40px 64px;
     }
 
     &__wrapper {
@@ -31,7 +37,11 @@
     }
 
     &__vacancies {
-        padding: 40px 64px;
+        padding: 0px 64px 0px 64px;
+
+        &:last-child {
+            padding: 0 64px 64px 64px;
+        }
     }
 
     &__down-vector-img {
@@ -40,10 +50,38 @@
 
     &__btn {
         margin-right: 16px;
+        background-color: #8269EF;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 16px;
+        font-size: 24px;
+        color: #fff;
+        cursor: pointer;
     }
 
-    &__input {
+    &__search-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        background-color: #fff;
+        border-radius: 100px;
+    }
+
+    &__search {
+        border: none;
         border-radius: 100px;
         width: 100%;
+        height: 56px;
+    }
+
+    &__search-icon {
+        padding: 16px;
+        cursor: pointer;
+    }
+
+    &__empty {
+        display: flex;
+        justify-content: center;
     }
 }

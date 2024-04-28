@@ -1,6 +1,9 @@
 <div class="abount-company__container">
     <div class="abount-company__company-name">
-        <span class="abount-company__back" (click)="goToBack()">Назад</span>
+        <div class="abount-company__wrapper-back">
+            <img class="abount-company__back-icon" src="assets/icons/back.svg">
+            <span class="abount-company__back" (click)="goToBack()">Назад</span>
+        </div>
         <p class="abount-company__title">Название компании</p>
     </div>
     <img class="abount-company__up-vector-img" src="assets/vectors/vector 2.png">
@@ -11,10 +14,10 @@
         <img src="assets/vectors/vector 3.png" [ngStyle]="{'width': '100%'}">
         <div class="abount-company__vacancies">
             <div class="abount-company__vacancy-title">Вакансии</div>
-            <vacancy-card></vacancy-card>
-            <vacancy-card></vacancy-card>
-            <vacancy-card></vacancy-card>
-            <ui-campus-button class="abount-company__show-more-btn" [type]="'primary'">Показать
+            <ng-container *ngFor="let card of vacancyList | slice: 0: 3">
+                <vacancy-card [vacancyCard]="card"></vacancy-card>
+            </ng-container>
+            <ui-campus-button class="abount-company__show-more-btn" [type]="'primary'" (click)="navigateToVacancies()">Показать
                 все</ui-campus-button>
         </div>
         <img src="assets/vectors/vector 4.png" [ngStyle]="{'width': '100%'}">
