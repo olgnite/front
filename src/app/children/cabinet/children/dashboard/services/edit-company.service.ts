@@ -1,11 +1,11 @@
-import {inject, Injectable} from "@angular/core";
-import {AngularFireDatabase} from "@angular/fire/compat/database";
-import {ICompany} from "../interfaces/company.interface";
-import {map, Observable, of, switchMap} from "rxjs";
-import {AngularFireStorage} from "@angular/fire/compat/storage";
+import { inject, Injectable } from "@angular/core";
+import { AngularFireDatabase } from "@angular/fire/compat/database";
+import { ICompany } from "../interfaces/company.interface";
+import { map, Observable, of, switchMap } from "rxjs";
+import { AngularFireStorage } from "@angular/fire/compat/storage";
 
-@Injectable({providedIn: 'root'})
-export class EditCompanyService  {
+@Injectable({ providedIn: 'root' })
+export class EditCompanyService {
     private db = inject(AngularFireDatabase);
     private storage = inject(AngularFireStorage);
     private defaultLogo = 'assets/icons/logo.svg';
@@ -20,7 +20,7 @@ export class EditCompanyService  {
         );
     }
 
-    public getCompanyMainImg(id:string): Observable<string> {
+    public getCompanyMainImg(id: string): Observable<string> {
         return this.storage.ref(`companies/${id}/main`).listAll().pipe(
             switchMap(images => {
                 const imageRef = images.items[0];

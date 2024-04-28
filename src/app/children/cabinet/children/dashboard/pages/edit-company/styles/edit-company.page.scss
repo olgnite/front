@@ -5,7 +5,7 @@
     &__company-name {
         display: grid;
         height: 229px;
-        background-color: $purple-light;
+        background-color: $purple;
         padding: 16px 0 16px 64px;
     }
 
@@ -13,6 +13,11 @@
         font-size: 20px;
         color: #fff;
         margin-left: 12px;
+    }
+
+    &__back-wrapper {
+        display: flex;
+        align-items: center;
     }
 
     &__title {

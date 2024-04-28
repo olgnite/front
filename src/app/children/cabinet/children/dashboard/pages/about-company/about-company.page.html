@@ -14,7 +14,7 @@
         <img src="assets/vectors/vector 3.png" [ngStyle]="{'width': '100%'}">
         <div class="abount-company__vacancies">
             <div class="abount-company__vacancy-title">Вакансии</div>
-            <ng-container *ngFor="let card of vacancyList | slice: 0: 3">
+            <ng-container *ngFor="let card of vacancyList | slice : 0 : 3">
                 <vacancy-card [vacancyCard]="card"></vacancy-card>
             </ng-container>
             <ui-campus-button class="abount-company__show-more-btn" [type]="'primary'" (click)="navigateToVacancies()">Показать

@@ -37,6 +37,6 @@ export class AboutCompanyPage implements OnInit {
     }
 
     public navigateToVacancies(): void {
-        this._router.navigate(['/dashboard/vacancies/']);
+        this._router.navigateByUrl('/dashboard/vacancies');
     }
 }

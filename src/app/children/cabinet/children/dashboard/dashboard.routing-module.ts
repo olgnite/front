@@ -11,10 +11,10 @@ import { PhotoGalleryComponent } from './components/photo-gallery/photo-gallery.
 import { CabinetFooterComponent } from '../../components/cabinet-footer/cabinet-footer.component'
 import { VacancyCardComponent } from './components/vacancy-card/vacancy-card.component'
 import { VacancyListPage } from './pages/vacancy-list/vacancy-list.page'
-import { EditCompanyComponent } from './components/edit-company/edit-company.component'
 import { MoreVacancyPage } from './pages/more-vacancy/more-vacancy.page'
 import { CurrentPathService } from '../../services/current-path.service'
 import { SearchPipe } from '../../pipes/search.pipe'
+import { EditCompanyPage } from './pages/edit-company/edit-company.page'
 
 const components: any[] = [
     LayoutDashboardPage,
@@ -25,7 +25,7 @@ const components: any[] = [
     PhotoGalleryComponent,
     VacancyCardComponent,
     VacancyListPage,
-    EditCompanyComponent
+    EditCompanyPage
 ];
 
 const dashboardRoutes: Routes = [
@@ -41,6 +41,10 @@ const dashboardRoutes: Routes = [
             {
                 path: 'abount-company',
                 component: AboutCompanyPage
+            },
+            {
+                path: 'edit-company',
+                component: EditCompanyPage
             },
             {
                 path: 'vacancies',
