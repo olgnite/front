@@ -1,0 +1,100 @@
+@import '../../../../../../../../styles/variables.scss';
+
+.edit-company {
+
+    &__company-name {
+        display: grid;
+        height: 229px;
+        background-color: $purple-light;
+        padding: 16px 0 16px 64px;
+    }
+
+    &__back {
+        font-size: 20px;
+        color: #fff;
+        margin-left: 12px;
+    }
+
+    &__title {
+        color: #fff;
+        font-size: 64px;
+        font-family: $abel-font;
+    }
+
+    &__options {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    &__option {
+        font-size: 16px;
+        line-height: 20px;
+        background-color: #E0D9FB;
+        border-radius: 16px;
+        width: 100%;
+        padding: 22px 24px;
+        box-sizing: border-box;
+    }
+
+    &__wrapper {
+        height: 100%;
+    }
+
+    &__avatar {
+        width: 244px;
+        height: 244px;
+        background-color: #F3F3F3;
+        border-radius: 200px;
+        margin-bottom: 40px;
+    }
+
+    &__block {
+        display: flex;
+        gap: 96px;
+    }
+
+    &__left-block {
+        margin-left: 64px;
+    }
+
+    &__down-vector-img {
+        width: 100%;
+    }
+
+    &__btn {
+        width: 244px;
+        border-radius: 16px;
+        padding: 12px 24px;
+    }
+
+    &__topic {
+        color: black;
+        font-size: 54px;
+        font-family: 'Giga Sans';
+        line-height: 70px;
+        margin-bottom: 40px;
+    }
+
+    &__address {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+    }
+
+    &__buttons-block {
+        margin-top: 80px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+}
+
+input::placeholder,textarea::placeholder {
+    color: $purple;
+}
+
+textarea {
+    resize: none;
+    height: 240px;
+}
