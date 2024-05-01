@@ -1,0 +1,59 @@
+@import '../../../../../../../../styles/variables.scss';
+
+.about-vacancy {
+
+    &__vacancy-name {
+        display: grid;
+        height: 229px;
+        background-color: #8269EF;
+        padding: 16px 0 16px 64px;
+    }
+
+    &__back {
+        font-size: 20px;
+        color: white;
+        margin-left: 12px;
+    }
+
+    &__wrapper-back {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+    }
+
+    &__title {
+        color: $white;
+        font-size: 64px;
+        font-family: $abel-font;
+    }
+
+    &__vacancy-title {
+        padding: 48px 64px 40px 0px;
+        font-size: 54px;
+        font-family: 'Giga Sans';
+        color: #21201F;
+    }
+
+    &__vacancies {
+        padding: 48px 64px;
+        background-color: #ECECEC;
+        height: 100%;
+    }
+
+    &__gallery-wrapper {
+        padding: 48px 64px;
+        background-color: #8269EF;
+        height: 100%;
+    }
+
+    &__photo-gallery-title {
+        padding: 48px 64px 40px 0px;
+        font-size: 54px;
+        font-family: 'Giga Sans';
+        color: #fff;
+    }
+
+    &__down-vector-img {
+        width: 100%;
+    }
+}

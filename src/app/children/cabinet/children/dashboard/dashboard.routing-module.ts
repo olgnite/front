@@ -15,6 +15,8 @@ import { MoreVacancyPage } from './pages/more-vacancy/more-vacancy.page'
 import { CurrentPathService } from '../../services/current-path.service'
 import { SearchPipe } from '../../pipes/search.pipe'
 import { EditCompanyPage } from './pages/edit-company/edit-company.page'
+import { AboutVacancyPage } from './pages/about-vacancy/about-vacancy.page'
+import { VacancyComponent } from './components/vacancy/vacancy.component'
 
 const components: any[] = [
     LayoutDashboardPage,
@@ -25,7 +27,9 @@ const components: any[] = [
     PhotoGalleryComponent,
     VacancyCardComponent,
     VacancyListPage,
-    EditCompanyPage
+    EditCompanyPage,
+    AboutVacancyPage,
+    VacancyComponent
 ];
 
 const dashboardRoutes: Routes = [
@@ -49,6 +53,10 @@ const dashboardRoutes: Routes = [
             {
                 path: 'vacancies',
                 component: VacancyListPage
+            },
+            {
+                path: 'vacancies/:id',
+                component: AboutVacancyPage
             },
             {
                 path: 'more-vacancy',

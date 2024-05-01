@@ -8,5 +8,5 @@ export const paths: IPath[] = [
     {
         path: 'vacancies',
         title: 'Вакансии'
-    }
-]
+    },
+];
