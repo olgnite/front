@@ -1,0 +1,73 @@
+@import '../../../../../../../../styles/variables.scss';
+
+.edit-vacancy {
+
+    &__vacancy-name {
+        display: grid;
+        height: 229px;
+        background-color: $purple;
+        padding: 16px 0 16px 64px;
+    }
+
+    &__back {
+        font-size: 20px;
+        color: #fff;
+        margin-left: 12px;
+    }
+
+    &__back-wrapper {
+        display: flex;
+        align-items: center;
+    }
+
+    &__title {
+        color: #fff;
+        font-size: 64px;
+        font-family: $abel-font;
+    }
+
+    &__about-title {
+        font-size: 54px;
+        font-family: 'Giga Sans';
+        margin-bottom: 40px;
+    }
+
+    &__wrapper-form {
+        max-width: 632px;
+        margin: auto;
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        margin-bottom: 24px;
+    }
+
+    &__control {
+        border: none;
+        font-size: 16px;
+        line-height: 20px;
+        background-color: #E0D9FB;
+        border-radius: 16px;
+        width: 100%;
+        padding: 22px 24px;
+        box-sizing: border-box;
+
+        &:last-child {
+            height: 320px;
+        }
+    }
+
+    &__submit {
+
+        ::ng-deep button {
+            margin-bottom: 24px;
+        }
+    }
+
+    &__danger {
+        color: red;
+        font-size: 12px;
+    }
+}

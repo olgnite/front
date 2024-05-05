@@ -1,11 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, combineLatest, takeUntil, tap } from 'rxjs';
+import { BehaviorSubject, combineLatest, takeUntil } from 'rxjs';
 import { DestroyService } from '../../../../../../services/destroy.service';
 import { ICompany } from '../../interfaces/company.interface';
 import { EditCompanyService } from '../../services/edit-company.service';
-import { ActivatedRoute, UrlSegment } from '@angular/router';
-import { CurrentPathService } from '../../../../services/current-path.service';
 
 @Component({
     templateUrl: './edit-company.page.html',
@@ -36,17 +34,8 @@ export class EditCompanyPage implements OnInit {
     private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
     private editService: EditCompanyService = inject(EditCompanyService);
     private _destroy$: DestroyService = inject(DestroyService);
-    private _activatedRoute: ActivatedRoute = inject(ActivatedRoute);
-    private _currentPathService: CurrentPathService = inject(CurrentPathService);
 
     public ngOnInit(): void {
-        this._activatedRoute.url
-            .pipe(
-                tap((value: UrlSegment[]) => this._currentPathService.updatePath(value[0].path)),
-                takeUntil(this._destroy$)
-            )
-            .subscribe();
-
         combineLatest([this.editService.getCompanyInfo(this.id), this.editService.getCompanyMainImg(this.id)])
             .pipe(
                 takeUntil(this._destroy$)

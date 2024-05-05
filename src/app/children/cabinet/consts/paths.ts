@@ -2,7 +2,7 @@ import { IPath } from '../interfaces/path.interface';
 
 export const paths: IPath[] = [
     {
-        path: 'abount-company',
+        path: 'about-company',
         title: 'О компании'
     },
     {

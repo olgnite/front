@@ -17,6 +17,7 @@ import { SearchPipe } from '../../pipes/search.pipe'
 import { EditCompanyPage } from './pages/edit-company/edit-company.page'
 import { AboutVacancyPage } from './pages/about-vacancy/about-vacancy.page'
 import { VacancyComponent } from './components/vacancy/vacancy.component'
+import { EditVacancyPage } from './pages/edit-vacancy/edit-vacancy.page'
 
 const components: any[] = [
     LayoutDashboardPage,
@@ -29,7 +30,8 @@ const components: any[] = [
     VacancyListPage,
     EditCompanyPage,
     AboutVacancyPage,
-    VacancyComponent
+    VacancyComponent,
+    EditVacancyPage,
 ];
 
 const dashboardRoutes: Routes = [
@@ -43,7 +45,7 @@ const dashboardRoutes: Routes = [
                 pathMatch: 'full'
             },
             {
-                path: 'abount-company',
+                path: 'about-company',
                 component: AboutCompanyPage
             },
             {
@@ -57,6 +59,10 @@ const dashboardRoutes: Routes = [
             {
                 path: 'vacancies/:id',
                 component: AboutVacancyPage
+            },
+            {
+                path: 'edit-vacancy',
+                component: EditVacancyPage
             },
             {
                 path: 'more-vacancy',

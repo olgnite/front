@@ -26,6 +26,7 @@
     &__wrapper-more {
         display: flex;
         align-items: center;
+        cursor: pointer;
     }
 
     &__name {
@@ -37,7 +38,6 @@
     }
 
     &__more {
-        cursor: pointer;
         color: #292929;
         margin-right: 16px;
         font-size: 18px;

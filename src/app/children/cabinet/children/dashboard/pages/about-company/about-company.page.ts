@@ -1,10 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute, UrlSegment } from '@angular/router';
-import { takeUntil, tap } from 'rxjs';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { DestroyService } from '../../../../../../services/destroy.service';
 import { vacancies } from '../../../../consts/vacancies';
 import { IVacancyCard } from '../../../../interfaces/vacancy-card.interface';
-import { CurrentPathService } from '../../../../services/current-path.service';
 
 @Component({
     templateUrl: './about-company.page.html',
@@ -14,21 +12,13 @@ import { CurrentPathService } from '../../../../services/current-path.service';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AboutCompanyPage implements OnInit {
+export class AboutCompanyPage {
 
     public vacancyList: IVacancyCard[] = vacancies;
+    public isShowAll$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-    private _activatedRoute: ActivatedRoute = inject(ActivatedRoute);
-    private _currentPathService: CurrentPathService = inject(CurrentPathService);
-    private _destroy$: DestroyService = inject(DestroyService);
-
-    public ngOnInit(): void {
-        this._activatedRoute.url
-            .pipe(
-                tap((value: UrlSegment[]) => this._currentPathService.updatePath(value[0].path)),
-                takeUntil(this._destroy$)
-            )
-            .subscribe();
+    public updateShowVacancies(flag: boolean): void {
+        this.isShowAll$.next(flag);
     }
 
     public goToBack(): void {

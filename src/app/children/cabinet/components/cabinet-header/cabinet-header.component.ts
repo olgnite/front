@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, Component, Inject, inject } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { Observable } from 'rxjs';
 import { paths } from '../../consts/paths';
 import { IPath } from '../../interfaces/path.interface';
 import { CurrentPathService } from '../../services/current-path.service';
 import { imagePathRecord } from '../../types/image-path.type';
-import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 
 @Component({
     selector: 'cabinet-header',

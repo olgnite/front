@@ -4,7 +4,7 @@
             <p class="vacancy-card__name">{{vacancyCard.title}}</p>
             <p class="vacancy-card__salary">{{vacancyCard.salary}}</p>
         </div>
-        <div class="vacancy-card__wrapper-more">
+        <div class="vacancy-card__wrapper-more" [routerLink]="['/dashboard/vacancies/1']">
             <a class="vacancy-card__more">Подробнее</a>
             <img class="vacancy-card__arrow" src="assets/icons/arrow.svg">
         </div>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subscriber, distinctUntilChanged, filter } from 'rxjs';
+import { BehaviorSubject, Observable, Subscriber, distinctUntilChanged } from 'rxjs';
 
 @Injectable()
 export class CurrentPathService extends Observable<string> {

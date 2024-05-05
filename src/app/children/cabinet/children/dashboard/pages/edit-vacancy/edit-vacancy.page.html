@@ -1,0 +1,32 @@
+<div class="edit-vacancy__container">
+    <div class="edit-vacancy__vacancy-name">
+        <div class="edit-vacancy__back-wrapper">
+            <img class="edit-vacancy__back-icon" src="assets/icons/back.svg">
+            <span class="edit-vacancy__back" (click)="goToBack()">Назад</span>
+        </div>
+        <p class="edit-vacancy__title">Название вакансии</p>
+    </div>
+    <div class="edit-vacancy__wrapper">
+        <img class="edit-vacancy__down-vector-img" src="assets/vectors/vector 6.png">
+    </div>
+    <div class="edit-vacancy__wrapper-form">
+        <form [formGroup]="viewModel.form">
+            <p class="edit-vacancy__about-title">О вакансии</p>
+            <div class="edit-vacancy__form">
+                <input formControlName="name" class="edit-vacancy__control" placeholder="Название вакансии">
+                <input formControlName="salary" class="edit-vacancy__control" placeholder="Зарплата">
+                <input formControlName="city" class="edit-vacancy__control" placeholder="Город">
+                <input formControlName="employment" class="edit-vacancy__control" placeholder="Занятость">
+                <input formControlName="experience" class="edit-vacancy__control" placeholder="Опыт работы">
+                <textarea formControlName="description" class="edit-vacancy__control"
+                    placeholder="Расскажите о вакансии"></textarea>
+            </div>
+        </form>
+        <div class="edit-vacancy__wrapper-btn">
+            <ui-campus-button class="edit-vacancy__submit" [type]="'primary'" [clickType]="'submit'"
+                (click)="onSubmit()" [disabled]="viewModel.form.invalid">Сохранить</ui-campus-button>
+            <ui-campus-button class="edit-vacancy__cancel" [type]="'edit'"
+                [routerLink]="['/dashboard/vacancies/1']">Отменить</ui-campus-button>
+        </div>
+    </div>
+</div>
