@@ -14,7 +14,7 @@ export class EditCompanyPage implements OnInit {
 
     public id: string = '4';
     public img$: BehaviorSubject<string> = new BehaviorSubject<string>('');
-    public editForm$!: Observable<FormGroup | undefined>;
+    public editForm$?: Observable<FormGroup>;
 
     private fromBuilder: FormBuilder = inject(FormBuilder);
     private editService: EditCompanyService = inject(EditCompanyService);
