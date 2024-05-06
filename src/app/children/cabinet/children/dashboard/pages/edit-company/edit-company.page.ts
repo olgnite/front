@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, combineLatest, takeUntil } from 'rxjs';
-import { DestroyService } from '../../../../../../services/destroy.service';
+import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
 import { ICompany } from '../../interfaces/company.interface';
 import { EditCompanyService } from '../../services/edit-company.service';
 
@@ -13,36 +12,27 @@ import { EditCompanyService } from '../../services/edit-company.service';
 export class EditCompanyPage implements OnInit {
     @ViewChild('fileInput', { static: false }) fileInput: any;
 
-    private fromBuilder: FormBuilder = inject(FormBuilder);
-
     public id: string = '4';
-    public img$: BehaviorSubject<string> = new BehaviorSubject('');
-    public editForm: FormGroup = this.fromBuilder.group({
-        industry: ['', Validators.required],
-        yearOfFoundation: '',
-        city: '',
-        street: '',
-        house: '',
-        numberOfEmployees: '',
-        aboutCompany: ['', Validators.required],
-        site: ['', Validators.required],
-        phone: ['', [Validators.required, Validators.pattern(/^\+7\d{10}$/)]],
-        email: ['', Validators.email],
-        link: ''
-    });
+    public img$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+    public editForm$!: Observable<FormGroup | undefined>;
 
-    private cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
+    private fromBuilder: FormBuilder = inject(FormBuilder);
     private editService: EditCompanyService = inject(EditCompanyService);
-    private _destroy$: DestroyService = inject(DestroyService);
 
     public ngOnInit(): void {
-        combineLatest([this.editService.getCompanyInfo(this.id), this.editService.getCompanyMainImg(this.id)])
+        this.initialize();
+    }
+
+    public initialize(): void {
+        this.editForm$ = combineLatest([
+            this.editService.getCompanyInfo(this.id),
+            this.editService.getCompanyMainImg(this.id)
+        ])
             .pipe(
-                takeUntil(this._destroy$)
-            )
-            .subscribe(([company, img]) => {
-                if (company) {
-                    this.editForm = this.fromBuilder.group({
+                map(([company, img]) => {
+                    this.img$.next(img);
+
+                    return this.fromBuilder.group({
                         industry: [company.industry, Validators.required],
                         yearOfFoundation: company.yearOfFoundation,
                         city: company.city,
@@ -54,16 +44,14 @@ export class EditCompanyPage implements OnInit {
                         phone: [company.phone, [Validators.required, Validators.pattern(/^\+7\d{10}$/)]],
                         email: [company.email, Validators.email],
                         link: company.link
-                    });
-                };
-                this.img$.next(img);
-
-                this.cdr.markForCheck();
-            });
+                    })
+                }),
+            );
     }
 
-    public goToBack(): void {
-        history.back();
+    public onSubmit(form: FormGroup): void {
+        const company: ICompany = form.value as ICompany;
+        this.editService.setEdits(company, this.id);
     }
 
     public uploadImage(): void {
@@ -80,8 +68,7 @@ export class EditCompanyPage implements OnInit {
         this.img$.next(await this.editService.setMainImg(file, this.id));
     }
 
-    public onSubmit(): void {
-        const company: ICompany = this.editForm.value as ICompany;
-        this.editService.setEdits(company, this.id);
+    public goToBack(): void {
+        history.back();
     }
 }

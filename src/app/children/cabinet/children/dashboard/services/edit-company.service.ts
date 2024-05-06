@@ -1,8 +1,8 @@
 import { inject, Injectable } from "@angular/core";
 import { AngularFireDatabase } from "@angular/fire/compat/database";
-import { ICompany } from "../interfaces/company.interface";
-import { map, Observable, of, switchMap } from "rxjs";
 import { AngularFireStorage } from "@angular/fire/compat/storage";
+import { map, Observable, of, switchMap } from "rxjs";
+import { ICompany } from "../interfaces/company.interface";
 
 @Injectable({ providedIn: 'root' })
 export class EditCompanyService {
