@@ -1,3 +1,5 @@
+@import "../../../../../../styles/variables";
+
 .cabinet-header {
 
     &__container {
@@ -7,6 +9,7 @@
     &__content {
         display: flex;
         align-items: center;
+        justify-content: space-between;
     }
 
     &__img-vector {
@@ -27,5 +30,18 @@
     &__tab {
         max-height: 45px;
         margin-right: 16px;
+    }
+
+    &__buttons {
+        margin-top: 20px;
+        position: relative;
+        display: flex;
+        width: 460px;
+        background-color: $purple-light-v2;
+        border-radius: 100px;
+    }
+
+    &__button {
+        width: 100%;
     }
 }

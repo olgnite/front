@@ -1,0 +1,63 @@
+<div class="modal-dialog">
+    <div class="modal-dialog__content">
+        <div class="modal-dialog__title">Регистрация</div>
+        <div class="modal-dialog__buttons">
+            <ui-campus-button [type]="'active'" class="modal-dialog__buttons"  style="pointer-events: none">Регистрация</ui-campus-button>
+            <ui-campus-button [type]="'inactive'" class="modal-dialog__buttons" (click)="openLogin()">Войти</ui-campus-button>
+        </div>
+        <ng-container *ngIf="!nextStep; else otherFields" class="modal-body">
+            <div class="modal-dialog__step">
+                <div class="modal-dialog__step__title">Укажите ИНН компании:</div>
+                <div style="position: relative">
+                    <input type="text" placeholder="ИНН" [formControl]="inn" class="modal-dialog__step__input"/>
+                    <div class="modal-dialog__invalid" *ngIf="inn.invalid && inn.touched">
+                        <div *ngFor="let error of getErrorMessages(inn)">
+                            {{error}}
+                        </div>
+                    </div>
+                </div>
+                <ui-campus-button [disabled]="inn.invalid" [type]="'primary'" class="modal-dialog__btn"
+                                  (click)="validateINN()">Продолжить
+                </ui-campus-button>
+            </div>
+        </ng-container>
+    </div>
+</div>
+
+<ng-template #otherFields>
+    <div class="modal-dialog__step">
+        <form [formGroup]="registrationForm" class="modal-dialog__step__inputs">
+            <div style="position: relative">
+            <input type="email" formControlName="email" class="modal-dialog__step__input" placeholder="Email"/>
+            <div class="modal-dialog__invalid" *ngIf="validationElementMethod('email')">
+                <div *ngFor="let error of getErrorMessages(registrationForm.get('email')!)">
+                    {{error}}
+                </div>
+            </div>
+            </div>
+            <div style="position: relative">
+                <input type="password" formControlName="password" class="modal-dialog__step__input" placeholder="Пароль"/>
+                <div class="modal-dialog__invalid" *ngIf="validationElementMethod('password')">
+                    <div *ngFor="let error of getErrorMessages(registrationForm.get('password')!)">
+                        {{error}}
+                    </div>
+                </div>
+            </div>
+            <div style="position: relative">
+                <input type="password" formControlName="confirmPassword" class="modal-dialog__step__input"
+                       placeholder="Повторите пароль"/>
+                <div class="modal-dialog__invalid" *ngIf="validationElementMethod('confirmPassword') || registrationForm.errors">
+                    <div *ngIf="registrationForm.errors?.['passwordsMismatch']">Пароли должны совпадать</div>
+                </div>
+            </div>
+            <div class="modal-dialog__step__checkbox">
+                <input type="checkbox" formControlName="agreeToTerms"/>
+                <label>Я согласен с политикой конфиденциальности</label>
+            </div>
+            <ui-campus-button [disabled]="registrationForm.invalid" [type]="'primary'" class="modal-dialog__btn"
+                              (click)="register()">Зарегистрироваться
+            </ui-campus-button>
+        </form>
+    </div>
+</ng-template>
+
