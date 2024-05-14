@@ -1,0 +1,33 @@
+<div class="modal-dialog">
+    <div class="modal-dialog__content">
+        <div class="modal-dialog__title">Вход в аккаунт</div>
+        <div class="modal-dialog__buttons">
+            <ui-campus-button [type]="'inactive'" class="modal-dialog__buttons" (click)="openRegistration()">Регистрация</ui-campus-button>
+            <ui-campus-button [type]="'active'" class="modal-dialog__buttons" style="pointer-events: none">Войти</ui-campus-button>
+        </div>
+        <div class="modal-dialog__step">
+            <form [formGroup]="loginForm" class="modal-dialog__step__inputs">
+                <div style="position: relative">
+                    <input type="text" placeholder="Email" formControlName="email" class="modal-dialog__step__input"/>
+                    <div class="modal-dialog__invalid" *ngIf="validationElementMethod('email')">
+                        <div *ngFor="let error of getErrorMessages(loginForm.get('email')!)">
+                            {{error}}
+                        </div>
+                    </div>
+                </div>
+                <div style="position: relative">
+                    <input type="password" placeholder="Пароль" formControlName="password" class="modal-dialog__step__input"/>
+                    <div class="modal-dialog__invalid" *ngIf="validationElementMethod('password')">
+                        <div *ngFor="let error of getErrorMessages(loginForm.get('password')!)">
+                            {{error}}
+                        </div>
+                    </div>
+                </div>
+                <ui-campus-button [disabled]="loginForm.invalid" [type]="'primary'" class="modal-dialog__btn"
+                                  (click)="login()">Войти
+                </ui-campus-button>
+            </form>
+        </div>
+    </div>
+</div>
+

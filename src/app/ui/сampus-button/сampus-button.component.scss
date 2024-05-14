@@ -31,6 +31,19 @@
         }
     }
 
+    &__inactive {
+        background-color: $purple-light-v2;
+        color: $purple;
+        padding: 12px 24px;
+        border-radius: 100px;
+
+        &:hover {
+            background-color: $purple;
+            transition: 0.5s;
+            color: white;
+        }
+    }
+
     &__tab {
         background-color: $grey-light;
         border-radius: 100px;
@@ -49,5 +62,12 @@
         width: 100%;
         background-color: $purple;
         padding: 12px 24px;
+    }
+
+    &__active {
+        width: 100%;
+        background-color: $purple;
+        padding: 12px 24px;
+        border-radius: 100px;
     }
 }
