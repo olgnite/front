@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { DestroyService } from '../../../../../../services/destroy.service';
-import { vacancies } from '../../../../consts/vacancies';
 import { IVacancyCard } from '../../../../interfaces/vacancy-card.interface';
+import { RequestVacancyService } from '../../services/request-vacancy.service';
 
 @Component({
     templateUrl: './about-company.page.html',
@@ -14,8 +14,13 @@ import { IVacancyCard } from '../../../../interfaces/vacancy-card.interface';
 })
 export class AboutCompanyPage {
 
-    public vacancyList: IVacancyCard[] = vacancies;
+    public vacancyList$?: Observable<IVacancyCard[]>;
     public isShowAll$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    private _requestVacancyService: RequestVacancyService = inject(RequestVacancyService);
+
+    constructor() {
+        this.vacancyList$ = this._requestVacancyService.getVacancyList();
+    }
 
     public updateShowVacancies(flag: boolean): void {
         this.isShowAll$.next(flag);

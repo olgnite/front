@@ -80,7 +80,7 @@
         cursor: pointer;
     }
 
-    &__empty {
+    &__empty, loading {
         display: flex;
         justify-content: center;
     }

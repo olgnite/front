@@ -11,6 +11,6 @@ export class SearchPipe implements PipeTransform {
             return vacancies;
         }
 
-        return vacancies.filter((item: IVacancyCard) => item.title.toLowerCase().includes(value.toLowerCase()));
+        return vacancies.filter((item: IVacancyCard) => item.name.toLowerCase().includes(value.toLowerCase()));
     }
 }

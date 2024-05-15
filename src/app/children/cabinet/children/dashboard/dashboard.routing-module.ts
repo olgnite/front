@@ -18,6 +18,8 @@ import { EditCompanyPage } from './pages/edit-company/edit-company.page'
 import { AboutVacancyPage } from './pages/about-vacancy/about-vacancy.page'
 import { VacancyComponent } from './components/vacancy/vacancy.component'
 import { EditVacancyPage } from './pages/edit-vacancy/edit-vacancy.page'
+import { URL_TOKEN } from './tokens/url.token'
+import { RequestVacancyService } from './services/request-vacancy.service'
 
 const components: any[] = [
     LayoutDashboardPage,
@@ -86,7 +88,12 @@ const dashboardRoutes: Routes = [
         UiCampusButtonComponent,
     ],
     providers: [
-        CurrentPathService
+        CurrentPathService,
+        RequestVacancyService,
+        {
+            provide: URL_TOKEN,
+            useValue: 'https://vacancies-service.onrender.com'
+        }
     ]
 })
 export class DashboardRoutingModule {

@@ -15,8 +15,10 @@
         <div class="abount-company__vacancies">
             <div class="abount-company__vacancy-title">Вакансии</div>
             <ng-container *ngIf="(isShowAll$ | async) === false; else showVacancies">
-                <ng-container *ngFor="let card of vacancyList | slice : 0 : 3">
-                    <vacancy-card [vacancyCard]="card"></vacancy-card>
+                <ng-container *ngIf="vacancyList$ | async as vacancyList">
+                    <ng-container *ngFor="let card of vacancyList | slice : 0 : 3">
+                        <vacancy-card [vacancyCard]="card"></vacancy-card>
+                    </ng-container>
                 </ng-container>
                 <ui-campus-button class="abount-company__show-more-btn" [type]="'primary'"
                     (click)="updateShowVacancies(true)">Показать все</ui-campus-button>
@@ -37,7 +39,7 @@
 </div>
 
 <ng-template #showVacancies>
-    <ng-container *ngFor="let card of vacancyList">
+    <ng-container *ngFor="let card of vacancyList$ | async">
         <vacancy-card [vacancyCard]="card"></vacancy-card>
     </ng-container>
     <ui-campus-button class="abount-company__show-more-btn" [type]="'primary'"

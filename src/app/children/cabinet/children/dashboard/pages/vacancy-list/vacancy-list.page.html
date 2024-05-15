@@ -16,11 +16,13 @@
                 <img class="vacancy-list__search-icon" src="assets/icons/close.svg">
             </div>
         </div>
-        <ng-container *ngIf="(vacancyList | search : name) as list">
-            <ng-container *ngIf="list.length; else empty">
-                <div class="vacancy-list__vacancies" *ngFor="let card of list">
-                    <vacancy-card [vacancyCard]="card"></vacancy-card>
-                </div>
+        <ng-container *ngIf="vacancyList$ | async as vacancyList; else loading">
+            <ng-container *ngIf="(vacancyList | search : name) as list">
+                <ng-container *ngIf="list.length; else empty">
+                    <div class="vacancy-list__vacancies" *ngFor="let card of list">
+                        <vacancy-card [vacancyCard]="card"></vacancy-card>
+                    </div>
+                </ng-container>
             </ng-container>
         </ng-container>
     </div>
@@ -30,6 +32,13 @@
 <ng-template #empty>
     <div class="vacancy-list__empty">
         <h2 class="vacancy-list__empty-title">Ничего не найдено</h2>
+    </div>
+    <img class="vacancy-list__down-vector-img" src="assets/vectors/vector 4.png">
+</ng-template>
+
+<ng-template #loading>
+    <div class="vacancy-list__loading">
+        <h2 class="vacancy-list__loading-title">Loading...</h2>
     </div>
     <img class="vacancy-list__down-vector-img" src="assets/vectors/vector 4.png">
 </ng-template>
