@@ -8,6 +8,8 @@
     </div>
     <img class="about-vacancy__down-vector-img" src="assets/vectors/vector 6.png">
     <div class="about-vacancy__vacancy-about">
-        <vacancy></vacancy>
+        <ng-container *ngIf="vacancyCard$ | async as vacancyCard">
+            <vacancy [vacancy]="vacancyCard"></vacancy>
+        </ng-container>
     </div>
 </div>

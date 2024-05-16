@@ -10,15 +10,14 @@
         <div class="vacancy__main-info">
             <p class="vacancy__title">О вакансии</p>
             <p class="vacancy__link">Название компании (ссылка на карточку)</p>
-            <p class="vacancy__salary">Зарплата</p>
+            <p class="vacancy__salary">Зарплата: {{vacancy.salary}} р</p>
             <div class="vacancy__info">
-                <span class="vacancy__vacancy-info">Город: Text</span>
-                <span class="vacancy__vacancy-info">Занятость: Text</span>
-                <span class="vacancy__vacancy-info">Опыт работы: Text</span>
+                <span class="vacancy__vacancy-info">Город: {{vacancy.city}}</span>
+                <span class="vacancy__vacancy-info">Занятость: {{vacancy.employment}}</span>
+                <span class="vacancy__vacancy-info">Опыт работы: {{vacancy.experience}}</span>
             </div>
             <div class="vacancy__vacancy-description">
-                <span class="vacancy-description">Описание: Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat impedit
-                    dolores officiis, rerum ducimus cum.</span>
+                <span class="vacancy__description">Описание: {{vacancy.description}}</span>
             </div>
         </div>
     </div>

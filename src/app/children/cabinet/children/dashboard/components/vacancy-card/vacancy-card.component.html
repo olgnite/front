@@ -2,9 +2,9 @@
     <div class="vacancy-card__wrapper">
         <div class="vacancy-card__wrapper-title">
             <p class="vacancy-card__name">{{vacancyCard.name}}</p>
-            <p class="vacancy-card__salary">{{vacancyCard.salary}}</p>
+            <p class="vacancy-card__salary">{{vacancyCard.salary}} р</p>
         </div>
-        <div class="vacancy-card__wrapper-more" [routerLink]="['/dashboard/vacancies/1']">
+        <div class="vacancy-card__wrapper-more" [routerLink]="['/dashboard/vacancies', vacancyCard.id]">
             <a class="vacancy-card__more">Подробнее</a>
             <img class="vacancy-card__arrow" src="assets/icons/arrow.svg">
         </div>

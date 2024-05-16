@@ -1,6 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { DestroyService } from '../../../../../../services/destroy.service';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { EditVacancyViewModel } from '../../view-model/edit-vacancy.view-model';
 
 @Component({
@@ -11,8 +9,6 @@ import { EditVacancyViewModel } from '../../view-model/edit-vacancy.view-model';
 export class EditVacancyPage {
 
     public viewModel: EditVacancyViewModel = new EditVacancyViewModel();
-
-    private _destroy$: DestroyService = inject(DestroyService);
 
     public goToBack(): void {
         history.back();

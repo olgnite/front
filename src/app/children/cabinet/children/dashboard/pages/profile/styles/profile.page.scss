@@ -1,0 +1,107 @@
+.profile {
+
+    &__name {
+        display: grid;
+        height: 229px;
+        background-color: #8269EF;
+        padding: 16px 0 16px 64px;
+    }
+
+    &__back {
+        font-size: 20px;
+        color: #fff;
+        margin-left: 12px;
+        cursor: pointer;
+    }
+
+    &__back-wrapper {
+        display: flex;
+        align-items: center;
+    }
+
+    &__title {
+        color: #fff;
+        font-size: 64px;
+        font-family: 'Abel';
+    }
+
+    &__wrapper {
+        height: 100%;
+    }
+
+    &__down-vector-img {
+        width: 100%;
+    }
+
+    &__info {
+        max-width: 362px;
+        padding: 48px 64px;
+    }
+
+    &__data {
+        margin: 48px 0 48px 0;
+    }
+
+    &__info-wrapper {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__info-title {
+        font-size: 20px;
+        font-family: 'Inter';
+        color: #616264;
+        margin-bottom: 16px;
+    }
+
+    &__info-data {
+        font-size: 20px;
+        font-family: 'Inter';
+        color: black;
+        margin-bottom: 16px;
+    }
+
+
+    &__profile-title {
+        font-family: 'Giga Sans';
+        font-size: 36px;
+        color: black;
+    }
+
+    &__form-title {
+        font-family: 'Giga Sans';
+        font-size: 36px;
+        color: black;
+        margin-left: 48px;
+    }
+
+    &__wrapper-form {
+        max-width: 632px;
+        margin: 48px;
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        margin-bottom: 24px;
+    }
+
+    &__control {
+        border: none;
+        font-size: 16px;
+        line-height: 20px;
+        background-color: #E0D9FB;
+        border-radius: 16px;
+        width: 100%;
+        padding: 22px 24px;
+        box-sizing: border-box;
+    }
+
+    &__submit {
+
+        ::ng-deep button {
+            margin-bottom: 24px;
+        }
+    }
+}

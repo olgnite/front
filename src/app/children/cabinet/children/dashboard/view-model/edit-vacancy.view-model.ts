@@ -1,6 +1,7 @@
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBaseViewModel } from './form-base.view-model';
 
-export class EditVacancyViewModel {
+export class EditVacancyViewModel extends FormBaseViewModel<IEditVacancyModel> {
     public get name(): AbstractControl<string> {
         return this.form.get('name')?.value;
     }
@@ -23,6 +24,8 @@ export class EditVacancyViewModel {
     public form: FormGroup;
 
     constructor() {
+        super();
+
         this.form = new FormGroup<IEditVacancyModel>({
             name: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
             salary: new FormControl('', { nonNullable: true, validators: [Validators.required] }),

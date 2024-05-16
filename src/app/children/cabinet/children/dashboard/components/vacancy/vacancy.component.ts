@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { IVacancyCard } from '../../../../interfaces/vacancy-card.interface';
 
 @Component({
     selector: 'vacancy',
@@ -7,5 +8,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VacancyComponent {
-
+    @Input()
+    public vacancy!: IVacancyCard;
 }

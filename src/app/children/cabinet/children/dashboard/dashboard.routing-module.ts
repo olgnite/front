@@ -20,6 +20,7 @@ import { VacancyComponent } from './components/vacancy/vacancy.component'
 import { EditVacancyPage } from './pages/edit-vacancy/edit-vacancy.page'
 import { URL_TOKEN } from './tokens/url.token'
 import { RequestVacancyService } from './services/request-vacancy.service'
+import { ProfilePage } from './pages/profile/profile.page'
 
 const components: any[] = [
     LayoutDashboardPage,
@@ -34,6 +35,7 @@ const components: any[] = [
     AboutVacancyPage,
     VacancyComponent,
     EditVacancyPage,
+    ProfilePage
 ];
 
 const dashboardRoutes: Routes = [
@@ -69,6 +71,10 @@ const dashboardRoutes: Routes = [
             {
                 path: 'more-vacancy',
                 component: MoreVacancyPage
+            },
+            {
+                path: 'profile',
+                component: ProfilePage
             }
         ]
     }

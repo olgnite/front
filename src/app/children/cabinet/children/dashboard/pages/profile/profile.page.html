@@ -1,0 +1,51 @@
+<div class="profile__container">
+    <div class="profile__name">
+        <div class="profile__back-wrapper">
+            <img class="profile__back-icon" src="assets/icons/back.svg">
+            <span class="profile__back" (click)="goToBack()">Назад</span>
+        </div>
+        <p class="profile__title">Личный кабинет</p>
+    </div>
+    <div class="profile__wrapper">
+        <img class="profile__down-vector-img" src="assets/vectors/vector 8.png">
+        <div class="profile__info" *ngIf="isEdit$ | async; else profileForm">
+            <p class="profile__profile-title">Данные компании</p>
+            <div class="profile__data">
+                <div class="profile__info-wrapper">
+                    <span class="profile__info-title">Название компании</span>
+                    <span class="profile__info-data">Текст</span>
+                </div>
+                <div class="profile__info-wrapper">
+                    <span class="profile__info-title">ИНН</span>
+                    <span class="profile__info-data">Текст</span>
+                </div>
+                <div class="profile__info-wrapper">
+                    <span class="profile__info-title">E-mail</span>
+                    <span class="profile__info-data">Текст</span>
+                </div>
+                <div class="profile__info-wrapper">
+                    <span class="profile__info-title">Пароль</span>
+                    <span class="profile__info-data">******</span>
+                </div>
+            </div>
+            <ui-campus-button class="profile__btn" [type]="'primary'" (click)="editMode(false)">Редактировать</ui-campus-button>
+        </div>
+    </div>
+</div>
+
+<ng-template #profileForm>
+    <p class="profile__form-title">Данные компании</p>
+    <div class="profile__wrapper-form">
+        <form [formGroup]="profileViewModel.form" [ngStyle]="{'margin-bottom': '48px'}">
+            <div class="profile__form">
+                <input formControlName="name" class="profile__control" placeholder="Название компании">
+                <input formControlName="email" class="profile__control" placeholder="E-mail">
+                <input formControlName="password" class="profile__control" placeholder="Пароль">
+            </div>
+        </form>
+        <div class="profile__action-form">
+            <ui-campus-button class="profile__submit" [clickType]="'submit'" (click)="onSubmit()" [type]="'primary'">Сохранить</ui-campus-button>
+            <ui-campus-button (click)="editMode(true)" [type]="'edit'">Отменить</ui-campus-button>
+        </div>
+    </div>
+</ng-template>

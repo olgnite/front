@@ -15,7 +15,7 @@ export class RequestVacancyService {
     }
 
     public getVacancyById(id: string): Observable<IVacancyCard> {
-        return this._httpClient.get<IVacancyCard>(`${this._url}/vacancy${id}`);
+        return this._httpClient.get<IVacancyCard>(`${this._url}/vacancy/${id}`);
     }
 
     public addVacancy(vacancy: IVacancyCard): Observable<void> {
