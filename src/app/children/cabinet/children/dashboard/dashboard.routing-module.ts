@@ -65,7 +65,7 @@ const dashboardRoutes: Routes = [
                 component: AboutVacancyPage
             },
             {
-                path: 'edit-vacancy',
+                path: 'edit-vacancy/:id',
                 component: EditVacancyPage
             },
             {

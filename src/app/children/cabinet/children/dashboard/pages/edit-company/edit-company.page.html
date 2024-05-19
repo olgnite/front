@@ -49,11 +49,14 @@
                 <div class="edit-company__buttons-block">
                     <ui-campus-button type="primary" [disabled]="editForm.invalid" (click)="onSubmit(editForm)"
                         clickType="submit">Сохранить</ui-campus-button>
-                    <ui-campus-button type="edit">Отменить</ui-campus-button>
+                    <ui-campus-button type="edit" (click)="goToBack()">Отменить</ui-campus-button>
                 </div>
             </form>
         </div>
     </ng-container>
+    <div class="edit-company__footer">
+        <cabinet-footer></cabinet-footer>
+    </div>
 </div>
 
 <ng-template #loading>

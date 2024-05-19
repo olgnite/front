@@ -1,42 +1,43 @@
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormBaseViewModel } from './form-base.view-model';
+import { IVacancyCard } from '../../../interfaces/vacancy-card.interface';
 
-export class EditVacancyViewModel extends FormBaseViewModel<IEditVacancyModel> {
-    public get name(): AbstractControl<string> {
+export class EditVacancyViewModel extends FormBaseViewModel<IVacancyCard> {
+    public get name(): string {
         return this.form.get('name')?.value;
     }
-    public get salary(): AbstractControl<string> {
+    public get salary(): string {
         return this.form.get('salary')?.value;
     }
-    public get city(): AbstractControl<string> {
+    public get city(): string {
         return this.form.get('city')?.value;
     }
-    public get employment(): AbstractControl<string> {
+    public get employment(): string {
         return this.form.get('employment')?.value;
     }
-    public get experience(): AbstractControl<string> {
+    public get experience(): string {
         return this.form.get('experience')?.value;
     }
-    public get description(): AbstractControl<string> {
+    public get description(): string {
         return this.form.get('description')?.value;
     }
 
     public form: FormGroup;
 
-    constructor() {
+    constructor(public vacancyCard: IVacancyCard) {
         super();
 
         this.form = new FormGroup<IEditVacancyModel>({
-            name: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-            salary: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-            city: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-            employment: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-            experience: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-            description: new FormControl('', { nonNullable: true }),
+            name: new FormControl(vacancyCard.name, { nonNullable: true, validators: [Validators.required] }),
+            salary: new FormControl(vacancyCard.salary, { nonNullable: true, validators: [Validators.required] }),
+            city: new FormControl(vacancyCard.city, { nonNullable: true, validators: [Validators.required] }),
+            employment: new FormControl(vacancyCard.employment, { nonNullable: true, validators: [Validators.required] }),
+            experience: new FormControl(vacancyCard.experience, { nonNullable: true, validators: [Validators.required] }),
+            description: new FormControl(vacancyCard.description, { nonNullable: true }),
         })
     }
 
-    public toModel(): IEditVacancyModel {
+    public toModel(): IVacancyCard {
         return {
             name: this.name,
             salary: this.salary,
@@ -53,6 +54,6 @@ interface IEditVacancyModel {
     salary: AbstractControl<string>,
     city: AbstractControl<string>,
     employment: AbstractControl<string>,
-    experience: AbstractControl<string>,
-    description: AbstractControl<string>,
+    experience: AbstractControl<string | undefined>,
+    description: AbstractControl<string | undefined>,
 }

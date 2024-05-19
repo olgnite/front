@@ -36,12 +36,6 @@
         color: $purple;
         padding: 12px 24px;
         border-radius: 100px;
-
-        &:hover {
-            background-color: $purple;
-            transition: 0.5s;
-            color: white;
-        }
     }
 
     &__tab {

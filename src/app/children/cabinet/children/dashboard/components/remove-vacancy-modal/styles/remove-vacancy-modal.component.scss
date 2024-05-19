@@ -1,0 +1,27 @@
+.remove-vacancy-modal {
+
+    &__wrapper {
+        max-width: 529px;
+        display: grid;
+        align-items: center;
+        padding: 48px 64px;
+    }
+
+    &__title {
+        font-size: 36px;
+        font-family: 'Giga Sans';
+        margin-bottom: 16px;
+    }
+
+    &__name {
+        font-size: 36px;
+        font-family: 'Giga Sans';
+        color: #8269EF;
+        margin-bottom: 48px;
+    }
+
+    &__options {
+        display: flex;
+        justify-content: space-between;
+    }
+}

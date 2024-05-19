@@ -1,6 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { ProfileViewModel } from '../../view-model/profile.view-model';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, takeUntil } from 'rxjs';
+import { TuiDialogContext, TuiDialogService } from '@taiga-ui/core';
+import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
+import { DestroyService } from '../../../../../../services/destroy.service';
 
 @Component({
     templateUrl: './profile.page.html',
@@ -9,17 +12,36 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ProfilePage {
     public profileViewModel: ProfileViewModel = new ProfileViewModel();
-    public isEdit$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+    public isEditData$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
-    public goToBack(): void {
-        history.back();
+    constructor(
+        @Inject(TuiDialogService) public readonly dialogs: TuiDialogService,
+        @Inject(DestroyService) public readonly destroy$: DestroyService
+    ) {
+
     }
 
     public editMode(flag: boolean): void {
-        this.isEdit$.next(flag);
+        this.isEditData$.next(flag);
     }
 
     public onSubmit(): void {
         console.log(this.profileViewModel.toModel());
+    }
+
+    public openChangePasswordDialog(template: PolymorpheusContent<TuiDialogContext>): void {
+        this.dialogs.open(template)
+            .pipe(
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
+    }
+
+    public changePassword(): void {
+
+    }
+
+    public goToBack(): void {
+        history.back();
     }
 }

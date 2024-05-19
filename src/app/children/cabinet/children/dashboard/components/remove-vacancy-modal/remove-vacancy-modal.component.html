@@ -1,0 +1,11 @@
+<div class="remove-vacancy-modal__wrapper">
+    <span class="remove-vacancy-modal__title">Удалить вакансию</span>
+    <span class="remove-vacancy-modal__name">Название вакансии?</span>
+
+    <div class="remove-vacancy-modal__options">
+        <div [ngStyle]="{'margin-right': '16px'}">
+            <ui-campus-button [type]="'edit'" [clickType]="'button'" (click)="cancel()">Отменить</ui-campus-button>
+        </div>
+        <ui-campus-button [type]="'primary'" (click)="removeVacancyById()">Удалить</ui-campus-button>
+    </div>
+</div>

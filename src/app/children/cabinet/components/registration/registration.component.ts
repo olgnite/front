@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, inject, Inject, Injector, OnInit} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Inject, Injector, OnInit } from '@angular/core';
 import {
     AbstractControl,
     FormBuilder,
@@ -8,13 +8,13 @@ import {
     ReactiveFormsModule,
     Validators
 } from "@angular/forms";
-import {NgClass, NgForOf, NgIf} from "@angular/common";
-import {TuiDialogContext, TuiDialogService} from "@taiga-ui/core";
-import {POLYMORPHEUS_CONTEXT, PolymorpheusComponent} from '@tinkoff/ng-polymorpheus';
-import {UiCampusButtonComponent} from "../../../../ui";
-import {LoginComponent} from "../login/login.component";
-import {takeUntil} from "rxjs";
-import {DestroyService} from "../../../../services/destroy.service";
+import { NgClass, NgForOf, NgIf } from "@angular/common";
+import { TuiDialogContext, TuiDialogService } from "@taiga-ui/core";
+import { POLYMORPHEUS_CONTEXT, PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
+import { UiCampusButtonComponent } from "../../../../ui";
+import { LoginComponent } from "../login/login.component";
+import { takeUntil } from "rxjs";
+import { DestroyService } from "../../../../services/destroy.service";
 
 
 @Component({
@@ -50,16 +50,16 @@ export class RegistrationComponent implements OnInit {
         const confirmPassword = formGroup.get('confirmPassword')?.value;
 
         if (password !== confirmPassword) {
-            return {passwordsMismatch: true};
+            return { passwordsMismatch: true };
         }
 
         return null;
     }
 
     constructor(@Inject(POLYMORPHEUS_CONTEXT) private readonly context: TuiDialogContext,
-                @Inject(TuiDialogService) private readonly dialogs: TuiDialogService,
-                @Inject(Injector) private readonly injector: Injector,
-                readonly destroy$: DestroyService) {
+        @Inject(TuiDialogService) private readonly dialogs: TuiDialogService,
+        @Inject(Injector) private readonly injector: Injector,
+        readonly destroy$: DestroyService) {
     }
 
     ngOnInit(): void {
@@ -100,7 +100,7 @@ export class RegistrationComponent implements OnInit {
     }
 
     openLogin(): void {
-        this.dialogs.open(new PolymorpheusComponent(LoginComponent, this.injector), {size: 'auto'}).pipe(
+        this.dialogs.open(new PolymorpheusComponent(LoginComponent, this.injector), { size: 'auto' }).pipe(
             takeUntil(this.destroy$)
         ).subscribe();
         this.context.completeWith();

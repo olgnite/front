@@ -41,6 +41,7 @@
         width: 100%;
         padding: 22px 24px;
         box-sizing: border-box;
+        border: none;
     }
 
     &__wrapper {
@@ -93,6 +94,14 @@
         display: flex;
         flex-direction: column;
         gap: 24px;
+    }
+
+    &__footer {
+        position: absolute;
+        left: 0px;
+        // bottom: 0px;
+        height: 30px;
+        width: 100%;
     }
 }
 

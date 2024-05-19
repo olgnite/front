@@ -20,7 +20,7 @@
             <ng-container *ngIf="(vacancyList | search : name) as list">
                 <ng-container *ngIf="list.length; else empty">
                     <div class="vacancy-list__vacancies" *ngFor="let card of list">
-                        <vacancy-card [vacancyCard]="card"></vacancy-card>
+                        <vacancy-card [vacancyCard]="card" (showDialogRemove)="openDialogRemove($event)"></vacancy-card>
                     </div>
                 </ng-container>
             </ng-container>

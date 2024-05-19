@@ -104,4 +104,31 @@
             margin-bottom: 24px;
         }
     }
+
+    &__change-form {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        margin-bottom: 48px;
+    }
+
+    &__change-password {
+        padding: 56px 96px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__change-password-title {
+        font-size: 16px;
+        color: #8269EF;
+        font-family: 'Inter';
+        cursor: pointer;
+    }
+
+    &__change-title {
+        font-size: 48px;
+        margin-bottom: 48px;
+        font-weight: bold;
+        font-family: 'Giga Sans';
+    }
 }

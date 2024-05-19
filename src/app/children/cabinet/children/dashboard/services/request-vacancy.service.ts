@@ -22,11 +22,11 @@ export class RequestVacancyService {
         return this._httpClient.post<void>(`${this._url}/vacancy`, vacancy);
     }
 
-    public updateVacancy(vacancy: IVacancyCard): Observable<IVacancyCard> {
-        return this._httpClient.put<IVacancyCard>(`${this._url}/vacancy${vacancy.id}`, vacancy);
+    public updateVacancy(vacancy: IVacancyCard, id: string): Observable<IVacancyCard> {
+        return this._httpClient.put<IVacancyCard>(`${this._url}/vacancy/${id}`, vacancy);
     }
 
-    public removeVacancy(id: string): Observable<void> {
-        return this._httpClient.delete<void>(`${this._url}/vacancy${id}`);
+    public removeVacancyById(id: string): Observable<void> {
+        return this._httpClient.delete<void>(`${this._url}/vacancy/${id}`);
     }
 }

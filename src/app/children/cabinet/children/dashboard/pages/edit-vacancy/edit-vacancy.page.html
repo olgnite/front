@@ -9,7 +9,7 @@
     <div class="edit-vacancy__wrapper">
         <img class="edit-vacancy__down-vector-img" src="assets/vectors/vector 6.png">
     </div>
-    <div class="edit-vacancy__wrapper-form">
+    <div class="edit-vacancy__wrapper-form" *ngIf="viewModel$ | async as viewModel; else skeleton">
         <form [formGroup]="viewModel.form">
             <p class="edit-vacancy__about-title">О вакансии</p>
             <div class="edit-vacancy__form">
@@ -24,9 +24,12 @@
         </form>
         <div class="edit-vacancy__wrapper-btn">
             <ui-campus-button class="edit-vacancy__submit" [type]="'primary'" [clickType]="'submit'"
-                (click)="onSubmit()" [disabled]="viewModel.form.invalid">Сохранить</ui-campus-button>
-            <ui-campus-button class="edit-vacancy__cancel" [type]="'edit'"
-                [routerLink]="['/dashboard/vacancies/1']">Отменить</ui-campus-button>
+                (click)="onSubmit(viewModel)" [disabled]="viewModel.form.invalid">Сохранить</ui-campus-button>
+            <ui-campus-button class="edit-vacancy__cancel" [type]="'edit'" (click)="goToBack()">Отменить</ui-campus-button>
         </div>
     </div>
 </div>
+
+<ng-template #skeleton>
+    <h2>Loading form...</h2>
+</ng-template>
