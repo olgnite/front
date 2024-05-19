@@ -95,14 +95,6 @@
         flex-direction: column;
         gap: 24px;
     }
-
-    &__footer {
-        position: absolute;
-        left: 0px;
-        // bottom: 0px;
-        height: 30px;
-        width: 100%;
-    }
 }
 
 input::placeholder,textarea::placeholder {

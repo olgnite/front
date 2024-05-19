@@ -1,8 +1,8 @@
 <div class="edit-company__container">
     <div class="edit-company__company-name">
-        <div class="edit-company__back-wrapper">
+        <div class="edit-company__back-wrapper" (click)="goToBack()">
             <img class="edit-company__back-icon" src="assets/icons/back.svg">
-            <span class="edit-company__back" (click)="goToBack()">Назад</span>
+            <span class="edit-company__back">Назад</span>
         </div>
         <p class="edit-company__title">Профиль</p>
     </div>
@@ -37,14 +37,14 @@
                     <input formControlName="numberOfEmployees" class="edit-company__option"
                         placeholder="Количество сотрудников">
                     <textarea formControlName="aboutCompany" class="edit-company__option"
-                        placeholder="Расскажите о компании*"></textarea>
+                        placeholder="Расскажите о компании"></textarea>
                 </div>
                 <div class="edit-company__options" style="margin-top: 80px">
                     <div class="edit-company__topic">Контакты и соцсети</div>
                     <input formControlName="site" class="edit-company__option" placeholder="Личный сайт*">
                     <input formControlName="phone" class="edit-company__option" placeholder="Телефон*">
                     <input formControlName="email" class="edit-company__option" placeholder="Email">
-                    <input formControlName="link" class="edit-company__option" placeholder="Ссылка на соцсеть">
+                    <input formControlName="link" class="edit-company__option" placeholder="Ссылка на сайт">
                 </div>
                 <div class="edit-company__buttons-block">
                     <ui-campus-button type="primary" [disabled]="editForm.invalid" (click)="onSubmit(editForm)"
@@ -54,9 +54,6 @@
             </form>
         </div>
     </ng-container>
-    <div class="edit-company__footer">
-        <cabinet-footer></cabinet-footer>
-    </div>
 </div>
 
 <ng-template #loading>

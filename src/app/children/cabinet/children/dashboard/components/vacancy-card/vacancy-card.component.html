@@ -4,9 +4,9 @@
             <img class="vacancy-card__delete" src="assets/icons/delete.svg" (click)="removeEmit(vacancyCard.id!)">
             <p class="vacancy-card__name">{{vacancyCard.name}}</p>
         </div>
-        <div class="vacancy-card__wrapper-more" [routerLink]="['/dashboard/vacancies', vacancyCard.id]">
+        <div class="vacancy-card__wrapper-more">
             <p class="vacancy-card__salary">{{vacancyCard.salary}} р</p>
-            <div class="vacancy-card__more-title">
+            <div class="vacancy-card__more-title" [routerLink]="['/dashboard/vacancies', vacancyCard.id]">
                 <a class="vacancy-card__more">Подробнее</a>
                 <img class="vacancy-card__arrow" src="assets/icons/arrow.svg">
             </div>

@@ -40,7 +40,7 @@ export class RegistrationComponent implements OnInit {
 
     private errors: Record<string, string> = {
         required: 'Это поле обязательно',
-        minlength: 'Минимальная длинна 8 символов',
+        minlength: 'Минимальная длина 8 символов',
         pattern: 'Поле не валидно',
         email: 'Неверный формат почты'
     };

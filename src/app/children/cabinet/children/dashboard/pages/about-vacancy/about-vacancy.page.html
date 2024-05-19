@@ -1,15 +1,15 @@
 <div class="about-vacancy__container">
     <div class="about-vacancy__vacancy-name">
-        <div class="about-vacancy__wrapper-back">
+        <div class="about-vacancy__wrapper-back" (click)="goToBack()">
             <img class="about-vacancy__back-icon" src="assets/icons/back.svg">
-            <span class="about-vacancy__back" (click)="goToBack()">Назад</span>
+            <span class="about-vacancy__back">Назад</span>
         </div>
         <p class="about-vacancy__title">Название вакансии</p>
     </div>
     <img class="about-vacancy__down-vector-img" src="assets/vectors/vector 6.png">
     <div class="about-vacancy__vacancy-about">
         <ng-container *ngIf="vacancyCard$ | async as vacancyCard">
-            <vacancy [vacancy]="vacancyCard"></vacancy>
+            <vacancy [vacancy]="vacancyCard" (showDialogRemove)="openDialogRemove($event)"></vacancy>
         </ng-container>
     </div>
 </div>

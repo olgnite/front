@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { IVacancyCard } from '../../../../interfaces/vacancy-card.interface';
 
 @Component({
@@ -10,4 +10,11 @@ import { IVacancyCard } from '../../../../interfaces/vacancy-card.interface';
 export class VacancyComponent {
     @Input()
     public vacancy!: IVacancyCard;
+
+    @Output()
+    public showDialogRemove: EventEmitter<string> = new EventEmitter<string>();
+
+    public removeEmit(id: string): void {
+        this.showDialogRemove.emit(id);
+    }
 }
