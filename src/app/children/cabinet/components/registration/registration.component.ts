@@ -15,6 +15,8 @@ import { UiCampusButtonComponent } from "../../../../ui";
 import { LoginComponent } from "../login/login.component";
 import { takeUntil } from "rxjs";
 import { DestroyService } from "../../../../services/destroy.service";
+import {AuthorizationService} from "../../services/authorization.service";
+import {IRegistration, IRegistrationResponse} from "../../interfaces/authorization.interface";
 
 
 @Component({
@@ -34,6 +36,7 @@ import { DestroyService } from "../../../../services/destroy.service";
 })
 export class RegistrationComponent implements OnInit {
     private formBuilder: FormBuilder = inject(FormBuilder);
+    private authorizationService = inject(AuthorizationService);
     inn = new FormControl('', [Validators.required, Validators.pattern(/^[0-9]*$/)]);
     registrationForm!: FormGroup;
     nextStep: boolean = false;
@@ -74,7 +77,16 @@ export class RegistrationComponent implements OnInit {
     }
 
     register() {
-        console.log(this.registrationForm.value);
+        const data: IRegistration = {
+            ...this.registrationForm.value,
+            inn: this.inn.value};
+
+        this.authorizationService.registration(data).pipe(takeUntil(this.destroy$))
+            .subscribe((response: IRegistrationResponse) =>
+                alert(`Пользователь ${response.email} успешно зарегестрирован!`),
+            () =>
+                alert('Возникла ошибка!')
+        );
         this.context.completeWith();
     }
 
