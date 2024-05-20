@@ -6,18 +6,17 @@
         <ui-campus-button class="company__btn-edit" [type]="'edit'" [routerLink]="['/dashboard/edit-company']">Редактировать</ui-campus-button>
         <ui-campus-button class="company__btn" [type]="'primary'">Перейти на сайт</ui-campus-button>
     </div>
-    <div class="company__about">
+    <div class="company__about" *ngIf="company$ | async as company">
         <div class="company__main-info">
             <p class="company__title">О компании</p>
             <div class="company__info">
                 <span class="company__company-type">Тип компании</span>
-                <span class="company__company-info">Год основания: 2002</span>
-                <span class="company__company-info">Местоположение: г.Москва</span>
-                <span class="company__company-info">Количество сотрудников: 400</span>
+                <span class="company__company-info">Год основания: {{company.yearOfFoundation}}</span>
+                <span class="company__company-info">Местоположение: {{company.city}}</span>
+                <span class="company__company-info">Количество сотрудников: {{company.numberOfEmployees}}</span>
             </div>
             <div class="company__company-description">
-                <span class="company-description">Описание: Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat impedit
-                    dolores officiis, rerum ducimus cum.</span>
+                <span class="company-description">Описание: {{company.aboutCompany}}</span>
             </div>
         </div>
     </div>

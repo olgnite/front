@@ -14,6 +14,8 @@ import {UiCampusButtonComponent} from "../../../../ui";
 import {DestroyService} from "../../../../services/destroy.service";
 import {takeUntil} from "rxjs";
 import {RegistrationComponent} from "../registration/registration.component";
+import {AuthorizationService} from "../../services/authorization.service";
+import {ILogin} from "../../interfaces/authorization.interface";
 
 
 @Component({
@@ -33,6 +35,7 @@ import {RegistrationComponent} from "../registration/registration.component";
 })
 export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder = inject(FormBuilder);
+    private authorizationService = inject(AuthorizationService);
     loginForm!: FormGroup;
 
     private errors: Record<string, string> = {
@@ -67,7 +70,11 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
-        console.log(this.loginForm.value);
+        const data: ILogin = {username: this.loginForm.value.email, password: this.loginForm.value.password};
+
+        this.authorizationService.login(data).pipe(takeUntil(this.destroy$)).subscribe(
+            item => console.log(item)
+        );
         this.context.completeWith();
     }
 

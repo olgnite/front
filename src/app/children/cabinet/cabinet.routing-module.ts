@@ -3,6 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutCabinetPage } from './pages/layout-cabinet/layout-cabinet.page.';
+import {URL_TOKEN} from "./children/dashboard/tokens/url.token";
 
 const cabinetRoutes: Routes = [
     {
@@ -31,7 +32,12 @@ const cabinetRoutes: Routes = [
     declarations: [
         LayoutCabinetPage,
     ],
-    providers: []
+    providers: [
+        {
+            provide: URL_TOKEN,
+            useValue: 'https://vacancies-service.onrender.com'
+        }
+    ]
 })
 export class CabinetRoutingModule {
 
