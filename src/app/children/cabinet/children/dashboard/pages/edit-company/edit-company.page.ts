@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, map, takeUntil } from 'rxjs';
 import { ICompany } from '../../interfaces/company.interface';
 import { EditCompanyService } from '../../services/edit-company.service';
 import { RequestPhotoGalleryService } from '../../services/request-photogallery.service';
+import { DestroyService } from '../../../../../../services/destroy.service';
 
 @Component({
     templateUrl: './edit-company.page.html',
@@ -16,13 +17,16 @@ export class EditCompanyPage implements OnInit {
     public id: string = '4';
     public img$: BehaviorSubject<string> = new BehaviorSubject<string>('');
     public editForm$?: Observable<FormGroup>;
+    public photoList$?: Observable<any>;
 
     private fromBuilder: FormBuilder = inject(FormBuilder);
     private editService: EditCompanyService = inject(EditCompanyService);
     private requestPhotoGalleryService: RequestPhotoGalleryService = inject(RequestPhotoGalleryService);
+    private destroy$: DestroyService = inject(DestroyService);
 
     public ngOnInit(): void {
         this.initialize();
+        this.photoList$ = this.requestPhotoGalleryService.getPhotoGallery();
     }
 
     public initialize(): void {
@@ -70,13 +74,16 @@ export class EditCompanyPage implements OnInit {
         this.img$.next(await this.editService.setMainImg(file, this.id));
     }
 
-    public pushImagePhotoGallery(event: any): void {
-        const file = event.target.files[0];
-        const list = [];
+    public addPhotoGallery(): void {
+        // по идее здесь будет ссылка на ресурс
+        // на крайняк будем добавлять и отображать моки
+        const photo: string = 'photo';
 
-        list.push(file);
-
-        console.log(list);
+        this.requestPhotoGalleryService.addPhoto(photo)
+            .pipe(
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
     }
 
     public goToBack(): void {
