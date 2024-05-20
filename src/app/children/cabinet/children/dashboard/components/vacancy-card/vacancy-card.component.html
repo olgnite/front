@@ -5,7 +5,7 @@
             <p class="vacancy-card__name">{{vacancyCard.name}}</p>
         </div>
         <div class="vacancy-card__wrapper-more">
-            <p class="vacancy-card__salary">{{vacancyCard.salary}} р</p>
+            <p class="vacancy-card__salary">{{vacancyCard.salary | currency: 'RU': true | slice : 2 : 100}} р</p>
             <div class="vacancy-card__more-title" [routerLink]="['/dashboard/vacancies', vacancyCard.id]">
                 <a class="vacancy-card__more">Подробнее</a>
                 <img class="vacancy-card__arrow" src="assets/icons/arrow.svg">

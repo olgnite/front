@@ -54,7 +54,39 @@
             </form>
         </div>
     </ng-container>
+    <div class="edit-company__photo-gallery">
+        <img class="edit-company__top-vector" src="assets/vectors/vector 3.png"
+            [ngStyle]="{'width': '100%', 'display': 'block'}">
+        <div class="edit-company__photo-gallery-wrapper">
+            <p class="edit-company__photo-gallery-title">Фотографии</p>
+            <div class="edit-company__photo-gallery-list">
+                <div class="edit-company__photo-add-wrapper">
+                    <div class="edit-company__photo-preview" *ngIf="false; else photoList">
+                        <img class="edit-company__photo-img" src="assets/icons/photo.svg">
+                        <span class="edit-company__photo-title">Вы еще не загружали фото</span>
+                    </div>
+                </div>
+            </div>
+            <ui-campus-button class="edit-company__photo-btn" [type]="'active'" (click)="uploadImage()">Добавить
+                фотографии</ui-campus-button>
+        </div>
+        <img class="edit-company__down-vector" src="assets/vectors/vector 4.png" [ngStyle]="{'width': '100%'}">
+    </div>
 </div>
+
+<ng-template #photoList>
+    <div class="edit-company__photo-list">
+        <div class="edit-company__photo">
+            <img src="">
+        </div>
+        <div class="edit-company__photo">
+            <img src="">
+        </div>
+        <div class="edit-company__photo">
+            <img src="">
+        </div>
+    </div>
+</ng-template>
 
 <ng-template #loading>
     <div class="edit-company__loader">

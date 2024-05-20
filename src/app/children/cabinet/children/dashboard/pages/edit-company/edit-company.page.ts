@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
 import { ICompany } from '../../interfaces/company.interface';
 import { EditCompanyService } from '../../services/edit-company.service';
+import { RequestPhotoGalleryService } from '../../services/request-photogallery.service';
 
 @Component({
     templateUrl: './edit-company.page.html',
@@ -18,6 +19,7 @@ export class EditCompanyPage implements OnInit {
 
     private fromBuilder: FormBuilder = inject(FormBuilder);
     private editService: EditCompanyService = inject(EditCompanyService);
+    private requestPhotoGalleryService: RequestPhotoGalleryService = inject(RequestPhotoGalleryService);
 
     public ngOnInit(): void {
         this.initialize();
@@ -66,6 +68,15 @@ export class EditCompanyPage implements OnInit {
         const file = event.target.files[0];
 
         this.img$.next(await this.editService.setMainImg(file, this.id));
+    }
+
+    public pushImagePhotoGallery(event: any): void {
+        const file = event.target.files[0];
+        const list = [];
+
+        list.push(file);
+
+        console.log(list);
     }
 
     public goToBack(): void {

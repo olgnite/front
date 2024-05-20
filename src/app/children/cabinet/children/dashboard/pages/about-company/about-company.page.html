@@ -11,7 +11,7 @@
         <company></company>
     </div>
     <div class="abount-company__vacancies-wrapper">
-        <img src="assets/vectors/vector 3.png" [ngStyle]="{'width': '100%'}">
+        <img src="assets/vectors/vector 3.png" [ngStyle]="{'width': '100%', 'display': 'block'}">
         <div class="abount-company__vacancies">
             <div class="abount-company__vacancy-title">Вакансии</div>
             <ng-container *ngIf="(isShowAll$ | async) === false; else showVacancies">
@@ -24,9 +24,10 @@
                     (click)="updateShowVacancies(true)">Показать все</ui-campus-button>
             </ng-container>
         </div>
-        <img src="assets/vectors/vector 4.png" [ngStyle]="{'width': '100%'}">
+        <img src="assets/vectors/vector 4.png" [ngStyle]="{'width': '100%', 'display': 'block'}">
     </div>
     <div class="abount-company__photo-gallery">
+        <!-- <img src="assets/vectors/vector 9.png" > -->
         <div class="abount-company__gallery-wrapper">
             <div class="abount-company__photo-gallery-title">Фотогалерея</div>
             <photo-gallery></photo-gallery>

@@ -21,6 +21,7 @@ import { EditVacancyPage } from './pages/edit-vacancy/edit-vacancy.page'
 import { URL_TOKEN } from './tokens/url.token'
 import { RequestVacancyService } from './services/request-vacancy.service'
 import { ProfilePage } from './pages/profile/profile.page'
+import { RequestPhotoGalleryService } from './services/request-photogallery.service'
 
 const components: any[] = [
     LayoutDashboardPage,
@@ -96,6 +97,7 @@ const dashboardRoutes: Routes = [
     providers: [
         CurrentPathService,
         RequestVacancyService,
+        RequestPhotoGalleryService,
         {
             provide: URL_TOKEN,
             useValue: 'https://vacancies-service.onrender.com'
