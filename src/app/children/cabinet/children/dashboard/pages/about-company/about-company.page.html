@@ -1,41 +1,42 @@
-<div class="abount-company__container">
-    <div class="abount-company__company-name">
-        <div class="abount-company__wrapper-back" (click)="goToBack()">
-            <img class="abount-company__back-icon" src="assets/icons/back.svg">
-            <span class="abount-company__back">Назад</span>
+<div class="about-company__container">
+    <div class="about-company__company-name">
+        <div class="about-company__wrapper-back" (click)="goToBack()">
+            <img class="about-company__back-icon" src="assets/icons/back.svg">
+            <span class="about-company__back">Назад</span>
         </div>
-        <p class="abount-company__title">Название компании</p>
+        <p class="about-company__title">Название компании</p>
     </div>
-    <img class="abount-company__up-vector-img" src="assets/vectors/vector 2.png">
-    <div class="abount-company__company-about">
+    <img class="about-company__up-vector-img" src="assets/vectors/vector 2.png">
+    <div class="about-company__company-about">
         <company></company>
     </div>
-    <div class="abount-company__vacancies-wrapper">
+    <div class="about-company__vacancies-wrapper">
         <img src="assets/vectors/vector 3.png" [ngStyle]="{'width': '100%', 'display': 'block'}">
-        <div class="abount-company__vacancies">
-            <div class="abount-company__vacancy-title">Вакансии</div>
+        <div class="about-company__vacancies">
+            <div class="about-company__vacancy-title">Вакансии</div>
             <ng-container *ngIf="(isShowAll$ | async) === false; else showVacancies">
                 <ng-container *ngIf="vacancyList$ | async as vacancyList">
                     <ng-container *ngFor="let card of vacancyList | slice : 0 : 3">
                         <vacancy-card [vacancyCard]="card"></vacancy-card>
                     </ng-container>
                 </ng-container>
-                <ui-campus-button class="abount-company__show-more-btn" [type]="'primary'"
+                <ui-campus-button class="about-company__show-more-btn" [type]="'primary'"
                     (click)="updateShowVacancies(true)">Показать все</ui-campus-button>
             </ng-container>
         </div>
-        <img src="assets/vectors/vector 4.png" [ngStyle]="{'width': '100%', 'display': 'block'}">
+        <div class="about-company__wrapper-down-vector">
+            <img src="assets/vectors/vector 4.png" [ngStyle]="{'width': '100%', 'display': 'block'}">
+        </div>
     </div>
-    <div class="abount-company__photo-gallery">
-        <!-- <img src="assets/vectors/vector 9.png" > -->
-        <div class="abount-company__gallery-wrapper">
-            <div class="abount-company__photo-gallery-title">Фотогалерея</div>
+    <div class="about-company__photo-gallery">
+        <div class="about-company__gallery-wrapper">
+            <div class="about-company__photo-gallery-title">Фотогалерея</div>
             <photo-gallery></photo-gallery>
-            <ui-campus-button class="abount-company__load-more-btn" [type]="'primary'">
+            <ui-campus-button class="about-company__load-more-btn" [type]="'primary'">
                 Загрузить еще
             </ui-campus-button>
         </div>
-        <img src="assets/vectors/vector 6.png" [ngStyle]="{'width': '100%'}">
+        <img src="assets/vectors/vector 6.png" [ngStyle]="{'width': '100%', 'display': 'block'}">
     </div>
     <div class="about-company__footer">
         <cabinet-footer></cabinet-footer>
@@ -46,6 +47,6 @@
     <!-- <ng-container *ngFor="let card of vacancyList$ | async">
         <vacancy-card [vacancyCard]="card"></vacancy-card>
     </ng-container> -->
-    <ui-campus-button class="abount-company__show-more-btn" [type]="'primary'"
+    <ui-campus-button class="about-company__show-more-btn" [type]="'primary'"
         (click)="updateShowVacancies(false)">Скрыть</ui-campus-button>
 </ng-template>

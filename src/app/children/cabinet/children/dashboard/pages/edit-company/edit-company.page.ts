@@ -47,7 +47,7 @@ export class EditCompanyPage implements OnInit {
                         numberOfEmployees: company.numberOfEmployees,
                         aboutCompany: [company.aboutCompany, Validators.required],
                         site: [company.site, Validators.required],
-                        phone: [company.phone, [Validators.required, Validators.pattern(/^\+7\d{10}$/)]],
+                        phone: [company.phone, [Validators.pattern(/^\+7\d{10}$/)]],
                         email: [company.email, Validators.email],
                         link: company.link
                     })
@@ -58,6 +58,7 @@ export class EditCompanyPage implements OnInit {
     public onSubmit(form: FormGroup): void {
         const company: ICompany = form.value as ICompany;
         this.editService.setEdits(company, this.id);
+        this.goToBack();
     }
 
     public uploadImage(): void {

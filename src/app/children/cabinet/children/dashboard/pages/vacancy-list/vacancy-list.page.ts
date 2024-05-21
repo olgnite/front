@@ -40,7 +40,7 @@ export class VacancyListPage {
     }
 
     public openDialogAdd(): void {
-        this.dialogs.open(new PolymorpheusComponent(AddVacancyModalComponent, this.injector), { size: 'auto', data: { update$: this._update$ } })
+        this.dialogs.open(new PolymorpheusComponent(AddVacancyModalComponent, this.injector), { data: { update$: this._update$ } })
             .pipe(
                 takeUntil(this._destroy$)
             )

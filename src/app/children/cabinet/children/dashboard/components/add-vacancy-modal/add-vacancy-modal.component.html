@@ -16,6 +16,6 @@
     <div class="add-vacancy-modal__options">
         <ui-campus-button class="add-vacancy-modal__submit" [type]="'primary'" (click)="onSubmit()"
             [clickType]="'submit'" [disabled]="viewModel.form.invalid">Сохранить</ui-campus-button>
-        <ui-campus-button class="add-vacancy-modal__submit" [type]="'edit'">Отменить</ui-campus-button>
+        <ui-campus-button class="add-vacancy-modal__submit" [type]="'edit'" (click)="closeModal()">Отменить</ui-campus-button>
     </div>
 </div>

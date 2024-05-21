@@ -7,6 +7,7 @@ import { RequestVacancyService } from '../../services/request-vacancy.service';
 import { POLYMORPHEUS_CONTEXT } from '@tinkoff/ng-polymorpheus';
 import { TuiDialogContext } from '@taiga-ui/core';
 import { DestroyService } from '../../../../../../services/destroy.service';
+import { takeUntil, tap } from 'rxjs';
 
 @Component({
     standalone: true,
@@ -28,9 +29,18 @@ export class AddVacancyModalComponent {
 
     constructor(
         @Inject(POLYMORPHEUS_CONTEXT) private readonly context: TuiDialogContext,
-    ) {}
+    ) { }
 
     public onSubmit(): void {
+        this._requestVacancyService.addVacancy(this.viewModel.toModel())
+            .pipe(
+                tap(() => this.closeModal()),
+                takeUntil(this._destroy$),
+            )
+            .subscribe();
+    }
 
+    public closeModal(): void {
+        this.context.$implicit.complete();
     }
 }

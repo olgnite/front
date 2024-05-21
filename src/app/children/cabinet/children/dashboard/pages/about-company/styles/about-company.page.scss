@@ -1,6 +1,6 @@
 @import '../../../../../../../../styles/variables.scss';
 
-.abount-company {
+.about-company {
 
     &__company-name {
         display: grid;
@@ -63,5 +63,9 @@
         // bottom: 0px;
         height: 30px;
         width: 100%;
+    }
+
+    &__wrapper-down-vector {
+        background: #8269EF;
     }
 }
