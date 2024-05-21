@@ -6,6 +6,7 @@ import { DestroyService } from '../../../../../../services/destroy.service';
 import { IVacancyCard } from '../../../../interfaces/vacancy-card.interface';
 import { RemoveVacancyModalComponent } from '../../components/remove-vacancy-modal/remove-vacancy-modal.component';
 import { RequestVacancyService } from '../../services/request-vacancy.service';
+import {AuthorizationService} from "../../../../../../services/authorization.service";
 
 @Component({
     templateUrl: './vacancy-list.page.html',
@@ -13,13 +14,14 @@ import { RequestVacancyService } from '../../services/request-vacancy.service';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VacancyListPage {
-
+    private authorizationService = inject(AuthorizationService);
     public name: string = '';
     public vacancyList$: Observable<IVacancyCard[]>;
 
     private _requestVacancyService: RequestVacancyService = inject(RequestVacancyService);
     private _destroy$: DestroyService = inject(DestroyService);
     private _update$: BehaviorSubject<void | null> = new BehaviorSubject<void | null>(null);
+    readonly isLoggedIn$ = this.authorizationService.isLoggedIn$;
 
     constructor(
         @Inject(TuiDialogService) public readonly dialogs: TuiDialogService,

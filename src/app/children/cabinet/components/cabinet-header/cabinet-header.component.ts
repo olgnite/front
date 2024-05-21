@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Inject, Injector} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, Inject, Injector} from '@angular/core';
 import {Observable, takeUntil} from 'rxjs';
 import { paths } from '../../consts/paths';
 import { IPath } from '../../interfaces/path.interface';
@@ -9,6 +9,7 @@ import {RegistrationComponent} from "../registration/registration.component";
 import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus';
 import {DestroyService} from "../../../../services/destroy.service";
 import {LoginComponent} from "../login/login.component";
+import {AuthorizationService} from "../../../../services/authorization.service";
 
 @Component({
     selector: 'cabinet-header',
@@ -20,6 +21,10 @@ export class CabinetHeaderComponent {
 
     public paths: IPath[] = paths;
     public imagePathList: Record<string, string> = imagePathRecord;
+
+    private authorizationService = inject(AuthorizationService);
+
+    readonly isLoggedIn$ = this.authorizationService.isLoggedIn$;
 
     constructor(@Inject(CurrentPathService) public currentPath$: Observable<string>,
                 @Inject(TuiDialogService) private readonly dialogs: TuiDialogService,
@@ -37,5 +42,9 @@ export class CabinetHeaderComponent {
         this.dialogs.open(new PolymorpheusComponent(LoginComponent, this.injector), {size: 'auto'}).pipe(
             takeUntil(this.destroy$)
         ).subscribe();
+    }
+
+    logout(): void {
+        this.authorizationService.logout();
     }
 }

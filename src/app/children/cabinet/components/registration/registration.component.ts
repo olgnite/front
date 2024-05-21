@@ -15,7 +15,7 @@ import { UiCampusButtonComponent } from "../../../../ui";
 import { LoginComponent } from "../login/login.component";
 import { takeUntil } from "rxjs";
 import { DestroyService } from "../../../../services/destroy.service";
-import {AuthorizationService} from "../../services/authorization.service";
+import {AuthorizationService} from "../../../../services/authorization.service";
 import {IRegistration, IRegistrationResponse} from "../../interfaces/authorization.interface";
 
 
