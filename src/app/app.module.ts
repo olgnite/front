@@ -10,6 +10,7 @@ import {environment} from "../environments/environment.development";
 import {AngularFireModule} from "@angular/fire/compat";
 import {AngularFireStorageModule} from "@angular/fire/compat/storage";
 import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
+import {JwtModule} from "@auth0/angular-jwt";
 
 @NgModule({
     declarations: [
@@ -24,7 +25,14 @@ import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
         BrowserAnimationsModule,
         TuiRootModule,
         TuiDialogModule,
-        TuiAlertModule
+        TuiAlertModule,
+        JwtModule.forRoot({
+            config: {
+                tokenGetter: () => {
+                    return localStorage.getItem('access_token');
+                }
+            }
+        })
     ],
     providers: [
         DestroyService,

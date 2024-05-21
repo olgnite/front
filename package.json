@@ -20,6 +20,7 @@
     "@angular/platform-browser": "^16.1.0",
     "@angular/platform-browser-dynamic": "^16.1.0",
     "@angular/router": "^16.1.0",
+    "@auth0/angular-jwt": "^5.2.0",
     "@taiga-ui/addon-charts": "^3.77.1",
     "@taiga-ui/addon-commerce": "^3.77.1",
     "@taiga-ui/addon-doc": "^3.77.1",

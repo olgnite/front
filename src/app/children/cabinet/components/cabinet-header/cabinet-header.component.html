@@ -7,9 +7,16 @@
                                   [routerLink]="path.path">{{ path.title }}</ui-campus-button>
             </div>
         </div>
-        <div class="cabinet-header__buttons">
-            <ui-campus-button type="inactive" class="cabinet-header__button" (click)="openRegistration()">Регистрация</ui-campus-button>
-            <ui-campus-button type="active" class="cabinet-header__button"  (click)="openLogin()">Вход</ui-campus-button>
+        <div class="cabinet-header__buttons" *ngIf="!(isLoggedIn$ | async); else logoutTemplate">
+            <ui-campus-button type="inactive" class="cabinet-header__button" (click)="openRegistration()">Регистрация
+            </ui-campus-button>
+            <ui-campus-button type="active" class="cabinet-header__button" (click)="openLogin()">Вход</ui-campus-button>
         </div>
     </div>
 </div>
+
+<ng-template #logoutTemplate>
+    <div class="cabinet-header__buttons">
+        <ui-campus-button type="active" class="cabinet-header__button" (click)="logout()">Выйти</ui-campus-button>
+    </div>
+</ng-template>
