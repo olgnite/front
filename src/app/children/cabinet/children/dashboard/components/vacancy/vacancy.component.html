@@ -3,9 +3,9 @@
         <div class="vacancy__avatar">
             <img class="vacancy__photo" src="assets/icons/photo.svg">
         </div>
-        <ui-campus-button class="vacancy__btn-edit" [type]="'edit'"
+        <ui-campus-button *ngIf="isLoggedIn$ | async" class="vacancy__btn-edit" [type]="'edit'"
             [routerLink]="['/dashboard/edit-vacancy', vacancy.id]">Редактировать</ui-campus-button>
-        <ui-campus-button class="vacancy__btn" [type]="'primary'"
+        <ui-campus-button *ngIf="isLoggedIn$ | async" class="vacancy__btn" [type]="'primary'"
             (click)="removeEmit(vacancy.id!)">Удалить</ui-campus-button>
     </div>
     <div class="vacancy__about">

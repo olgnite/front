@@ -22,6 +22,7 @@ import { URL_TOKEN } from './tokens/url.token'
 import { RequestVacancyService } from './services/request-vacancy.service'
 import { ProfilePage } from './pages/profile/profile.page'
 import { RequestPhotoGalleryService } from './services/request-photogallery.service'
+import {TokenValidateGuard} from "./guards/token-validate.guard";
 
 const components: any[] = [
     LayoutDashboardPage,
@@ -55,7 +56,8 @@ const dashboardRoutes: Routes = [
             },
             {
                 path: 'edit-company',
-                component: EditCompanyPage
+                component: EditCompanyPage,
+                canActivate: [TokenValidateGuard]
             },
             {
                 path: 'vacancies',
@@ -67,7 +69,8 @@ const dashboardRoutes: Routes = [
             },
             {
                 path: 'edit-vacancy/:id',
-                component: EditVacancyPage
+                component: EditVacancyPage,
+                canActivate: [TokenValidateGuard]
             },
             {
                 path: 'more-vacancy',

@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output} from '@angular/core';
 import { IVacancyCard } from '../../../../interfaces/vacancy-card.interface';
+import {AuthorizationService} from "../../../../../../services/authorization.service";
 
 @Component({
     selector: 'vacancy',
@@ -13,6 +14,10 @@ export class VacancyComponent {
 
     @Output()
     public showDialogRemove: EventEmitter<string> = new EventEmitter<string>();
+
+    private authorizationService = inject(AuthorizationService);
+
+    readonly isLoggedIn$ = this.authorizationService.isLoggedIn$;
 
     public removeEmit(id: string): void {
         this.showDialogRemove.emit(id);

@@ -14,7 +14,7 @@ import {UiCampusButtonComponent} from "../../../../ui";
 import {DestroyService} from "../../../../services/destroy.service";
 import {takeUntil} from "rxjs";
 import {RegistrationComponent} from "../registration/registration.component";
-import {AuthorizationService} from "../../services/authorization.service";
+import {AuthorizationService} from "../../../../services/authorization.service";
 import {ILogin} from "../../interfaces/authorization.interface";
 
 
@@ -73,7 +73,12 @@ export class LoginComponent implements OnInit {
         const data: ILogin = {username: this.loginForm.value.email, password: this.loginForm.value.password};
 
         this.authorizationService.login(data).pipe(takeUntil(this.destroy$)).subscribe(
-            item => console.log(item)
+            response => {
+                localStorage.setItem('access_token', response.access_token);
+                this.authorizationService.isTokenValid();
+                alert(`Вы успешно вошли!`);
+            },
+            () => alert('Возникла ошибка!')
         );
         this.context.completeWith();
     }

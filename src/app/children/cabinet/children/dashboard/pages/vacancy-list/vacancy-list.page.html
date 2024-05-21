@@ -9,7 +9,7 @@
     <div class="vacancy-list__wrapper">
         <img class="vacancy-list__down-vector-img" src="assets/vectors/vector 6.png">
         <div class="vacancy-list__options">
-            <input class="vacancy-list__btn" type="button" value="Добавить вакансию" (click)="openDialogAdd()">
+            <input *ngIf="isLoggedIn$ | async" class="vacancy-list__btn" type="button" value="Добавить вакансию" (click)="openDialogAdd()">
             <div class="vacancy-list__search-wrapper">
                 <img class="vacancy-list__search-icon" src="assets/icons/search.svg">
                 <input class="vacancy-list__search" type="text" style="font-size: 20px;" [(ngModel)]="name">
