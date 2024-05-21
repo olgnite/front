@@ -1,15 +1,15 @@
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormBaseViewModel } from './form-base.view-model';
 
-export class ProfileViewModel extends FormBaseViewModel<IProfileModel> {
+export class ProfileViewModel extends FormBaseViewModel<IProfile> {
 
-    public get name(): AbstractControl<string> {
+    public get name(): string {
         return this.form.get('name')?.value;
     }
-    public get email(): AbstractControl<string> {
+    public get email(): string {
         return this.form.get('email')?.value;
     }
-    public get password(): AbstractControl<string> {
+    public get password(): string {
         return this.form.get('password')?.value;
     }
 
@@ -25,7 +25,7 @@ export class ProfileViewModel extends FormBaseViewModel<IProfileModel> {
         })
     }
 
-    public toModel(): IProfileModel {
+    public toModel(): IProfile {
         return {
             name: this.name,
             email: this.email,
@@ -33,6 +33,12 @@ export class ProfileViewModel extends FormBaseViewModel<IProfileModel> {
         }
     }
 
+}
+
+interface IProfile {
+    name: string;
+    email: string;
+    password: string;
 }
 
 interface IProfileModel {

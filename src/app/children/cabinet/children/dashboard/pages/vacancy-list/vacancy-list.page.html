@@ -9,7 +9,7 @@
     <div class="vacancy-list__wrapper">
         <img class="vacancy-list__down-vector-img" src="assets/vectors/vector 6.png">
         <div class="vacancy-list__options">
-            <input class="vacancy-list__btn" type="button" value="Добавить вакансию">
+            <input class="vacancy-list__btn" type="button" value="Добавить вакансию" (click)="openDialogAdd()">
             <div class="vacancy-list__search-wrapper">
                 <img class="vacancy-list__search-icon" src="assets/icons/search.svg">
                 <input class="vacancy-list__search" type="text" style="font-size: 20px;" [(ngModel)]="name">
@@ -20,7 +20,7 @@
             <ng-container *ngIf="(vacancyList | search : name) as list">
                 <ng-container *ngIf="list.length; else empty">
                     <div class="vacancy-list__vacancies" *ngFor="let card of list">
-                        <vacancy-card [vacancyCard]="card" (showDialogRemove)="openDialogRemove($event)"></vacancy-card>
+                        <vacancy-card [vacancyCard]="card" (showDialogRemove)="openDialogRemove(card)"></vacancy-card>
                     </div>
                 </ng-container>
             </ng-container>
@@ -38,7 +38,7 @@
 
 <ng-template #loading>
     <div class="vacancy-list__loading">
-        <h2 class="vacancy-list__loading-title">Loading...</h2>
+        <span class="vacancy-list__loader"></span>
     </div>
     <img class="vacancy-list__down-vector-img" src="assets/vectors/vector 4.png">
 </ng-template>

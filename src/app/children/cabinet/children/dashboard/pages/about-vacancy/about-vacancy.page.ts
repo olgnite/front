@@ -36,8 +36,8 @@ export class AboutVacancyPage {
             )
     }
 
-    public openDialogRemove(id: string): void {
-        this.dialogs.open(new PolymorpheusComponent(RemoveVacancyModalComponent, this.injector), { size: 'auto', data: { vacancyId: id } })
+    public openDialogRemove(vacancy: IVacancyCard): void {
+        this.dialogs.open(new PolymorpheusComponent(RemoveVacancyModalComponent, this.injector), { size: 'auto', data: { vacancy: vacancy } })
             .pipe(
                 takeUntil(this._destroy$)
             )

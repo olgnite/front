@@ -2,7 +2,7 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { FormBaseViewModel } from './form-base.view-model';
 import { IVacancyCard } from '../../../interfaces/vacancy-card.interface';
 
-export class EditVacancyViewModel extends FormBaseViewModel<IVacancyCard> {
+export class VacancyViewModel extends FormBaseViewModel<IVacancyCard> {
     public get name(): string {
         return this.form.get('name')?.value;
     }
@@ -24,16 +24,16 @@ export class EditVacancyViewModel extends FormBaseViewModel<IVacancyCard> {
 
     public form: FormGroup;
 
-    constructor(public vacancyCard: IVacancyCard) {
+    constructor(public vacancyCard?: IVacancyCard) {
         super();
 
-        this.form = new FormGroup<IEditVacancyModel>({
-            name: new FormControl(vacancyCard.name, { nonNullable: true, validators: [Validators.required] }),
-            salary: new FormControl(vacancyCard.salary, { nonNullable: true, validators: [Validators.required] }),
-            city: new FormControl(vacancyCard.city, { nonNullable: true, validators: [Validators.required] }),
-            employment: new FormControl(vacancyCard.employment, { nonNullable: true, validators: [Validators.required] }),
-            experience: new FormControl(vacancyCard.experience, { nonNullable: true, validators: [Validators.required] }),
-            description: new FormControl(vacancyCard.description, { nonNullable: true }),
+        this.form = new FormGroup<IVacancyModel>({
+            name: new FormControl(vacancyCard?.name || '', { nonNullable: true, validators: [Validators.required] }),
+            salary: new FormControl(vacancyCard?.salary || '', { nonNullable: true, validators: [Validators.required] }),
+            city: new FormControl(vacancyCard?.city || '', { nonNullable: true, validators: [Validators.required] }),
+            employment: new FormControl(vacancyCard?.employment || '', { nonNullable: true, validators: [Validators.required] }),
+            experience: new FormControl(vacancyCard?.experience || '', { nonNullable: true, validators: [Validators.required] }),
+            description: new FormControl(vacancyCard?.description || '', { nonNullable: true }),
         })
     }
 
@@ -49,7 +49,7 @@ export class EditVacancyViewModel extends FormBaseViewModel<IVacancyCard> {
     }
 }
 
-interface IEditVacancyModel {
+interface IVacancyModel {
     name: AbstractControl<string>,
     salary: AbstractControl<string>,
     city: AbstractControl<string>,

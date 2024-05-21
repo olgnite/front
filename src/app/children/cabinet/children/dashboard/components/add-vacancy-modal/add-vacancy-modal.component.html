@@ -1,0 +1,21 @@
+<div class="add-vacancy-modal__container">
+    <p class="add-vacancy-modal__title">Добавление вакансии</p>
+    <div clas="add-vacancy-modal__wrapper-form">
+        <form [formGroup]="viewModel.form">
+            <div class="add-vacancy-modal__form">
+                <input formControlName="name" class="add-vacancy-modal__control" placeholder="Название вакансии">
+                <input formControlName="salary" class="add-vacancy-modal__control" placeholder="Зарплата">
+                <input formControlName="city" class="add-vacancy-modal__control" placeholder="Город">
+                <input formControlName="employment" class="add-vacancy-modal__control" placeholder="Занятость">
+                <input formControlName="experience" class="add-vacancy-modal__control" placeholder="Опыт работы">
+                <textarea formControlName="description" class="add-vacancy-modal__control"
+                    placeholder="Расскажите о вакансии"></textarea>
+            </div>
+        </form>
+    </div>
+    <div class="add-vacancy-modal__options">
+        <ui-campus-button class="add-vacancy-modal__submit" [type]="'primary'" (click)="onSubmit()"
+            [clickType]="'submit'" [disabled]="viewModel.form.invalid">Сохранить</ui-campus-button>
+        <ui-campus-button class="add-vacancy-modal__submit" [type]="'edit'">Отменить</ui-campus-button>
+    </div>
+</div>

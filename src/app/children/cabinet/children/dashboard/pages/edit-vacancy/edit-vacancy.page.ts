@@ -4,7 +4,7 @@ import { Observable, map, switchMap, takeUntil, tap } from 'rxjs';
 import { DestroyService } from '../../../../../../services/destroy.service';
 import { IVacancyCard } from '../../../../interfaces/vacancy-card.interface';
 import { RequestVacancyService } from '../../services/request-vacancy.service';
-import { EditVacancyViewModel } from '../../view-model/edit-vacancy.view-model';
+import { VacancyViewModel } from '../../view-model/vacancy.view-model';
 
 @Component({
     templateUrl: './edit-vacancy.page.html',
@@ -13,7 +13,7 @@ import { EditVacancyViewModel } from '../../view-model/edit-vacancy.view-model';
 })
 export class EditVacancyPage {
 
-    public viewModel$!: Observable<EditVacancyViewModel>;
+    public viewModel$!: Observable<VacancyViewModel>;
 
     private _requestVacancyService: RequestVacancyService = inject(RequestVacancyService);
     private _activatedRoute: ActivatedRoute = inject(ActivatedRoute);
@@ -23,11 +23,11 @@ export class EditVacancyPage {
         this.viewModel$ = this._activatedRoute.params
             .pipe(
                 switchMap((params: Params) => this._requestVacancyService.getVacancyById(params['id'])),
-                map((vacancy: IVacancyCard) => new EditVacancyViewModel(vacancy))
+                map((vacancy: IVacancyCard) => new VacancyViewModel(vacancy))
             );
     }
 
-    public onSubmit(model: EditVacancyViewModel): void {
+    public onSubmit(model: VacancyViewModel): void {
         this._activatedRoute.params
             .pipe(
                 switchMap((params: Params) => this._requestVacancyService.updateVacancy(model.toModel(), params['id'])),

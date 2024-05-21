@@ -13,9 +13,9 @@ export class VacancyCardComponent {
     public vacancyCard!: IVacancyCard;
 
     @Output()
-    public showDialogRemove: EventEmitter<string> = new EventEmitter<string>();
+    public showDialogRemove: EventEmitter<void> = new EventEmitter<void>();
 
-    public removeEmit(id: string): void {
-        this.showDialogRemove.emit(id);
+    public removeEmit(): void {
+        this.showDialogRemove.emit();
     }
 }

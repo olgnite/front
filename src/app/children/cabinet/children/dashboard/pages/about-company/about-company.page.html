@@ -43,9 +43,9 @@
 </div>
 
 <ng-template #showVacancies>
-    <ng-container *ngFor="let card of vacancyList$ | async">
+    <!-- <ng-container *ngFor="let card of vacancyList$ | async">
         <vacancy-card [vacancyCard]="card"></vacancy-card>
-    </ng-container>
+    </ng-container> -->
     <ui-campus-button class="abount-company__show-more-btn" [type]="'primary'"
         (click)="updateShowVacancies(false)">Скрыть</ui-campus-button>
 </ng-template>

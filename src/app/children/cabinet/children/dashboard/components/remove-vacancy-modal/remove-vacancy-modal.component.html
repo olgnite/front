@@ -1,6 +1,9 @@
 <div class="remove-vacancy-modal__wrapper">
     <span class="remove-vacancy-modal__title">Удалить вакансию</span>
-    <span class="remove-vacancy-modal__name">Название вакансии?</span>
+    <div class="remove-vacancy-modal__wrapper-name">
+        <span class="remove-vacancy-modal__name">{{vacancy.name}}</span>
+        <p class="remove-vacancy-modal__question" [ngStyle]="{'font-size': '30px'}">?</p>
+    </div>
 
     <div class="remove-vacancy-modal__options">
         <div [ngStyle]="{'margin-right': '16px'}">
