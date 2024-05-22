@@ -1,7 +1,7 @@
 export interface IVacancyCard {
     id?: string;
     name: string;
-    salary: string;
+    salary: number;
     description?: string;
     city: string;
     employment: string;

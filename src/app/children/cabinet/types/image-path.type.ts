@@ -3,5 +3,6 @@ export const imagePathRecord: Record<string, string> = {
     'vacancies': 'assets/vectors/vector 7.png',
     'edit-company': 'assets/vectors/vector 7.png',
     'edit-vacancy': 'assets/vectors/vector 7.png',
-    'profile': 'assets/vectors/vector 7.png'
+    'profile': 'assets/vectors/vector 7.png',
+    'partners': 'assets/vectors/vector 7.png'
 };

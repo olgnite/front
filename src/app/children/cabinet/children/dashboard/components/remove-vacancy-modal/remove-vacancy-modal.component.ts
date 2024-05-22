@@ -32,6 +32,10 @@ export class RemoveVacancyModalComponent {
         this._requestVacancyService.removeVacancyById(this.vacancy.id!)
             .pipe(
                 tap(() => {
+                    if ((this.context.data as any).type === 'about') {
+                        history.back();
+                    }
+
                     (this.context.data as any).update$.next();
                     this.context.$implicit.complete();
                 }),

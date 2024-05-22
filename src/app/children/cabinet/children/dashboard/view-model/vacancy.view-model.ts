@@ -6,7 +6,7 @@ export class VacancyViewModel extends FormBaseViewModel<IVacancyCard> {
     public get name(): string {
         return this.form.get('name')?.value;
     }
-    public get salary(): string {
+    public get salary(): number {
         return this.form.get('salary')?.value;
     }
     public get city(): string {
@@ -29,7 +29,7 @@ export class VacancyViewModel extends FormBaseViewModel<IVacancyCard> {
 
         this.form = new FormGroup<IVacancyModel>({
             name: new FormControl(vacancyCard?.name || '', { nonNullable: true, validators: [Validators.required] }),
-            salary: new FormControl(vacancyCard?.salary || '', { nonNullable: true, validators: [Validators.required] }),
+            salary: new FormControl(vacancyCard?.salary || null, { nonNullable: false, validators: [Validators.required] }),
             city: new FormControl(vacancyCard?.city || '', { nonNullable: true, validators: [Validators.required] }),
             employment: new FormControl(vacancyCard?.employment || '', { nonNullable: true, validators: [Validators.required] }),
             experience: new FormControl(vacancyCard?.experience || '', { nonNullable: true, validators: [Validators.required] }),
@@ -51,7 +51,7 @@ export class VacancyViewModel extends FormBaseViewModel<IVacancyCard> {
 
 interface IVacancyModel {
     name: AbstractControl<string>,
-    salary: AbstractControl<string>,
+    salary: AbstractControl<number | null>,
     city: AbstractControl<string>,
     employment: AbstractControl<string>,
     experience: AbstractControl<string | undefined>,

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Inject, Injector, inject } from '@a
 import { ActivatedRoute, Params } from '@angular/router';
 import { TuiDialogService } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
-import { Observable, switchMap, takeUntil } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap, takeUntil, tap } from 'rxjs';
 import { DestroyService } from '../../../../../../services/destroy.service';
 import { IVacancyCard } from '../../../../interfaces/vacancy-card.interface';
 import { RemoveVacancyModalComponent } from '../../components/remove-vacancy-modal/remove-vacancy-modal.component';
@@ -19,6 +19,7 @@ import { RequestVacancyService } from '../../services/request-vacancy.service';
 export class AboutVacancyPage {
 
     public vacancyCard$: Observable<IVacancyCard>;
+    public currentVacancy$: BehaviorSubject<IVacancyCard | null> = new BehaviorSubject<IVacancyCard | null>(null);
 
     private _activatedRoute: ActivatedRoute = inject(ActivatedRoute);
     private _requestVacancyService: RequestVacancyService = inject(RequestVacancyService);
@@ -33,11 +34,12 @@ export class AboutVacancyPage {
                 switchMap((params: Params) => {
                     return this._requestVacancyService.getVacancyById(params['id'])
                 }),
+                tap((data: IVacancyCard) => this.currentVacancy$.next(data))
             )
     }
 
     public openDialogRemove(vacancy: IVacancyCard): void {
-        this.dialogs.open(new PolymorpheusComponent(RemoveVacancyModalComponent, this.injector), { size: 'auto', data: { vacancy: vacancy } })
+        this.dialogs.open(new PolymorpheusComponent(RemoveVacancyModalComponent, this.injector), { size: 'auto', data: { vacancy: vacancy, type: 'about' } })
             .pipe(
                 takeUntil(this._destroy$)
             )

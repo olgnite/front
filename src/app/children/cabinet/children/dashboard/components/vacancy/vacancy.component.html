@@ -12,7 +12,7 @@
         <div class="vacancy__main-info">
             <p class="vacancy__title">О вакансии</p>
             <p class="vacancy__link">Название компании (ссылка на карточку)</p>
-            <p class="vacancy__salary">Зарплата: {{vacancy.salary | currency: 'RU': true | slice : 2 : 100}} р</p>
+            <p class="vacancy__salary">Зарплата: {{vacancy.salary.toLocaleString()}} р</p>
             <div class="vacancy__info">
                 <span class="vacancy__vacancy-info">Город: {{vacancy.city}}</span>
                 <span class="vacancy__vacancy-info">Занятость: {{vacancy.employment}}</span>

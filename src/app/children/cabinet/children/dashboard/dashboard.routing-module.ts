@@ -23,6 +23,8 @@ import { RequestVacancyService } from './services/request-vacancy.service'
 import { ProfilePage } from './pages/profile/profile.page'
 import { RequestPhotoGalleryService } from './services/request-photogallery.service'
 import {TokenValidateGuard} from "./guards/token-validate.guard";
+import { PartnerListPage } from './pages/partner-list/partner-list.page'
+import { PartnerCardComponent } from './components/partner-card/partner-card.component'
 
 const components: any[] = [
     LayoutDashboardPage,
@@ -37,22 +39,30 @@ const components: any[] = [
     AboutVacancyPage,
     VacancyComponent,
     EditVacancyPage,
-    ProfilePage
+    ProfilePage,
+    PartnerListPage,
+    PartnerCardComponent
 ];
 
 const dashboardRoutes: Routes = [
     {
         path: '',
+        pathMatch: 'full',
+        redirectTo: 'dashboard/about-company'
+    },
+    {
+        path: 'dashboard',
         component: LayoutDashboardPage,
         children: [
             {
                 path: '',
-                redirectTo: 'abount-company',
+                redirectTo: 'about-company',
                 pathMatch: 'full'
             },
             {
                 path: 'about-company',
-                component: AboutCompanyPage
+                component: AboutCompanyPage,
+                canActivate: [TokenValidateGuard]
             },
             {
                 path: 'edit-company',
@@ -78,7 +88,12 @@ const dashboardRoutes: Routes = [
             },
             {
                 path: 'profile',
-                component: ProfilePage
+                component: ProfilePage,
+                canActivate: [TokenValidateGuard]
+            },
+            {
+                path: 'partners',
+                component: PartnerListPage,
             }
         ]
     }

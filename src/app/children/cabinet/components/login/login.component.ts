@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, inject, Inject, Injector, OnInit} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Inject, Injector, OnInit } from '@angular/core';
 import {
     AbstractControl,
     FormBuilder,
@@ -7,15 +7,17 @@ import {
     ReactiveFormsModule,
     Validators
 } from "@angular/forms";
-import {NgClass, NgForOf, NgIf} from "@angular/common";
-import {TuiDialogContext, TuiDialogService} from "@taiga-ui/core";
-import {POLYMORPHEUS_CONTEXT, PolymorpheusComponent} from '@tinkoff/ng-polymorpheus';
-import {UiCampusButtonComponent} from "../../../../ui";
-import {DestroyService} from "../../../../services/destroy.service";
-import {takeUntil} from "rxjs";
-import {RegistrationComponent} from "../registration/registration.component";
-import {AuthorizationService} from "../../../../services/authorization.service";
-import {ILogin} from "../../interfaces/authorization.interface";
+import { NgClass, NgForOf, NgIf } from "@angular/common";
+import { TuiDialogContext, TuiDialogService } from "@taiga-ui/core";
+import { POLYMORPHEUS_CONTEXT, PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
+import { UiCampusButtonComponent } from "../../../../ui";
+import { DestroyService } from "../../../../services/destroy.service";
+import { takeUntil } from "rxjs";
+import { RegistrationComponent } from "../registration/registration.component";
+import { AuthorizationService } from "../../../../services/authorization.service";
+import { ILogin } from "../../interfaces/authorization.interface";
+import { Router } from '@angular/router';
+import { pathsAuth } from '../../consts/paths';
 
 
 @Component({
@@ -36,6 +38,7 @@ import {ILogin} from "../../interfaces/authorization.interface";
 export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder = inject(FormBuilder);
     private authorizationService = inject(AuthorizationService);
+    private router: Router = inject(Router);
     loginForm!: FormGroup;
 
     private errors: Record<string, string> = {
@@ -50,16 +53,16 @@ export class LoginComponent implements OnInit {
         const confirmPassword = formGroup.get('confirmPassword')?.value;
 
         if (password !== confirmPassword) {
-            return {passwordsMismatch: true};
+            return { passwordsMismatch: true };
         }
 
         return null;
     }
 
     constructor(@Inject(POLYMORPHEUS_CONTEXT) private readonly context: TuiDialogContext,
-                @Inject(TuiDialogService) private readonly dialogs: TuiDialogService,
-                @Inject(Injector) private readonly injector: Injector,
-                readonly destroy$: DestroyService) {
+        @Inject(TuiDialogService) private readonly dialogs: TuiDialogService,
+        @Inject(Injector) private readonly injector: Injector,
+        readonly destroy$: DestroyService) {
     }
 
     ngOnInit(): void {
@@ -70,13 +73,15 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
-        const data: ILogin = {username: this.loginForm.value.email, password: this.loginForm.value.password};
+        const data: ILogin = { username: this.loginForm.value.email, password: this.loginForm.value.password };
 
         this.authorizationService.login(data).pipe(takeUntil(this.destroy$)).subscribe(
             response => {
                 localStorage.setItem('access_token', response.access_token);
                 this.authorizationService.isTokenValid();
                 alert(`Вы успешно вошли!`);
+                this.router.navigate(['/dashboard/about-company']);
+                this.authorizationService.paths$.next(pathsAuth);
             },
             () => alert('Возникла ошибка!')
         );
@@ -100,7 +105,7 @@ export class LoginComponent implements OnInit {
     }
 
     openRegistration(): void {
-        this.dialogs.open(new PolymorpheusComponent(RegistrationComponent, this.injector), {size: 'auto'}).pipe(
+        this.dialogs.open(new PolymorpheusComponent(RegistrationComponent, this.injector), { size: 'auto' }).pipe(
             takeUntil(this.destroy$)
         ).subscribe();
         this.context.completeWith();

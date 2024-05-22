@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import { EditCompanyService } from '../../children/dashboard/services/edit-company.service';
-import { Observable, map, tap } from 'rxjs';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Observable, map } from 'rxjs';
 import { ICompany } from '../../children/dashboard/interfaces/company.interface';
+import { EditCompanyService } from '../../children/dashboard/services/edit-company.service';
 
 @Component({
     selector: 'cabinet-footer',
@@ -9,21 +9,16 @@ import { ICompany } from '../../children/dashboard/interfaces/company.interface'
     styleUrls: ['./styles/cabinet-footer.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CabinetFooterComponent implements OnInit {
-    private editService: EditCompanyService = inject(EditCompanyService);
+export class CabinetFooterComponent {
     private id = '4';
-    public contacts$!: Observable<{ phone: string, email: string }>;
-
-    public ngOnInit(): void {
-        this.contacts$ = this.editService.getCompanyInfo(this.id)
-            .pipe(
-                tap(data => console.log(data)),
-                map((data: ICompany) => {
-                    return {
-                        phone: data.phone,
-                        email: data.email
-                    }
-                })
-            );
-    }
+    public contacts$: Observable<{ phone: string, email: string }> = inject(EditCompanyService)
+        .getCompanyInfo(this.id)
+        .pipe(
+            map((data: ICompany) => {
+                return {
+                    phone: data.phone,
+                    email: data.email
+                }
+            })
+        );
 }

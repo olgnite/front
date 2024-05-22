@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, Observable, combineLatest, map, takeUntil } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, map, switchMap, takeUntil, tap } from 'rxjs';
+import { DestroyService } from '../../../../../../services/destroy.service';
 import { ICompany } from '../../interfaces/company.interface';
+import { IPhoto, IPhotoRequest } from '../../interfaces/photo.interface';
 import { EditCompanyService } from '../../services/edit-company.service';
 import { RequestPhotoGalleryService } from '../../services/request-photogallery.service';
-import { DestroyService } from '../../../../../../services/destroy.service';
 
 @Component({
     templateUrl: './edit-company.page.html',
@@ -13,11 +14,13 @@ import { DestroyService } from '../../../../../../services/destroy.service';
 })
 export class EditCompanyPage implements OnInit {
     @ViewChild('fileInput', { static: false }) fileInput: any;
+    @ViewChild('photoInput', { static: false }) photoInput: any;
 
     public id: string = '4';
     public img$: BehaviorSubject<string> = new BehaviorSubject<string>('');
     public editForm$?: Observable<FormGroup>;
-    public photoList$?: Observable<any>;
+    public photoList$?: Observable<IPhoto[]>;
+    public update$: BehaviorSubject<void> = new BehaviorSubject<void>(void 0);
 
     private fromBuilder: FormBuilder = inject(FormBuilder);
     private editService: EditCompanyService = inject(EditCompanyService);
@@ -26,7 +29,7 @@ export class EditCompanyPage implements OnInit {
 
     public ngOnInit(): void {
         this.initialize();
-        this.photoList$ = this.requestPhotoGalleryService.getPhotoGallery();
+        this.photoList$ = this.getGalleryList();
     }
 
     public initialize(): void {
@@ -61,8 +64,39 @@ export class EditCompanyPage implements OnInit {
         this.goToBack();
     }
 
+    public pushImageGallery(event: any): void {
+        const file = event.target.files[0];
+        const form: FormData = new FormData();
+        form.append('file', new File([file], file.name));
+
+        this.requestPhotoGalleryService.addPhoto(form)
+            .pipe(
+                tap(() => this.update$.next()),
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
+    }
+
+    public getGalleryList(): Observable<IPhoto[]> {
+        return this.update$
+            .pipe(
+                switchMap(() => this.requestPhotoGalleryService.getPhotoGallery()),
+                map((data: IPhotoRequest[]) => {
+                    return data.map((item: IPhotoRequest) => ({
+                        imageUrl: item.image_url,
+                        name: item.name,
+                        createAt: item.created_at
+                    }))
+                })
+            )
+    }
+
     public uploadImage(): void {
         this.fileInput.nativeElement.click();
+    }
+
+    public uploadPhoto(): void {
+        this.photoInput.nativeElement.click();
     }
 
     public deleteImage(): void {
@@ -73,18 +107,6 @@ export class EditCompanyPage implements OnInit {
         const file = event.target.files[0];
 
         this.img$.next(await this.editService.setMainImg(file, this.id));
-    }
-
-    public addPhotoGallery(): void {
-        // по идее здесь будет ссылка на ресурс
-        // на крайняк будем добавлять и отображать моки
-        const photo: string = 'photo';
-
-        this.requestPhotoGalleryService.addPhoto(photo)
-            .pipe(
-                takeUntil(this.destroy$)
-            )
-            .subscribe();
     }
 
     public goToBack(): void {

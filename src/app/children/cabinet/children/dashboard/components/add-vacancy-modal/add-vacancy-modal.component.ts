@@ -35,6 +35,7 @@ export class AddVacancyModalComponent {
         this._requestVacancyService.addVacancy(this.viewModel.toModel())
             .pipe(
                 tap(() => this.closeModal()),
+                tap(() => (this.context.data as any).update$.next()),
                 takeUntil(this._destroy$),
             )
             .subscribe();

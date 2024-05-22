@@ -1,27 +1,30 @@
-import {inject, Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {URL_TOKEN} from "../children/cabinet/children/dashboard/tokens/url.token";
-import {ILogin, ILoginResponse, IRegistration, IRegistrationResponse} from "../children/cabinet/interfaces/authorization.interface";
-import {BehaviorSubject, Observable, of} from "rxjs";
-import {JwtHelperService} from "@auth0/angular-jwt";
+import { inject, Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { URL_TOKEN } from "../children/cabinet/children/dashboard/tokens/url.token";
+import { ILogin, ILoginResponse, IRegistration, IRegistrationResponse } from "../children/cabinet/interfaces/authorization.interface";
+import { BehaviorSubject, Observable } from "rxjs";
+import { JwtHelperService } from "@auth0/angular-jwt";
+import { IPath } from '../children/cabinet/interfaces/path.interface';
+import { pathsAuth, pathsUnAuth } from '../children/cabinet/consts/paths';
 
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class AuthorizationService {
+
     private _url: string = inject(URL_TOKEN);
     private _httpClient: HttpClient = inject(HttpClient);
     private _jwt: JwtHelperService = inject(JwtHelperService);
 
     readonly isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+    public paths$: BehaviorSubject<IPath[]> = new BehaviorSubject<IPath[]>(!this.isLoggedIn$.value ? pathsAuth : pathsUnAuth);
 
-
-    registration(data: IRegistration): Observable<IRegistrationResponse> {
+    public registration(data: IRegistration): Observable<IRegistrationResponse> {
         return this._httpClient.post<IRegistrationResponse>(`${this._url}/auth/register`, data);
     }
 
-    login(data: ILogin): Observable<ILoginResponse> {
+    public login(data: ILogin): Observable<ILoginResponse> {
         const httpOptions = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -36,13 +39,14 @@ export class AuthorizationService {
         return this._httpClient.post<ILoginResponse>(`${this._url}/auth/jwt/login`, body.toString(), httpOptions);
     }
 
-    logout(): void {
+    public logout(): void {
         localStorage.removeItem('access_token');
+        this.paths$.next(pathsUnAuth);
 
         this.isTokenValid();
     }
 
-    isTokenValid(): boolean {
+    public isTokenValid(): boolean {
         const token = localStorage.getItem('access_token');
 
         const isValid = !!token && !this._jwt.isTokenExpired(token);

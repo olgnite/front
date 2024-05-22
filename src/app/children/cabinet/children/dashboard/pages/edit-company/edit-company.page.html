@@ -67,7 +67,9 @@
                     </div>
                 </div>
             </div>
-            <ui-campus-button class="edit-company__photo-btn" [type]="'active'" (click)="addPhotoGallery()">Добавить
+            <input type="file" style="display: none" #photoInput class="edit-company__options"
+                (change)="pushImageGallery($event)">
+            <ui-campus-button class="edit-company__photo-btn" [type]="'active'" (click)="uploadPhoto()">Добавить
                 фотографии</ui-campus-button>
         </div>
         <img class="edit-company__down-vector" src="assets/vectors/vector 4.png" [ngStyle]="{'width': '100%'}">
@@ -76,15 +78,14 @@
 
 <ng-template #photoList>
     <div class="edit-company__photo-list">
-        <div class="edit-company__photo">
-            <img src="">
-        </div>
-        <div class="edit-company__photo">
-            <img src="">
-        </div>
-        <div class="edit-company__photo">
-            <img src="">
-        </div>
+        <ng-container *ngIf="photoList$ | async as photoList">
+            <ng-container *ngFor="let photo of photoList">
+                <div class="edit-company__photo">
+                    <img src="{{photo.imageUrl}}"
+                        [ngStyle]="{'width': '300px', 'height': '282px', 'border-radius': '16px'}">
+                </div>
+            </ng-container>
+        </ng-container>
     </div>
 </ng-template>
 

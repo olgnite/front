@@ -131,4 +131,10 @@
         font-weight: bold;
         font-family: 'Giga Sans';
     }
+
+    &__btn {
+        ::ng-deep button {
+            margin-bottom: 24px;
+        }
+    }
 }

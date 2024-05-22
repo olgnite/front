@@ -1,0 +1,26 @@
+<div class="partner-list__container">
+    <div class="partner-list__partner-header">
+        <div class="partner-list__wrapper-back" (click)="goToBack()">
+            <img class="partner-list__back-icon" src="assets/icons/back.svg">
+            <span class="partner-list__back">Назад</span>
+        </div>
+        <p class="partner-list__title">Компании</p>
+    </div>
+    <img class="partner-list__up-vector-img" src="assets/vectors/vector 6.png">
+    <div [ngStyle]="{'padding': '48px 64px'}">
+        <div class="partner-list__search-wrapper">
+            <img class="partner-list__search-icon" src="assets/icons/search.svg">
+            <input class="partner-list__search" type="text" style="font-size: 20px;" [(ngModel)]="name">
+            <img class="partner-list__search-icon" src="assets/icons/close.svg">
+        </div>
+    </div>
+
+    <div class="partner-list">
+        <img class="edit-company__top-vector" src="assets/vectors/vector 3.png"
+            [ngStyle]="{'width': '100%', 'display': 'block'}">
+        <div class="partner-list__partner-card-wrapper">
+            <partner></partner>
+        </div>
+        <img class="edit-company__down-vector" src="assets/vectors/vector 4.png" [ngStyle]="{'width': '100%'}">
+    </div>
+</div>

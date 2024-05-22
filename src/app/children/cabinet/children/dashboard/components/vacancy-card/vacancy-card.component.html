@@ -1,11 +1,11 @@
 <div class="vacancy-card__container">
     <div class="vacancy-card__wrapper">
         <div class="vacancy-card__wrapper-title">
-            <img class="vacancy-card__delete" src="assets/icons/delete.svg" (click)="removeEmit()">
-            <p class="vacancy-card__name">{{vacancyCard.name}}</p>
+            <img *ngIf="isLoggedIn$ | async" class="vacancy-card__delete" src="assets/icons/delete.svg" (click)="removeEmit()">
+            <p class="vacancy-card__name" [ngClass]="{'isMargin': isLoggedIn$ | async}">{{vacancyCard.name}}</p>
         </div>
         <div class="vacancy-card__wrapper-more">
-            <p class="vacancy-card__salary">{{vacancyCard.salary | currency: 'RU': true | slice : 2 : 100}} р</p>
+            <p class="vacancy-card__salary">{{vacancyCard.salary.toLocaleString()}} р</p>
             <div class="vacancy-card__more-title" [routerLink]="['/dashboard/vacancies', vacancyCard.id]">
                 <a class="vacancy-card__more">Подробнее</a>
                 <img class="vacancy-card__arrow" src="assets/icons/arrow.svg">

@@ -1,0 +1,33 @@
+.partner-card {
+    &__container {
+        display: grid;
+        gap: 32px;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    &__card {
+        background-color: #fff;
+        border-radius: 16px;
+        width: 416px;
+        height: 172px;
+    }
+
+    &__info {
+        display: grid;
+        padding: 24px;
+    }
+
+    &__title {
+        font-family: 'Giga Sans';
+        font-size: 24px;
+        color: #21201F;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+
+    &__type {
+        color: #21201F;
+        font-size: 20px;
+        font-family: 'Inter';
+    }
+}

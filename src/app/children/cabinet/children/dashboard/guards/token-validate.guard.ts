@@ -1,7 +1,7 @@
-import {CanActivateFn, Router} from '@angular/router';
-import {map} from "rxjs";
-import {inject} from "@angular/core";
-import {AuthorizationService} from "../../../../../services/authorization.service";
+import { CanActivateFn, Router } from '@angular/router';
+import { map } from "rxjs";
+import { inject } from "@angular/core";
+import { AuthorizationService } from "../../../../../services/authorization.service";
 
 
 export const TokenValidateGuard: CanActivateFn = () => {
@@ -13,7 +13,7 @@ export const TokenValidateGuard: CanActivateFn = () => {
     return authorizationService.isLoggedIn$.pipe(
         map(isValid => {
             if (!isValid) {
-                router.navigate(['/dashboard/about-company']);
+                router.navigate(['/dashboard/partners']);
             }
 
             return isValid;
