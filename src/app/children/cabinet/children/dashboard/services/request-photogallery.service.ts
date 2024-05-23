@@ -18,7 +18,7 @@ export class RequestPhotoGalleryService {
         return this._httpClient.post<void>(`${this._url}/photo`, file);
     }
 
-    public removePhoto(photoName: string): Observable<void> {
-        return this._httpClient.delete<void>(`${this._url}/photo?photo_name=${photoName}`);
+    public removePhoto(id: string): Observable<void> {
+        return this._httpClient.delete<void>(`${this._url}/photo?uuid=${id}`);
     }
 }

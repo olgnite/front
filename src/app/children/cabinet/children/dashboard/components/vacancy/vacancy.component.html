@@ -11,7 +11,9 @@
     <div class="vacancy__about">
         <div class="vacancy__main-info">
             <p class="vacancy__title">О вакансии</p>
-            <p class="vacancy__link">Название компании (ссылка на карточку)</p>
+            <ng-container *ngIf="company$ | async as company">
+                <a class="vacancy__link" href="{{company.personalSite}}">{{company.companyName}}</a>
+            </ng-container>
             <p class="vacancy__salary">Зарплата: {{vacancy.salary.toLocaleString()}} р</p>
             <div class="vacancy__info">
                 <span class="vacancy__vacancy-info">Город: {{vacancy.city}}</span>

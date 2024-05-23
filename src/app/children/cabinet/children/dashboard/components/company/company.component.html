@@ -1,12 +1,16 @@
-<div class="company__container">
+<div class="company__container" *ngIf="company$ | async as company">
     <div class="company__company-avatar">
-        <div class="company__avatar">
-            <img class="company__photo" src="assets/icons/photo.svg">
+        <div class="company__avatar" style="display: flex; justify-content: center"
+            *ngIf="img$ | async as img; else emptyAvatar">
+            <img class="company__photo" [src]="img">
         </div>
-        <ui-campus-button *ngIf="isLoggedIn$ | async" class="company__btn-edit" [type]="'edit'" [routerLink]="['/dashboard/edit-company']">Редактировать</ui-campus-button>
-        <ui-campus-button class="company__btn" [type]="'primary'">Перейти на сайт</ui-campus-button>
+        <ui-campus-button *ngIf="isLoggedIn$ | async" class="company__btn-edit" [type]="'edit'"
+            [routerLink]="['/dashboard/edit-company']">Редактировать</ui-campus-button>
+        <ui-campus-button class="company__btn" [type]="'primary'">
+            <a [href]="company.site" [ngStyle]="{'text-decoration': 'none', 'color': 'white'}">Перейти на сайт</a>
+        </ui-campus-button>
     </div>
-    <div class="company__about" *ngIf="company$ | async as company">
+    <div class="company__about">
         <div class="company__main-info">
             <p class="company__title">О компании</p>
             <div class="company__info">
@@ -15,9 +19,15 @@
                 <span class="company__company-info">Местоположение: {{company.city}}</span>
                 <span class="company__company-info">Количество сотрудников: {{company.numberOfEmployees}}</span>
             </div>
-            <div class="company__company-description">
-                <span class="company-description">Описание: {{company.aboutCompany}}</span>
+            <div class="company__company-description" [ngStyle]="{'overflow': 'hidden'}">
+                <span class="company__description">{{company.aboutCompany}}</span>
             </div>
         </div>
     </div>
 </div>
+
+<ng-template #emptyAvatar>
+    <div class="company__avatar">
+        <img class="company__photo" src="assets/icons/avatar">
+    </div>
+</ng-template>

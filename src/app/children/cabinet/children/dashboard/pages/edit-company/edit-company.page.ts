@@ -85,10 +85,20 @@ export class EditCompanyPage implements OnInit {
                     return data.map((item: IPhotoRequest) => ({
                         imageUrl: item.image_url,
                         name: item.name,
-                        createAt: item.created_at
+                        createAt: item.created_at,
+                        id: item.id
                     }))
                 })
             )
+    }
+
+    public removeImageGallery(id: string): void {
+        this.requestPhotoGalleryService.removePhoto(id)
+            .pipe(
+                tap(() => this.update$.next()),
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
     }
 
     public uploadImage(): void {

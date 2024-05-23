@@ -149,7 +149,7 @@
     }
 
     &__photo {
-        width: 100%;
+        position: relative;
         margin-right: 32px;
         border-radius: 16px;
 
@@ -164,8 +164,15 @@
         height: 100%;
         width: 100%;
         gap: 24px;
-        margin-bottom: 40px;
-        margin-top: 48px;
+    }
+
+    &__remove-photo {
+        position: absolute;
+        border: 0;
+        right: 0;
+        top: 0;
+        margin-right: 8px;
+        margin-top: 8px;
     }
 }
 

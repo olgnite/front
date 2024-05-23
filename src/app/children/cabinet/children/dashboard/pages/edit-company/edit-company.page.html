@@ -61,9 +61,11 @@
             <p class="edit-company__photo-gallery-title">Фотографии</p>
             <div class="edit-company__photo-gallery-list">
                 <div class="edit-company__photo-add-wrapper">
-                    <div class="edit-company__photo-preview" *ngIf="false; else photoList">
-                        <img class="edit-company__photo-img" src="assets/icons/photo.svg">
-                        <span class="edit-company__photo-title">Вы еще не загружали фото</span>
+                    <div class="edit-company__photo-preview" *ngIf="photoList$ | async as photoList">
+                        <ng-container *ngIf="!photoList.length; else gallery">
+                            <img class="edit-company__photo-img" src="assets/icons/photo.svg">
+                            <span class="edit-company__photo-title">Вы еще не загружали фото</span>
+                        </ng-container>
                     </div>
                 </div>
             </div>
@@ -76,13 +78,15 @@
     </div>
 </div>
 
-<ng-template #photoList>
+<ng-template #gallery>
     <div class="edit-company__photo-list">
         <ng-container *ngIf="photoList$ | async as photoList">
             <ng-container *ngFor="let photo of photoList">
                 <div class="edit-company__photo">
+                    <img class="edit-company__remove-photo" (click)="removeImageGallery(photo.id!)"
+                        src="assets/icons/remove_photo.svg">
                     <img src="{{photo.imageUrl}}"
-                        [ngStyle]="{'width': '300px', 'height': '282px', 'border-radius': '16px'}">
+                        [ngStyle]="{'width': '300px', 'height': '282px', 'border-radius': '16px', 'display': 'block'}">
                 </div>
             </ng-container>
         </ng-container>

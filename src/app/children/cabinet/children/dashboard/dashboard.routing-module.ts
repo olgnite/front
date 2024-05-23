@@ -25,6 +25,7 @@ import { RequestPhotoGalleryService } from './services/request-photogallery.serv
 import {TokenValidateGuard} from "./guards/token-validate.guard";
 import { PartnerListPage } from './pages/partner-list/partner-list.page'
 import { PartnerCardComponent } from './components/partner-card/partner-card.component'
+import { RequestCompanyService } from './services/request-company.service'
 
 const components: any[] = [
     LayoutDashboardPage,
@@ -116,6 +117,7 @@ const dashboardRoutes: Routes = [
         CurrentPathService,
         RequestVacancyService,
         RequestPhotoGalleryService,
+        RequestCompanyService,
         {
             provide: URL_TOKEN,
             useValue: 'https://vacancies-service.onrender.com'

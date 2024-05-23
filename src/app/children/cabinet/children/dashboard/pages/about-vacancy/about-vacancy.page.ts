@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Inject, Injector, inject } from '@a
 import { ActivatedRoute, Params } from '@angular/router';
 import { TuiDialogService } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
-import { BehaviorSubject, Observable, switchMap, takeUntil, tap } from 'rxjs';
+import { BehaviorSubject, Observable, map, switchMap, takeUntil, tap } from 'rxjs';
 import { DestroyService } from '../../../../../../services/destroy.service';
 import { IVacancyCard } from '../../../../interfaces/vacancy-card.interface';
 import { RemoveVacancyModalComponent } from '../../components/remove-vacancy-modal/remove-vacancy-modal.component';
@@ -33,6 +33,12 @@ export class AboutVacancyPage {
             .pipe(
                 switchMap((params: Params) => {
                     return this._requestVacancyService.getVacancyById(params['id'])
+                        .pipe(
+                            map(value => ({
+                                companyId: value.company_id,
+                                ...value
+                            }))
+                        )
                 }),
                 tap((data: IVacancyCard) => this.currentVacancy$.next(data))
             )
