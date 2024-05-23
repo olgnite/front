@@ -14,9 +14,9 @@
         <div class="company__main-info">
             <p class="company__title">О компании</p>
             <div class="company__info">
-                <span class="company__company-type">Тип компании</span>
+                <span class="company__company-type">Тип компании: {{company.field_of_activity}}</span>
                 <span class="company__company-info">Год основания: {{company.year_of_foundation}}</span>
-                <span class="company__company-info">Местоположение: {{company.city}}</span>
+                <span class="company__company-info">Местоположение: г. {{company.city}}, ул. {{company.street}}, дом. {{company.house}}</span>
                 <span class="company__company-info">Количество сотрудников: {{company.number_of_employees}}</span>
             </div>
             <div class="company__company-description" [ngStyle]="{'overflow': 'hidden'}">
