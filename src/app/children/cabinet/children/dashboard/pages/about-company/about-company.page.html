@@ -4,7 +4,9 @@
             <img class="about-company__back-icon" src="assets/icons/back.svg">
             <span class="about-company__back">Назад</span>
         </div>
-        <p class="about-company__title">Название компании</p>
+        <ng-container *ngIf="company$ | async as company">
+            <p class="about-company__title">{{company.company_name}}</p>
+        </ng-container>
     </div>
     <img class="about-company__up-vector-img" src="assets/vectors/vector 2.png">
     <div class="about-company__company-about">
@@ -32,9 +34,6 @@
         <div class="about-company__gallery-wrapper">
             <div class="about-company__photo-gallery-title">Фотогалерея</div>
             <photo-gallery></photo-gallery>
-            <!-- <ui-campus-button class="about-company__load-more-btn" [type]="'primary'">
-                Загрузить еще
-            </ui-campus-button> -->
         </div>
         <img src="assets/vectors/vector 6.png" [ngStyle]="{'width': '100%', 'display': 'block'}">
     </div>

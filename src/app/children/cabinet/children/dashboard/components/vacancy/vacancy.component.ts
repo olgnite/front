@@ -25,14 +25,14 @@ export class VacancyComponent implements OnInit {
     readonly isLoggedIn$ = this.authorizationService.isLoggedIn$;
 
     public ngOnInit(): void {
-        this.company$ = this.requestCompanyService.getCompanyById(this.vacancy.companyId || '')
-            .pipe(
-                map(value => ({
-                    companyName: value.company_name,
-                    personalSite: value.personal_site,
-                    ...value
-                }))
-            );
+        // this.company$ = this.requestCompanyService.getCompanyById(this.vacancy.companyId || '')
+        //     .pipe(
+        //         map(value => ({
+        //             companyName: value.company_name,
+        //             personalSite: value.personal_site,
+        //             ...value
+        //         }))
+        //     );
     }
 
     public removeEmit(id: string): void {

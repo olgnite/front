@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, Observable, combineLatest, map, switchMap, takeUntil, tap } from 'rxjs';
+import { BehaviorSubject, Observable, map, of, switchMap, takeUntil, tap, zip } from 'rxjs';
 import { DestroyService } from '../../../../../../services/destroy.service';
-import { ICompany } from '../../interfaces/company.interface';
+import { ICompany, ICompanyV2Request } from '../../interfaces/company.interface';
 import { IPhoto, IPhotoRequest } from '../../interfaces/photo.interface';
-import { EditCompanyService } from '../../services/edit-company.service';
+import { RequestCompanyService } from '../../services/request-company.service';
 import { RequestPhotoGalleryService } from '../../services/request-photogallery.service';
 
 @Component({
@@ -23,7 +23,7 @@ export class EditCompanyPage implements OnInit {
     public update$: BehaviorSubject<void> = new BehaviorSubject<void>(void 0);
 
     private fromBuilder: FormBuilder = inject(FormBuilder);
-    private editService: EditCompanyService = inject(EditCompanyService);
+    private requestCompanyService: RequestCompanyService = inject(RequestCompanyService);
     private requestPhotoGalleryService: RequestPhotoGalleryService = inject(RequestPhotoGalleryService);
     private destroy$: DestroyService = inject(DestroyService);
 
@@ -33,35 +33,62 @@ export class EditCompanyPage implements OnInit {
     }
 
     public initialize(): void {
-        this.editForm$ = combineLatest([
-            this.editService.getCompanyInfo(this.id),
-            this.editService.getCompanyMainImg(this.id)
-        ])
+        this.editForm$ = this.requestCompanyService.getCompanyById('ff74a67a-9ad8-4d3a-b554-1cbe2d91cb28')
             .pipe(
-                map(([company, img]) => {
-                    this.img$.next(img);
+                map((company: ICompanyV2Request) => {
+                    return {
+                        industry: company.field_of_activity,
+                        yearOfFoundation: company.field_of_activity,
+                        numberOfEmployees: company.number_of_employees,
+                        aboutCompany: '',
+                        site: company.personal_site,
+                        link: company.social_network_link,
+                        ...company
+                    };
+                }),
+                switchMap(company => {
+                    return zip(this.requestPhotoGalleryService.getPhotoById('be674599-edd1-4eab-b5e9-24f233944b35'), of(company));
+                }),
+                map(([img, company]) => {
+                    this.img$.next(img.image_url);
 
                     return this.fromBuilder.group({
-                        industry: [company.industry, Validators.required],
-                        yearOfFoundation: company.yearOfFoundation,
+                        industry: company.field_of_activity,
+                        yearOfFoundation: company.year_of_foundation,
                         city: company.city,
                         street: company.street,
                         house: company.house,
-                        numberOfEmployees: company.numberOfEmployees,
-                        aboutCompany: [company.aboutCompany, Validators.required],
-                        site: [company.site, Validators.required],
+                        numberOfEmployees: company.number_of_employees,
+                        aboutCompany: [company.description, Validators.required],
+                        site: [company.personal_site, Validators.required],
                         phone: [company.phone, [Validators.pattern(/^\+7\d{10}$/)]],
                         email: [company.email, Validators.email],
-                        link: company.link
+                        link: company.social_network_link
                     })
-                }),
+                })
             );
     }
 
     public onSubmit(form: FormGroup): void {
         const company: ICompany = form.value as ICompany;
-        this.editService.setEdits(company, this.id);
-        this.goToBack();
+        this.requestCompanyService.updateCompany({
+            description: company.aboutCompany,
+            field_of_activity: company.industry,
+            year_of_foundation: company.yearOfFoundation,
+            city: company.city,
+            street: company.street,
+            house: company.house,
+            number_of_employees: company.numberOfEmployees,
+            personal_site: company.site,
+            phone: company.phone,
+            social_network_link: company.link,
+            contact_email: company.email,
+        })
+            .pipe(
+                tap(() => this.goToBack()),
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
     }
 
     public pushImageGallery(event: any): void {
@@ -110,13 +137,13 @@ export class EditCompanyPage implements OnInit {
     }
 
     public deleteImage(): void {
-        this.img$.next(this.editService.deleteImg(this.id));
+        // this.img$.next(this.editService.deleteImg(this.id));
     }
 
     public async pushMainImage(event: any): Promise<void> {
         const file = event.target.files[0];
 
-        this.img$.next(await this.editService.setMainImg(file, this.id));
+        // this.img$.next(await this.editService.setMainImg(file, this.id));
     }
 
     public goToBack(): void {

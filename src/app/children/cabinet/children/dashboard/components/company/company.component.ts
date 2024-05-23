@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
-import { EditCompanyService } from "../../services/edit-company.service";
-import { ICompany } from "../../interfaces/company.interface";
 import { Observable } from "rxjs";
 import { AuthorizationService } from "../../../../../../services/authorization.service";
+import { ICompanyV2Request } from "../../interfaces/company.interface";
+import { IPhotoRequest } from '../../interfaces/photo.interface';
+import { RequestCompanyService } from '../../services/request-company.service';
+import { RequestPhotoGalleryService } from '../../services/request-photogallery.service';
 
 @Component({
     selector: 'company',
@@ -11,16 +13,17 @@ import { AuthorizationService } from "../../../../../../services/authorization.s
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CompanyComponent implements OnInit {
-    private editService: EditCompanyService = inject(EditCompanyService);
-    private id = '4';
-    public company$!: Observable<ICompany>;
-    public img$!: Observable<string>;
+    public company$!: Observable<ICompanyV2Request>;
+    public img$!: Observable<IPhotoRequest>;
+
     private authorizationService = inject(AuthorizationService);
+    private requestCompanyService = inject(RequestCompanyService)
+    private requestPhotoGalleryService = inject(RequestPhotoGalleryService);
 
     isLoggedIn$ = this.authorizationService.isLoggedIn$;
 
     ngOnInit(): void {
-        this.company$ = this.editService.getCompanyInfo(this.id);
-        this.img$ = this.editService.getCompanyMainImg(this.id);
+        this.company$ = this.requestCompanyService.getCompanyById('ff74a67a-9ad8-4d3a-b554-1cbe2d91cb28');
+        this.img$ = this.requestPhotoGalleryService.getPhotoById('be674599-edd1-4eab-b5e9-24f233944b35');
     }
 }

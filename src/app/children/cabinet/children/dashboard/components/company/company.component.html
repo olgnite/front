@@ -2,12 +2,12 @@
     <div class="company__company-avatar">
         <div class="company__avatar" style="display: flex; justify-content: center"
             *ngIf="img$ | async as img; else emptyAvatar">
-            <img class="company__photo" [src]="img">
+            <img class="company__photo" [src]="img.image_url">
         </div>
         <ui-campus-button *ngIf="isLoggedIn$ | async" class="company__btn-edit" [type]="'edit'"
             [routerLink]="['/dashboard/edit-company']">Редактировать</ui-campus-button>
         <ui-campus-button class="company__btn" [type]="'primary'">
-            <a [href]="company.site" [ngStyle]="{'text-decoration': 'none', 'color': 'white'}">Перейти на сайт</a>
+            <a [href]="company.personal_site" [ngStyle]="{'text-decoration': 'none', 'color': 'white'}">Перейти на сайт</a>
         </ui-campus-button>
     </div>
     <div class="company__about">
@@ -15,12 +15,12 @@
             <p class="company__title">О компании</p>
             <div class="company__info">
                 <span class="company__company-type">Тип компании</span>
-                <span class="company__company-info">Год основания: {{company.yearOfFoundation}}</span>
+                <span class="company__company-info">Год основания: {{company.year_of_foundation}}</span>
                 <span class="company__company-info">Местоположение: {{company.city}}</span>
-                <span class="company__company-info">Количество сотрудников: {{company.numberOfEmployees}}</span>
+                <span class="company__company-info">Количество сотрудников: {{company.number_of_employees}}</span>
             </div>
             <div class="company__company-description" [ngStyle]="{'overflow': 'hidden'}">
-                <span class="company__description">{{company.aboutCompany}}</span>
+                <span class="company__description">{{company.description}}</span>
             </div>
         </div>
     </div>

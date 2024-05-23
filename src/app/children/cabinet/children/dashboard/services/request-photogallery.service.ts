@@ -21,4 +21,8 @@ export class RequestPhotoGalleryService {
     public removePhoto(id: string): Observable<void> {
         return this._httpClient.delete<void>(`${this._url}/photo?uuid=${id}`);
     }
+
+    public getPhotoById(id: string): Observable<IPhotoRequest> {
+        return this._httpClient.get<IPhotoRequest>(`${this._url}/photo/${id}`);
+    }
 }
