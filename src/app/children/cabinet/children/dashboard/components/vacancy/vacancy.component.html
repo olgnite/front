@@ -1,7 +1,7 @@
 <div class="vacancy__container">
     <div class="vacancy__vacancy-avatar">
-        <div class="vacancy__avatar">
-            <img class="vacancy__photo" src="assets/icons/photo.svg">
+        <div class="vacancy__avatar" *ngIf="imageCompany$ | async as image; empty">
+            <img class="vacancy__photo" [src]="image.image_url">
         </div>
         <ui-campus-button *ngIf="isLoggedIn$ | async" class="vacancy__btn-edit" [type]="'edit'"
             [routerLink]="['/dashboard/edit-vacancy', vacancy.id]">Редактировать</ui-campus-button>
@@ -10,10 +10,10 @@
     </div>
     <div class="vacancy__about">
         <div class="vacancy__main-info">
-            <p class="vacancy__title">О вакансии</p>
-            <!-- <ng-container *ngIf="company$ | async as company">
-                <a class="vacancy__link" href="{{company.personalSite}}">{{company.companyName}}</a>
-            </ng-container> -->
+            <p class="vacancy__title" [ngStyle]="{'margin-bottom': '24px'}">О вакансии</p>
+            <ng-container *ngIf="company$ | async as company">
+                <span class="vacancy__link" [routerLink]="['/dashboard/about-company']">{{company.company_name}}</span>
+            </ng-container>
             <p class="vacancy__salary">Зарплата: {{vacancy.salary.toLocaleString()}} р</p>
             <div class="vacancy__info">
                 <span class="vacancy__vacancy-info">Город: {{vacancy.city}}</span>
@@ -21,8 +21,13 @@
                 <span class="vacancy__vacancy-info">Опыт работы: {{vacancy.experience}}</span>
             </div>
             <div class="vacancy__vacancy-description">
-                <span class="vacancy__description">Описание: {{vacancy.description}}</span>
+                <span class="vacancy__description">Описание:</span>
+                <span class="vacancy__description-info">{{vacancy.description}}</span>
             </div>
         </div>
     </div>
 </div>
+
+<ng-template #empty>
+    <img class="vacancy__photo" src="assets/icons/photo.svg">
+</ng-template>

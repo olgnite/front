@@ -4,7 +4,9 @@
             <img class="edit-vacancy__back-icon" src="assets/icons/back.svg">
             <span class="edit-vacancy__back">Назад</span>
         </div>
-        <p class="edit-vacancy__title">Название вакансии</p>
+        <ng-container *ngIf="vacancy$ | async as vacancy">
+            <p class="edit-vacancy__title">{{vacancy.name}}</p>
+        </ng-container>
     </div>
     <div class="edit-vacancy__wrapper">
         <img class="edit-vacancy__down-vector-img" src="assets/vectors/vector 6.png">

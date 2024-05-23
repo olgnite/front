@@ -1,10 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Observable, map, switchMap, takeUntil, tap } from 'rxjs';
+import { Observable, map, of, switchMap, takeUntil, tap } from 'rxjs';
 import { DestroyService } from '../../../../../../services/destroy.service';
-import { IVacancyCard } from '../../../../interfaces/vacancy-card.interface';
+import { IVacancyCard, IVacancyCardRequest } from '../../../../interfaces/vacancy-card.interface';
 import { RequestVacancyService } from '../../services/request-vacancy.service';
 import { VacancyViewModel } from '../../view-model/vacancy.view-model';
+import { RequestCompanyService } from '../../services/request-company.service';
+import { RequestPhotoGalleryService } from '../../services/request-photogallery.service';
+import { IPhotoRequest } from '../../interfaces/photo.interface';
 
 @Component({
     templateUrl: './edit-vacancy.page.html',
@@ -14,6 +17,7 @@ import { VacancyViewModel } from '../../view-model/vacancy.view-model';
 export class EditVacancyPage {
 
     public viewModel$!: Observable<VacancyViewModel>;
+    public vacancy$!: Observable<IVacancyCardRequest>;
 
     private _requestVacancyService: RequestVacancyService = inject(RequestVacancyService);
     private _activatedRoute: ActivatedRoute = inject(ActivatedRoute);
@@ -23,7 +27,11 @@ export class EditVacancyPage {
         this.viewModel$ = this._activatedRoute.params
             .pipe(
                 switchMap((params: Params) => this._requestVacancyService.getVacancyById(params['id'])),
-                map((vacancy: IVacancyCard) => new VacancyViewModel(vacancy))
+                map((vacancy: IVacancyCardRequest) => {
+                    this.vacancy$ = of(vacancy);
+
+                    return new VacancyViewModel(vacancy);
+                })
             );
     }
 

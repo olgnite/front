@@ -25,10 +25,11 @@
     }
 
     &__photo {
-        margin: auto;
-        width: 84px;
-        height: 74px;
-        fill: $grey;
+        width: 244px;
+        height: 244px;
+        background-color: #F3F3F3;
+        border-radius: 200px;
+        margin-bottom: 40px;
     }
 
     &__btn-edit {
@@ -86,5 +87,7 @@
         font-size: 18px;
     }
 
-
+    &__description-info {
+        font-size: 16px;
+    }
 }

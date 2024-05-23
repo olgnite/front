@@ -7,6 +7,8 @@ import { DestroyService } from '../../../../../../services/destroy.service';
 import { IVacancyCard } from '../../../../interfaces/vacancy-card.interface';
 import { RemoveVacancyModalComponent } from '../../components/remove-vacancy-modal/remove-vacancy-modal.component';
 import { RequestVacancyService } from '../../services/request-vacancy.service';
+import { RequestPhotoGalleryService } from '../../services/request-photogallery.service';
+import { IPhotoRequest } from '../../interfaces/photo.interface';
 
 @Component({
     templateUrl: './about-vacancy.page.html',
@@ -41,7 +43,7 @@ export class AboutVacancyPage {
                         )
                 }),
                 tap((data: IVacancyCard) => this.currentVacancy$.next(data))
-            )
+            );
     }
 
     public openDialogRemove(vacancy: IVacancyCard): void {
