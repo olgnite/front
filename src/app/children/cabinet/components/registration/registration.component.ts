@@ -83,7 +83,7 @@ export class RegistrationComponent implements OnInit {
 
         this.authorizationService.registration(data).pipe(takeUntil(this.destroy$))
             .subscribe((response: IRegistrationResponse) =>
-                alert(`Пользователь ${response.email} успешно зарегестрирован!`),
+                alert(`Пользователь ${response.email} успешно зарегистрирован!`),
             () =>
                 alert('Возникла ошибка!')
         );
