@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { ICompany } from '../../children/dashboard/interfaces/company.interface';
+import { ICompany, ICompanyV2Request } from '../../children/dashboard/interfaces/company.interface';
+import { RequestCompanyService } from '../../children/dashboard/services/request-company.service';
 
 @Component({
     selector: 'cabinet-footer',
@@ -10,14 +11,14 @@ import { ICompany } from '../../children/dashboard/interfaces/company.interface'
 })
 export class CabinetFooterComponent {
     private id = '4';
-    // public contacts$: Observable<{ phone: string, email: string }> = inject(EditCompanyService)
-    //     .getCompanyInfo(this.id)
-    //     .pipe(
-    //         map((data: ICompany) => {
-    //             return {
-    //                 phone: data.phone,
-    //                 email: data.email
-    //             }
-    //         })
-    //     );
+    public contacts$: Observable<any> = inject(RequestCompanyService)
+        .getCompanyById('ff74a67a-9ad8-4d3a-b554-1cbe2d91cb28')
+        .pipe(
+            map((data: ICompanyV2Request) => {
+                return {
+                    phone: data.phone,
+                    email: data.email
+                }
+            })
+        );
 }
