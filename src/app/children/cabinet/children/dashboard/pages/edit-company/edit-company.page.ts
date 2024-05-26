@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit, ViewChild, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, Observable, map, of, switchMap, takeUntil, tap, zip } from 'rxjs';
 import { DestroyService } from '../../../../../../services/destroy.service';
@@ -6,6 +6,7 @@ import { ICompany, ICompanyV2Request } from '../../interfaces/company.interface'
 import { IPhoto, IPhotoRequest } from '../../interfaces/photo.interface';
 import { RequestCompanyService } from '../../services/request-company.service';
 import { RequestPhotoGalleryService } from '../../services/request-photogallery.service';
+import { AUTHORIZED_COMPANY } from '../../tokens/authorized-company.token';
 
 @Component({
     templateUrl: './edit-company.page.html',
@@ -27,13 +28,18 @@ export class EditCompanyPage implements OnInit {
     private requestPhotoGalleryService: RequestPhotoGalleryService = inject(RequestPhotoGalleryService);
     private destroy$: DestroyService = inject(DestroyService);
 
+    constructor(
+        @Inject(AUTHORIZED_COMPANY) private _authorizedCompany: Observable<ICompanyV2Request>
+    ) {
+    }
+
     public ngOnInit(): void {
         this.initialize();
         this.photoList$ = this.getGalleryList();
     }
 
     public initialize(): void {
-        this.editForm$ = this.requestCompanyService.getCompanyById('ff74a67a-9ad8-4d3a-b554-1cbe2d91cb28')
+        this.editForm$ = this._authorizedCompany
             .pipe(
                 map((company: ICompanyV2Request) => {
                     return {

@@ -78,6 +78,7 @@ export class LoginComponent implements OnInit {
         this.authorizationService.login(data).pipe(takeUntil(this.destroy$)).subscribe(
             response => {
                 localStorage.setItem('access_token', response.access_token);
+                localStorage.setItem('email', data.username);
                 this.authorizationService.isTokenValid();
                 alert(`Вы успешно вошли!`);
                 this.router.navigate(['/dashboard/about-company']);

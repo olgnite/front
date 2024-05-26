@@ -1,31 +1,32 @@
-import { RouterLinkActive, RouterModule, Routes } from '@angular/router'
-import { LayoutDashboardPage } from './pages/layout-dashboard/layout-dashboard.page'
-import { CommonModule } from '@angular/common'
-import { NgModule } from '@angular/core'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { CabinetHeaderComponent } from '../../components/cabinet-header/cabinet-header.component'
-import { UiCampusButtonComponent } from '../../../../ui'
-import { AboutCompanyPage } from './pages/about-company/about-company.page'
-import { CompanyComponent } from './components/company/company.component'
-import { PhotoGalleryComponent } from './components/photo-gallery/photo-gallery.component'
-import { CabinetFooterComponent } from '../../components/cabinet-footer/cabinet-footer.component'
-import { VacancyCardComponent } from './components/vacancy-card/vacancy-card.component'
-import { VacancyListPage } from './pages/vacancy-list/vacancy-list.page'
-import { MoreVacancyPage } from './pages/more-vacancy/more-vacancy.page'
-import { CurrentPathService } from '../../services/current-path.service'
-import { SearchPipe } from '../../pipes/search.pipe'
-import { EditCompanyPage } from './pages/edit-company/edit-company.page'
-import { AboutVacancyPage } from './pages/about-vacancy/about-vacancy.page'
-import { VacancyComponent } from './components/vacancy/vacancy.component'
-import { EditVacancyPage } from './pages/edit-vacancy/edit-vacancy.page'
-import { URL_TOKEN } from './tokens/url.token'
-import { RequestVacancyService } from './services/request-vacancy.service'
-import { ProfilePage } from './pages/profile/profile.page'
-import { RequestPhotoGalleryService } from './services/request-photogallery.service'
-import {TokenValidateGuard} from "./guards/token-validate.guard";
-import { PartnerListPage } from './pages/partner-list/partner-list.page'
-import { PartnerCardComponent } from './components/partner-card/partner-card.component'
-import { RequestCompanyService } from './services/request-company.service'
+import { RouterLinkActive, RouterModule, Routes } from '@angular/router';
+import { LayoutDashboardPage } from './pages/layout-dashboard/layout-dashboard.page';
+import { CommonModule } from '@angular/common';
+import { NgModule, inject } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CabinetHeaderComponent } from '../../components/cabinet-header/cabinet-header.component';
+import { UiCampusButtonComponent } from '../../../../ui';
+import { AboutCompanyPage } from './pages/about-company/about-company.page';
+import { CompanyComponent } from './components/company/company.component';
+import { PhotoGalleryComponent } from './components/photo-gallery/photo-gallery.component';
+import { CabinetFooterComponent } from '../../components/cabinet-footer/cabinet-footer.component';
+import { VacancyCardComponent } from './components/vacancy-card/vacancy-card.component';
+import { VacancyListPage } from './pages/vacancy-list/vacancy-list.page';
+import { CurrentPathService } from '../../services/current-path.service';
+import { SearchPipe } from '../../pipes/search.pipe';
+import { EditCompanyPage } from './pages/edit-company/edit-company.page';
+import { AboutVacancyPage } from './pages/about-vacancy/about-vacancy.page';
+import { VacancyComponent } from './components/vacancy/vacancy.component';
+import { EditVacancyPage } from './pages/edit-vacancy/edit-vacancy.page';
+import { RequestVacancyService } from './services/request-vacancy.service';
+import { ProfilePage } from './pages/profile/profile.page';
+import { RequestPhotoGalleryService } from './services/request-photogallery.service';
+import { TokenValidateGuard } from "./guards/token-validate.guard";
+import { PartnerListPage } from './pages/partner-list/partner-list.page';
+import { PartnerCardComponent } from './components/partner-card/partner-card.component';
+import { RequestCompanyService } from './services/request-company.service';
+import { AUTHORIZED_COMPANY } from './tokens/authorized-company.token';
+import { Observable, map, of, switchMap } from 'rxjs';
+import { ICompanyV2Request } from './interfaces/company.interface';
 
 const components: any[] = [
     LayoutDashboardPage,
@@ -84,10 +85,6 @@ const dashboardRoutes: Routes = [
                 canActivate: [TokenValidateGuard]
             },
             {
-                path: 'more-vacancy',
-                component: MoreVacancyPage
-            },
-            {
                 path: 'profile',
                 component: ProfilePage,
                 canActivate: [TokenValidateGuard]
@@ -119,8 +116,18 @@ const dashboardRoutes: Routes = [
         RequestPhotoGalleryService,
         RequestCompanyService,
         {
-            provide: URL_TOKEN,
-            useValue: 'https://vacancies-service.onrender.com'
+            provide: AUTHORIZED_COMPANY,
+            useFactory: (): Observable<ICompanyV2Request> => {
+                const requestCompanyService: RequestCompanyService = inject(RequestCompanyService);
+
+                return requestCompanyService.getCompanies()
+                    .pipe(
+                        map((data: ICompanyV2Request[]) => {
+                            return (data.find((item: ICompanyV2Request) => item.email === localStorage.getItem('email')) || {} as ICompanyV2Request)?.id || '';
+                        }),
+                        switchMap((id: string) => requestCompanyService.getCompanyById(id))
+                    );
+            }
         }
     ]
 })
