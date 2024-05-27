@@ -1,15 +1,10 @@
 .partner-card {
-    &__container {
-        display: grid;
-        gap: 32px;
-        grid-template-columns: repeat(3, 1fr);
-    }
-
     &__card {
         background-color: #fff;
         border-radius: 16px;
         width: 416px;
         height: 172px;
+        cursor: pointer;
     }
 
     &__info {

@@ -25,6 +25,24 @@
         font-family: 'Abel';
     }
 
+    &__empty {
+        display: flex;
+        justify-content: center;
+        height: 229px;
+        background-color: #ECECEC;
+    }
+
+    &__loading {
+        display: flex;
+        justify-content: center;
+        height: 229px;
+        background-color: #ECECEC;
+    }
+
+    &__empty-title {
+        margin: auto;
+    }
+
     &__search-wrapper {
         display: flex;
         align-items: center;
@@ -50,5 +68,31 @@
     &__partner-card-wrapper {
         padding: 48px 64px;
         background-color: #ECECEC;
+        display: grid;
+        gap: 32px;
+        grid-template-columns: repeat(4, 1fr);
+        overflow: hidden;
+    }
+
+    &__loader {
+        margin: auto;
+        width: 48px;
+        height: 48px;
+        border: 5px solid black;
+        border-bottom-color: transparent;
+        border-radius: 50%;
+        display: inline-block;
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+
+        @keyframes rotation {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     }
 }

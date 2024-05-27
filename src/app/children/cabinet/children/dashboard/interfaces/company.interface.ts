@@ -43,17 +43,17 @@ export interface ICompanyV2Request {
     is_verified?: boolean;
     inn?: string;
     company_name?: string;
-    description: string;
-    field_of_activity: string;
-    year_of_foundation: number;
-    city: string;
-    street: string;
-    house: string;
-    number_of_employees: string;
+    description?: string;
+    field_of_activity?: string;
+    year_of_foundation?: number;
+    city?: string;
+    street?: string;
+    house?: string;
+    number_of_employees?: string;
     image_id?: string;
-    personal_site: string;
-    phone: string;
-    contact_email: string;
-    social_network_link: string;
+    personal_site?: string;
+    phone?: string;
+    contact_email?: string;
+    social_network_link?: string;
     registered_at?: string;
 }

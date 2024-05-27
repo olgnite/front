@@ -1,14 +1,12 @@
 import { ChangeDetectionStrategy, Component, Inject, Injector, inject } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { TuiDialogService } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 import { BehaviorSubject, Observable, map, switchMap, takeUntil, tap } from 'rxjs';
 import { DestroyService } from '../../../../../../services/destroy.service';
-import { IVacancyCard } from '../../../../interfaces/vacancy-card.interface';
+import { IVacancyCard, IVacancyCardRequest } from '../../../../interfaces/vacancy-card.interface';
 import { RemoveVacancyModalComponent } from '../../components/remove-vacancy-modal/remove-vacancy-modal.component';
 import { RequestVacancyService } from '../../services/request-vacancy.service';
-import { RequestPhotoGalleryService } from '../../services/request-photogallery.service';
-import { IPhotoRequest } from '../../interfaces/photo.interface';
 
 @Component({
     templateUrl: './about-vacancy.page.html',
@@ -40,7 +38,7 @@ export class AboutVacancyPage {
                                 companyId: value.company_id,
                                 ...value
                             }))
-                        )
+                        );
                 }),
                 tap((data: IVacancyCard) => this.currentVacancy$.next(data))
             );

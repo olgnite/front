@@ -8,28 +8,28 @@
     </div>
     <div class="profile__wrapper">
         <img class="profile__down-vector-img" src="assets/vectors/vector 8.png">
-        <div class="profile__info" *ngIf="isEditData$ | async; else profileForm">
+        <div class="profile__info" *ngIf="(isEditData$ | async) === false; else profileForm">
             <p class="profile__profile-title">Данные компании</p>
-            <div class="profile__data">
+            <div class="profile__data" *ngIf="company$ | async as company">
                 <div class="profile__info-wrapper">
                     <span class="profile__info-title">Название компании</span>
-                    <span class="profile__info-data">Текст</span>
+                    <span class="profile__info-data">{{company.company_name}}</span>
                 </div>
                 <div class="profile__info-wrapper">
                     <span class="profile__info-title">ИНН</span>
-                    <span class="profile__info-data">Текст</span>
+                    <span class="profile__info-data">{{company.inn}}</span>
                 </div>
                 <div class="profile__info-wrapper">
                     <span class="profile__info-title">E-mail</span>
-                    <span class="profile__info-data">Текст</span>
+                    <span class="profile__info-data">{{company.email}}</span>
                 </div>
                 <div class="profile__info-wrapper">
                     <span class="profile__info-title">Пароль</span>
                     <span class="profile__info-data">******</span>
                 </div>
+                <ui-campus-button class="profile__btn" [type]="'primary'" (click)="editMode(true)">Редактировать</ui-campus-button>
+                <ui-campus-button type="active" class="cabinet-header__button" (click)="logout()" [routerLink]="['/dashboard/partners']">Выйти</ui-campus-button>
             </div>
-            <ui-campus-button class="profile__btn" [type]="'primary'" (click)="editMode(false)">Редактировать</ui-campus-button>
-            <ui-campus-button type="active" class="cabinet-header__button" (click)="logout()" [routerLink]="['/dashboard/partners']">Выйти</ui-campus-button>
         </div>
     </div>
 </div>
@@ -40,30 +40,32 @@
         <form [formGroup]="profileViewModel.form" [ngStyle]="{'margin-bottom': '48px'}">
             <div class="profile__form">
                 <input formControlName="name" class="profile__control" placeholder="Название компании">
-                <input formControlName="email" class="profile__control" placeholder="E-mail">
-                <input formControlName="password" class="profile__control" placeholder="Пароль">
+                <input formControlName="email" class="profile__control-email" placeholder="E-mail" [readOnly]="true">
             </div>
-            <span class="profile__change-password-title" (click)="openChangePasswordDialog(changePassword)">Изменить пароль</span>
+            <span class="profile__change-password-title" (click)="openChangePasswordDialog(changePasswordModel)">Изменить пароль</span>
         </form>
         <div class="profile__action-form">
             <ui-campus-button class="profile__submit" [clickType]="'submit'" (click)="onSubmit()" [type]="'primary'">Сохранить</ui-campus-button>
-            <ui-campus-button (click)="editMode(true)" [type]="'edit'">Отменить</ui-campus-button>
+            <ui-campus-button (click)="editMode(false)" [type]="'edit'">Отменить</ui-campus-button>
         </div>
     </div>
 </ng-template>
 
-<ng-template #changePassword let-observer>
+<ng-template #changePasswordModel let-observer>
     <div class="profile__change-password">
         <span class="profile__change-title">Смена пароля</span>
         <div class="profile__change-form">
-            <form>
-                <input class="profile__control" placeholder="Пароль" [ngStyle]="{'margin-bottom': '24px'}">
-                <input class="profile__control" placeholder="Новый пароль" [ngStyle]="{'margin-bottom': '24px'}">
-                <input class="profile__control" placeholder="Повторите пароль">
-            </form>
-        </div>
-        <div class="profile__change-submit">
-            <ui-campus-button [type]="'primary'" [clickType]="'button'" tuiButton (click)="observer.complete()">Сохранить</ui-campus-button>
+            <ng-container *ngIf="changePasswordViewModel as model">
+                <form [formGroup]="model.form">
+                    <input class="profile__control" placeholder="Пароль" [ngStyle]="{'margin-bottom': '24px'}" formControlName="currentPassword">
+                    <input class="profile__control" placeholder="Новый пароль" [ngStyle]="{'margin-bottom': '24px'}" formControlName="newPassword">
+                    <input class="profile__control" placeholder="Повторите пароль" formControlName="repeatPassword">
+
+                    <div class="profile__change-submit" [ngStyle]="{'margin-top': '24px'}">
+                        <ui-campus-button [type]="'primary'" [clickType]="'submit'" tuiButton (click)="changePassword(model, observer)">Сохранить</ui-campus-button>
+                    </div>
+                </form>
+            </ng-container>
         </div>
     </div>
 </ng-template>

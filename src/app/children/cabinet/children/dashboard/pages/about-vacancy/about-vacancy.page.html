@@ -5,7 +5,9 @@
             <span class="about-vacancy__back">Назад</span>
         </div>
         <ng-container *ngIf="currentVacancy$ | async as currentCard">
-            <p class="about-vacancy__title">{{currentCard.name}}</p>
+            <div [routerLink]="['/dashboard/partner', currentCard.companyId]">
+                <span class="about-vacancy__title">{{currentCard.name}}</span>
+            </div>
         </ng-container>
     </div>
     <img class="about-vacancy__down-vector-img" src="assets/vectors/vector 6.png">

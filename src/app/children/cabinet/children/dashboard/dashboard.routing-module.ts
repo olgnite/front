@@ -27,6 +27,7 @@ import { RequestCompanyService } from './services/request-company.service';
 import { AUTHORIZED_COMPANY } from './tokens/authorized-company.token';
 import { Observable, map, of, switchMap } from 'rxjs';
 import { ICompanyV2Request } from './interfaces/company.interface';
+import { SearchPartnersPipe } from '../../pipes/serach-partners.pipe';
 
 const components: any[] = [
     LayoutDashboardPage,
@@ -67,6 +68,10 @@ const dashboardRoutes: Routes = [
                 canActivate: [TokenValidateGuard]
             },
             {
+                path: 'partner/:id',
+                component: AboutCompanyPage,
+            },
+            {
                 path: 'edit-company',
                 component: EditCompanyPage,
                 canActivate: [TokenValidateGuard]
@@ -100,7 +105,8 @@ const dashboardRoutes: Routes = [
 @NgModule({
     declarations: [
         ...components,
-        SearchPipe
+        SearchPipe,
+        SearchPartnersPipe
     ],
     imports: [
         CommonModule,

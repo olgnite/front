@@ -1,32 +1,8 @@
 <div class="partner-card__container">
-    <div class="partner-card__card">
+    <div class="partner-card__card" [routerLink]="['/dashboard/partner', partnerCard.id]">
         <div class="partner-card__info">
-            <span class="partner-card__title">«Название компании»</span>
-            <span class="partner-card__type">Тип компании</span>
-        </div>
-    </div>
-    <div class="partner-card__card">
-        <div class="partner-card__info">
-            <span class="partner-card__title">«Название компании»</span>
-            <span class="partner-card__type">Тип компании</span>
-        </div>
-    </div>
-    <div class="partner-card__card">
-        <div class="partner-card__info">
-            <span class="partner-card__title">«Название компании»</span>
-            <span class="partner-card__type">Тип компании</span>
-        </div>
-    </div>
-    <div class="partner-card__card">
-        <div class="partner-card__info">
-            <span class="partner-card__title">«Название компании»</span>
-            <span class="partner-card__type">Тип компании</span>
-        </div>
-    </div>
-    <div class="partner-card__card">
-        <div class="partner-card__info">
-            <span class="partner-card__title">«Название компании»</span>
-            <span class="partner-card__type">Тип компании</span>
+            <span class="partner-card__title">{{partnerCard.company_name}}</span>
+            <span class="partner-card__type">{{partnerCard.field_of_activity}}</span>
         </div>
     </div>
 </div>

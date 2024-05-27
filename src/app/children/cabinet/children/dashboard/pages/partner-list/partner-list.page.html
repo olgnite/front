@@ -6,7 +6,8 @@
         </div>
         <p class="partner-list__title">Компании</p>
     </div>
-    <img class="partner-list__up-vector-img" src="assets/vectors/vector 6.png">
+    <img class="partner-list__down-vector-img" src="assets/vectors/vector 6.png"
+        [ngStyle]="{'width': '100%', 'display': 'flex'}">
     <div [ngStyle]="{'padding': '48px 64px'}">
         <div class="partner-list__search-wrapper">
             <img class="partner-list__search-icon" src="assets/icons/search.svg">
@@ -16,11 +17,32 @@
     </div>
 
     <div class="partner-list">
-        <img class="edit-company__top-vector" src="assets/vectors/vector 3.png"
+        <img class="partner-list__top-vector" src="assets/vectors/vector 3.png"
             [ngStyle]="{'width': '100%', 'display': 'block'}">
-        <div class="partner-list__partner-card-wrapper">
-            <partner></partner>
-        </div>
-        <img class="edit-company__down-vector" src="assets/vectors/vector 4.png" [ngStyle]="{'width': '100%'}">
+        <ng-container *ngIf="parthers$ | async as parthers; else loading">
+            <ng-container *ngIf="(parthers | searchPartners : name) as list; else empty">
+                <ng-container *ngIf="list.length; else empty">
+                    <div class="partner-list__partner-card-wrapper">
+                        <ng-container *ngFor="let parther of list">
+                            <partner [partnerCard]="parther"></partner>
+                        </ng-container>
+                    </div>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+        <img class="partner-list__down-vector" src="assets/vectors/vector 4.png"
+            [ngStyle]="{'width': '100%', 'display': 'block'}">
     </div>
 </div>
+
+<ng-template #empty>
+    <div class="partner-list__empty">
+        <h2 class="partner-list__empty-title">Ничего не найдено</h2>
+    </div>
+</ng-template>
+
+<ng-template #loading>
+    <div class="partner-list__loading">
+        <span class="partner-list__loader"></span>
+    </div>
+</ng-template>

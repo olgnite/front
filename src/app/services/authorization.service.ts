@@ -29,7 +29,7 @@ export class AuthorizationService {
             headers: new HttpHeaders({
                 'Content-Type': 'application/x-www-form-urlencoded'
             })
-        }
+        };
 
         const body = new URLSearchParams();
 
@@ -54,5 +54,9 @@ export class AuthorizationService {
         this.isLoggedIn$.next(isValid);
 
         return isValid;
+    }
+
+    public changePassword(data: { password: string, new_password: string; }): Observable<void> {
+        return this._httpClient.post<void>(`${this._url}/auth/change-password`, data);
     }
 }

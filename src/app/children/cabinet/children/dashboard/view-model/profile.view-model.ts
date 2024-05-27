@@ -1,5 +1,6 @@
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormBaseViewModel } from './form-base.view-model';
+import { ICompanyV2Request } from '../interfaces/company.interface';
 
 export class ProfileViewModel extends FormBaseViewModel<IProfile> {
 
@@ -15,12 +16,12 @@ export class ProfileViewModel extends FormBaseViewModel<IProfile> {
 
     public form: FormGroup;
 
-    constructor() {
+    constructor(company?: ICompanyV2Request) {
         super()
 
         this.form = new FormGroup<IProfileModel>({
-            name: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
-            email: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
+            name: new FormControl<string>(company?.company_name || '', { nonNullable: true, validators: [Validators.required] }),
+            email: new FormControl<string>(company?.email || '', { nonNullable: true, validators: [Validators.required] }),
             password: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] })
         })
     }
@@ -38,7 +39,7 @@ export class ProfileViewModel extends FormBaseViewModel<IProfile> {
 interface IProfile {
     name: string;
     email: string;
-    password: string;
+    password?: string;
 }
 
 interface IProfileModel {

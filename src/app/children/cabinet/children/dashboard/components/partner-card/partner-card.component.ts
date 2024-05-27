@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ICompanyV2Request } from '../../interfaces/company.interface';
 
 @Component({
     selector: 'partner',
@@ -9,5 +10,5 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 export class PartnerCardComponent {
 
     @Input()
-    public partnerCard: any;
+    public partnerCard!: ICompanyV2Request;
 }

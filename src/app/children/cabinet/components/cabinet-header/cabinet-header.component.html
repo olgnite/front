@@ -3,8 +3,7 @@
     <div class="cabinet-header__content">
         <div class="cabinet-header__tabs">
             <div *ngFor="let path of paths$ | async" class="cabinet-header__tab">
-                <ui-campus-button [type]="'tab'"
-                                  [routerLink]="path.path">{{ path.title }}</ui-campus-button>
+                <ui-campus-button [type]="'tab'" [routerLink]="path.path">{{ path.title }}</ui-campus-button>
             </div>
         </div>
         <div class="cabinet-header__buttons" *ngIf="!(isLoggedIn$ | async); else logoutTemplate">
@@ -17,6 +16,8 @@
 
 <ng-template #logoutTemplate>
     <div class="cabinet-header__buttons">
-        <ui-campus-button type="active" class="cabinet-header__button" [routerLink]="['/dashboard/profile']">Личный кабинет</ui-campus-button>
+        <ui-campus-button type="active" class="cabinet-header__button" [routerLink]="['/dashboard/profile']">
+            Личный кабинет
+        </ui-campus-button>
     </div>
 </ng-template>

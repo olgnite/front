@@ -1,10 +1,14 @@
 import { ChangeDetectionStrategy, Component, Inject, inject } from '@angular/core';
 import { ProfileViewModel } from '../../view-model/profile.view-model';
-import { BehaviorSubject, takeUntil } from 'rxjs';
+import { BehaviorSubject, Observable, takeUntil, tap } from 'rxjs';
 import { TuiDialogContext, TuiDialogService } from '@taiga-ui/core';
 import { PolymorpheusContent } from '@tinkoff/ng-polymorpheus';
 import { DestroyService } from '../../../../../../services/destroy.service';
 import { AuthorizationService } from '../../../../../../services/authorization.service';
+import { ICompanyV2Request } from '../../interfaces/company.interface';
+import { AUTHORIZED_COMPANY } from '../../tokens/authorized-company.token';
+import { ChangePasswordViewModel } from '../../view-model/change-password.view-model';
+import { RequestCompanyService } from '../../services/request-company.service';
 
 @Component({
     templateUrl: './profile.page.html',
@@ -12,16 +16,27 @@ import { AuthorizationService } from '../../../../../../services/authorization.s
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProfilePage {
-    public profileViewModel: ProfileViewModel = new ProfileViewModel();
-    public isEditData$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+
+    public profileViewModel!: ProfileViewModel;
+    public changePasswordViewModel: ChangePasswordViewModel = new ChangePasswordViewModel();
+    public isEditData$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    public company$!: Observable<ICompanyV2Request>;
 
     private authorizationService = inject(AuthorizationService);
+    private requestCompanyService = inject(RequestCompanyService);
     readonly isLoggedIn$ = this.authorizationService.isLoggedIn$;
 
     constructor(
         @Inject(TuiDialogService) public readonly dialogs: TuiDialogService,
-        @Inject(DestroyService) public readonly destroy$: DestroyService
+        @Inject(DestroyService) public readonly destroy$: DestroyService,
+        @Inject(AUTHORIZED_COMPANY) private _authorizedCompany: Observable<ICompanyV2Request>
     ) {
+        this.company$ = this._authorizedCompany
+            .pipe(
+                tap((data: ICompanyV2Request) => {
+                    this.profileViewModel = new ProfileViewModel(data);
+                })
+            );
     }
 
     public editMode(flag: boolean): void {
@@ -29,7 +44,14 @@ export class ProfilePage {
     }
 
     public onSubmit(): void {
-        console.log(this.profileViewModel.toModel());
+        const dto: { name: string, email: string; } = this.profileViewModel.toModel();
+
+        this.requestCompanyService.updateCompany({ company_name: dto.name, email: dto.email })
+            .pipe(
+                tap(() => this.isEditData$.next(false)),
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
     }
 
     public openChangePasswordDialog(template: PolymorpheusContent<TuiDialogContext>): void {
@@ -44,8 +66,13 @@ export class ProfilePage {
         this.authorizationService.logout();
     }
 
-    public changePassword(): void {
-
+    public changePassword(model: ChangePasswordViewModel, observer: any): void {
+        this.authorizationService.changePassword({ password: model.toModel().currentPassword, new_password: model.toModel().newPassword })
+            .pipe(
+                tap(() => observer.complete()),
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
     }
 
     public goToBack(): void {
