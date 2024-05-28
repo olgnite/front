@@ -57,6 +57,6 @@ export class AuthorizationService {
     }
 
     public changePassword(data: { password: string, new_password: string; }): Observable<void> {
-        return this._httpClient.post<void>(`${this._url}/auth/change-password`, data);
+        return this._httpClient.post<void>(`${this._url}/auth/change-password?password=${data.password}&new_password=${data.new_password}`, '');
     }
 }

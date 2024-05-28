@@ -12,7 +12,7 @@
     </div>
     <div class="company__about">
         <div class="company__main-info" *ngIf="company.field_of_activity; else emptyInfo">
-            <p class="company__title">О компании</p>
+            <span class="company__title">О компании</span>
             <div class="company__info">
                 <span class="company__company-type">Тип компании: {{company.field_of_activity}}</span>
                 <span class="company__company-info" *ngIf="company.year_of_foundation">Год основания: {{company.year_of_foundation}}</span>

@@ -1,13 +1,15 @@
 import { ChangeDetectionStrategy, Component, Inject, Injector, inject } from '@angular/core';
 import { TuiDialogService } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
-import { BehaviorSubject, Observable, switchMap, takeUntil } from 'rxjs';
+import { BehaviorSubject, Observable, map, of, switchMap, takeUntil, zip } from 'rxjs';
 import { DestroyService } from '../../../../../../services/destroy.service';
-import { IVacancyCard } from '../../../../interfaces/vacancy-card.interface';
+import { IVacancyCard, IVacancyCardRequest } from '../../../../interfaces/vacancy-card.interface';
 import { RemoveVacancyModalComponent } from '../../components/remove-vacancy-modal/remove-vacancy-modal.component';
 import { RequestVacancyService } from '../../services/request-vacancy.service';
 import { AddVacancyModalComponent } from '../../components/add-vacancy-modal/add-vacancy-modal.component';
 import { AuthorizationService } from "../../../../../../services/authorization.service";
+import { AUTHORIZED_COMPANY } from '../../tokens/authorized-company.token';
+import { ICompanyV2Request } from '../../interfaces/company.interface';
 
 @Component({
     templateUrl: './vacancy-list.page.html',
@@ -17,7 +19,7 @@ import { AuthorizationService } from "../../../../../../services/authorization.s
 export class VacancyListPage {
     private authorizationService = inject(AuthorizationService);
     public name: string = '';
-    public vacancyList$: Observable<IVacancyCard[]>;
+    public vacancyList$: Observable<IVacancyCardRequest[]>;
 
     private _requestVacancyService: RequestVacancyService = inject(RequestVacancyService);
     private _destroy$: DestroyService = inject(DestroyService);
@@ -27,8 +29,15 @@ export class VacancyListPage {
     constructor(
         @Inject(TuiDialogService) public readonly dialogs: TuiDialogService,
         @Inject(Injector) private readonly injector: Injector,
+        @Inject(AUTHORIZED_COMPANY) private _authorizedCompany: Observable<ICompanyV2Request>
     ) {
-        this.vacancyList$ = this.getVacancyList();
+        this.vacancyList$ = this.getVacancyList()
+            .pipe(
+                switchMap(data => zip(this._authorizedCompany, of(data))),
+                map(([company, list]: [ICompanyV2Request, IVacancyCardRequest[]]) => {
+                    return this.isLoggedIn$.value ? list.filter(item => item.company_id === company.id) : list;
+                })
+            );
     }
 
     public openDialogRemove(vacancy: IVacancyCard): void {
@@ -51,7 +60,7 @@ export class VacancyListPage {
         return this._update$
             .pipe(
                 switchMap(() => this._requestVacancyService.getVacancyList()),
-            )
+            );
     }
 
     public goToBack(): void {

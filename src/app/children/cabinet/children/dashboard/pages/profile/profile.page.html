@@ -40,6 +40,7 @@
         <form [formGroup]="profileViewModel.form" [ngStyle]="{'margin-bottom': '48px'}">
             <div class="profile__form">
                 <input formControlName="name" class="profile__control" placeholder="Название компании">
+                <input formControlName="inn" class="profile__control-inn" placeholder="inn" [readOnly]="true">
                 <input formControlName="email" class="profile__control-email" placeholder="E-mail" [readOnly]="true">
             </div>
             <span class="profile__change-password-title" (click)="openChangePasswordDialog(changePasswordModel)">Изменить пароль</span>

@@ -12,14 +12,16 @@
     <div class="about-company__company-about">
         <company></company>
     </div>
-    <div class="about-company__vacancies-wrapper">
+    <div class="about-company__vacancies-wrapper" *ngIf="isShowVacancyList$ | async">
         <img src="assets/vectors/vector 3.png" [ngStyle]="{'width': '100%', 'display': 'block'}">
         <div class="about-company__vacancies">
             <div class="about-company__vacancy-title">Вакансии</div>
             <ng-container *ngIf="(isShowAll$ | async) === false; else showVacancies">
                 <ng-container *ngIf="vacancyList$ | async as vacancyList">
-                    <ng-container *ngFor="let card of vacancyList | slice : 0 : 3">
-                        <vacancy-card [vacancyCard]="card"></vacancy-card>
+                    <ng-container *ngIf="vacancyList.length; else empty">
+                        <ng-container *ngFor="let card of vacancyList | slice : 0 : 3">
+                            <vacancy-card [vacancyCard]="card"></vacancy-card>
+                        </ng-container>
                     </ng-container>
                 </ng-container>
                 <!-- <ui-campus-button class="about-company__show-more-btn" [type]="'primary'"
@@ -48,4 +50,10 @@
     </ng-container> -->
     <ui-campus-button class="about-company__show-more-btn" [type]="'primary'"
         (click)="updateShowVacancies(false)">Скрыть</ui-campus-button>
+</ng-template>
+
+<ng-template #empty>
+    <div class="about-company__empty-wrapper">
+        <h2 class="about-company__empty-title">Ничего не найдено</h2>
+    </div>
 </ng-template>

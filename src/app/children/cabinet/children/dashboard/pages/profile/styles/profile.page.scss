@@ -109,6 +109,17 @@
         box-sizing: border-box;
     }
 
+    &__control-inn {
+        border: none;
+        font-size: 16px;
+        line-height: 20px;
+        background-color: #8d87a3;
+        border-radius: 16px;
+        width: 100%;
+        padding: 22px 24px;
+        box-sizing: border-box;
+    }
+
     &__submit {
 
         ::ng-deep button {

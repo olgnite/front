@@ -7,13 +7,20 @@
         font-family: 'Giga Sans';
         font-size: 24px;
     }
+    &__container-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-left: 32px;
+    }
 
     &__wrapper {
+        cursor: pointer;
         display: flex;
         align-items: center;
         padding: 32px 64px;
         justify-content: space-between;
-        margin-bottom: 24px;
+        width: 100%;
     }
 
     &__wrapper-title {

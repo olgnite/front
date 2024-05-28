@@ -68,4 +68,15 @@
     &__wrapper-down-vector {
         background: #8269EF;
     }
+
+    &__empty-wrapper {
+        display: flex;
+        height: 65px;
+        margin: auto;
+        justify-content: center;
+    }
+
+    &__empty-title {
+        margin-top: 24px;
+    }
 }

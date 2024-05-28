@@ -10,8 +10,8 @@ export class ProfileViewModel extends FormBaseViewModel<IProfile> {
     public get email(): string {
         return this.form.get('email')?.value;
     }
-    public get password(): string {
-        return this.form.get('password')?.value;
+    public get inn(): string {
+        return this.form.get('inn')?.value;
     }
 
     public form: FormGroup;
@@ -22,7 +22,7 @@ export class ProfileViewModel extends FormBaseViewModel<IProfile> {
         this.form = new FormGroup<IProfileModel>({
             name: new FormControl<string>(company?.company_name || '', { nonNullable: true, validators: [Validators.required] }),
             email: new FormControl<string>(company?.email || '', { nonNullable: true, validators: [Validators.required] }),
-            password: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] })
+            inn: new FormControl<string>(company?.inn || '', { nonNullable: true, validators: [Validators.required] })
         })
     }
 
@@ -30,7 +30,7 @@ export class ProfileViewModel extends FormBaseViewModel<IProfile> {
         return {
             name: this.name,
             email: this.email,
-            password: this.password
+            inn: this.inn
         }
     }
 
@@ -39,11 +39,11 @@ export class ProfileViewModel extends FormBaseViewModel<IProfile> {
 interface IProfile {
     name: string;
     email: string;
-    password?: string;
+    inn?: string;
 }
 
 interface IProfileModel {
     name: AbstractControl<string>;
     email: AbstractControl<string>;
-    password: AbstractControl<string>;
+    inn: AbstractControl<string>;
 }
