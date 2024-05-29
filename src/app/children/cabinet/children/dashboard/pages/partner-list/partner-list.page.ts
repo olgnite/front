@@ -22,4 +22,8 @@ export class PartnerListPage {
     public goToBack(): void {
         history.back();
     }
+
+    public trackByFn(index: number, item: ICompanyV2Request): string {
+        return `${item.id}`;
+    }
 }

@@ -18,7 +18,7 @@ export class AuthorizationService {
     private _jwt: JwtHelperService = inject(JwtHelperService);
 
     readonly isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-    public paths$: BehaviorSubject<IPath[]> = new BehaviorSubject<IPath[]>(!this.isLoggedIn$.value ? pathsAuth : pathsUnAuth);
+    public paths$: BehaviorSubject<IPath[]> = new BehaviorSubject<IPath[]>(this.isTokenValid() ? pathsAuth : pathsUnAuth);
 
     public registration(data: IRegistration): Observable<IRegistrationResponse> {
         return this._httpClient.post<IRegistrationResponse>(`${this._url}/auth/register`, data);

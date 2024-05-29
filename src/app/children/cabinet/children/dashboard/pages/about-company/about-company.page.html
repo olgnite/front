@@ -4,50 +4,47 @@
             <img class="about-company__back-icon" src="assets/icons/back.svg">
             <span class="about-company__back">Назад</span>
         </div>
-        <ng-container *ngIf="company$ | async as company">
-            <p class="about-company__title">{{company.company_name}}</p>
-        </ng-container>
+        <p class="about-company__title">{{(companyName$ | async)}}</p>
     </div>
     <img class="about-company__up-vector-img" src="assets/vectors/vector 2.png">
-    <div class="about-company__company-about">
-        <company></company>
-    </div>
-    <div class="about-company__vacancies-wrapper" *ngIf="isShowVacancyList$ | async">
-        <img src="assets/vectors/vector 3.png" [ngStyle]="{'width': '100%', 'display': 'block'}">
-        <div class="about-company__vacancies">
-            <div class="about-company__vacancy-title">Вакансии</div>
-            <ng-container *ngIf="(isShowAll$ | async) === false; else showVacancies">
-                <ng-container *ngIf="vacancyList$ | async as vacancyList">
-                    <ng-container *ngIf="vacancyList.length; else empty">
-                        <ng-container *ngFor="let card of vacancyList | slice : 0 : 3">
-                            <vacancy-card [vacancyCard]="card"></vacancy-card>
+    <ng-container *ngIf="company$ | async as company">
+        <div class="about-company__company-about">
+            <company></company>
+        </div>
+        <div class="about-company__vacancies-wrapper" *ngIf="isShowVacancyList$ | async">
+            <img src="assets/vectors/vector 3.png" [ngStyle]="{'width': '100%', 'display': 'block'}">
+            <div class="about-company__vacancies">
+                <div class="about-company__vacancy-title">Вакансии</div>
+                <ng-container *ngIf="(isShowAll$ | async) === false; else showVacancies">
+                    <ng-container *ngIf="vacancyList$ | async as vacancyList">
+                        <ng-container *ngIf="vacancyList.length; else empty">
+                            <ng-container *ngFor="let card of vacancyList | slice : 0 : 3; trackBy: trackByFn">
+                                <vacancy-card [vacancyCard]="card"></vacancy-card>
+                            </ng-container>
                         </ng-container>
                     </ng-container>
-                </ng-container>
-                <!-- <ui-campus-button class="about-company__show-more-btn" [type]="'primary'"
+                    <!-- <ui-campus-button class="about-company__show-more-btn" [type]="'primary'"
                     (click)="updateShowVacancies(true)">Показать все</ui-campus-button> -->
-            </ng-container>
+                </ng-container>
+            </div>
+            <div class="about-company__wrapper-down-vector">
+                <img src="assets/vectors/vector 4.png" [ngStyle]="{'width': '100%', 'display': 'block'}">
+            </div>
         </div>
-        <div class="about-company__wrapper-down-vector">
-            <img src="assets/vectors/vector 4.png" [ngStyle]="{'width': '100%', 'display': 'block'}">
+        <div class="about-company__photo-gallery">
+            <div class="about-company__gallery-wrapper">
+                <div class="about-company__photo-gallery-title">Фотогалерея</div>
+                <photo-gallery></photo-gallery>
+            </div>
+            <img src="assets/vectors/vector 6.png" [ngStyle]="{'width': '100%', 'display': 'block'}">
         </div>
-    </div>
-    <div class="about-company__photo-gallery">
-        <div class="about-company__gallery-wrapper">
-            <div class="about-company__photo-gallery-title">Фотогалерея</div>
-            <photo-gallery></photo-gallery>
+        <div class="about-company__footer">
+            <cabinet-footer [company]="company"></cabinet-footer>
         </div>
-        <img src="assets/vectors/vector 6.png" [ngStyle]="{'width': '100%', 'display': 'block'}">
-    </div>
-    <div class="about-company__footer">
-        <cabinet-footer></cabinet-footer>
-    </div>
+    </ng-container>
 </div>
 
 <ng-template #showVacancies>
-    <!-- <ng-container *ngFor="let card of vacancyList$ | async">
-        <vacancy-card [vacancyCard]="card"></vacancy-card>
-    </ng-container> -->
     <ui-campus-button class="about-company__show-more-btn" [type]="'primary'"
         (click)="updateShowVacancies(false)">Скрыть</ui-campus-button>
 </ng-template>

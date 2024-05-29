@@ -1,6 +1,6 @@
 <div class="photo-gallery__container">
     <ng-container *ngIf="photoList$ | async as photoList">
-        <ng-container *ngFor="let photo of photoList">
+        <ng-container *ngFor="let photo of photoList; trackBy: trackByFn">
             <div class="photo-gallery__photo">
                 <img src="{{photo.imageUrl}}"
                     [ngStyle]="{'width': '300px', 'height': '282px', 'border-radius': '16px'}">

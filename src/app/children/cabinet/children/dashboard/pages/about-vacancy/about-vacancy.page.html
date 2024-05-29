@@ -5,8 +5,8 @@
             <span class="about-vacancy__back">Назад</span>
         </div>
         <ng-container *ngIf="currentVacancy$ | async as currentCard">
-            <div [routerLink]="['/dashboard/partner', currentCard.companyId]">
-                <span class="about-vacancy__title">{{currentCard.name}}</span>
+            <div>
+                <span class="about-vacancy__title" [routerLink]="['/dashboard/partner', currentCard.company_id]">{{currentCard.name}}</span>
             </div>
         </ng-container>
     </div>

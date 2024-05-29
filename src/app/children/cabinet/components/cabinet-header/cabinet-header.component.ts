@@ -45,4 +45,8 @@ export class CabinetHeaderComponent {
         )
             .subscribe();
     }
+
+    public trackByFn(index: number, item: IPath): string {
+        return `${item.path}`;
+    }
 }

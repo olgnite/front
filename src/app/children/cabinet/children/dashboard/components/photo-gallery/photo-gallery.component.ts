@@ -26,4 +26,8 @@ export class PhotoGalleryComponent {
                 })
             );
     }
+
+    public trackByFn(index: number, item: IPhoto): string {
+        return `${item.id}`;
+    }
 }

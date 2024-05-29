@@ -19,7 +19,7 @@
         <ng-container *ngIf="vacancyList$ | async as vacancyList; else loading">
             <ng-container *ngIf="(vacancyList | search : name) as list">
                 <ng-container *ngIf="list.length; else empty">
-                    <div class="vacancy-list__vacancies" *ngFor="let card of list">
+                    <div class="vacancy-list__vacancies" *ngFor="let card of list; trackBy: trackByFn">
                         <vacancy-card [vacancyCard]="card" (showDialogRemove)="openDialogRemove(card)"></vacancy-card>
                     </div>
                 </ng-container>

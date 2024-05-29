@@ -70,8 +70,8 @@
         background-color: #ECECEC;
         display: grid;
         gap: 32px;
-        grid-template-columns: repeat(4, 1fr);
-        overflow: hidden;
+        grid-template-columns: repeat(auto-fit, minmax(416px, 1fr));
+        margin: 0 auto;
     }
 
     &__loader {

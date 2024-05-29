@@ -2,7 +2,7 @@
     <img class="cabinet-header__img-vector" *ngIf="currentPath$ | async as path" src="{{imagePathList[path]}}">
     <div class="cabinet-header__content">
         <div class="cabinet-header__tabs">
-            <div *ngFor="let path of paths$ | async" class="cabinet-header__tab">
+            <div *ngFor="let path of paths$ | async; trackBy: trackByFn" class="cabinet-header__tab">
                 <ui-campus-button [type]="'tab'" [routerLink]="path.path">{{ path.title }}</ui-campus-button>
             </div>
         </div>

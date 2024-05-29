@@ -7,7 +7,9 @@
         font-family: 'Giga Sans';
         font-size: 24px;
         margin-bottom: 24px;
+        overflow: hidden;
     }
+
     &__container-item {
         display: flex;
         align-items: center;

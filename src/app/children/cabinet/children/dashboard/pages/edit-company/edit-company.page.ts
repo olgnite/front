@@ -156,4 +156,8 @@ export class EditCompanyPage implements OnInit {
     public goToBack(): void {
         history.back();
     }
+
+    public trackByFn(index: number, item: IPhoto): string {
+        return `${item.id}`;
+    }
 }

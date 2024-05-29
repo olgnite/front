@@ -22,6 +22,7 @@ export class AboutCompanyPage {
     public company$!: Observable<ICompanyV2Request>;
     public isShowAll$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     public isShowVacancyList$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+    public companyName$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
     private _requestVacancyService: RequestVacancyService = inject(RequestVacancyService);
     private _requestCompanyService: RequestCompanyService = inject(RequestCompanyService);
@@ -42,6 +43,7 @@ export class AboutCompanyPage {
                     const newList: IVacancyCardRequest[] = list.filter(item => item.company_id === company.id);
                     this.vacancyList$ = of(newList);
                     this.isShowVacancyList$.next(!!newList.length);
+                    this.companyName$.next(company.company_name || '');
 
                     return company;
                 })
@@ -54,5 +56,9 @@ export class AboutCompanyPage {
 
     public goToBack(): void {
         history.back();
+    }
+
+    public trackByFn(index: number, item: IVacancyCardRequest): string {
+        return `${item.id}`;
     }
 }

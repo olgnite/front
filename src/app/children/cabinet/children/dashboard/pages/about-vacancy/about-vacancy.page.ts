@@ -19,7 +19,7 @@ import { RequestVacancyService } from '../../services/request-vacancy.service';
 export class AboutVacancyPage {
 
     public vacancyCard$: Observable<IVacancyCard>;
-    public currentVacancy$: BehaviorSubject<IVacancyCard | null> = new BehaviorSubject<IVacancyCard | null>(null);
+    public currentVacancy$: BehaviorSubject<IVacancyCardRequest | null> = new BehaviorSubject<IVacancyCardRequest | null>(null);
 
     private _activatedRoute: ActivatedRoute = inject(ActivatedRoute);
     private _requestVacancyService: RequestVacancyService = inject(RequestVacancyService);
@@ -34,13 +34,11 @@ export class AboutVacancyPage {
                 switchMap((params: Params) => {
                     return this._requestVacancyService.getVacancyById(params['id'])
                         .pipe(
-                            map(value => ({
-                                companyId: value.company_id,
-                                ...value
-                            }))
+                            tap((data: IVacancyCardRequest) => {
+                                this.currentVacancy$.next(data);
+                            })
                         );
                 }),
-                tap((data: IVacancyCard) => this.currentVacancy$.next(data))
             );
     }
 

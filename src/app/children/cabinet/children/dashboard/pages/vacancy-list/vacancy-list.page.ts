@@ -66,4 +66,8 @@ export class VacancyListPage {
     public goToBack(): void {
         history.back();
     }
+
+    public trackByFn(index: number, item: IVacancyCardRequest): string {
+        return `${item.id}`;
+    }
 }
