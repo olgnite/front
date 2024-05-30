@@ -1,17 +1,26 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { URL_TOKEN } from '../tokens/url.token';
-import { Observable } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import { IPhotoRequest } from '../interfaces/photo.interface';
+import { CacheRequestService } from './cache-request.service';
 
 @Injectable()
 export class RequestPhotoGalleryService {
 
     private _url: string = inject(URL_TOKEN);
     private _httpClient: HttpClient = inject(HttpClient);
+    private _cacheRequestService: CacheRequestService = inject(CacheRequestService);
 
     public getPhotoGallery(): Observable<IPhotoRequest[]> {
-        return this._httpClient.get<IPhotoRequest[]>(`${this._url}/photo`);
+        if (!this._cacheRequestService.photoGalleryCache.has(this._url)) {
+            return this._httpClient.get<IPhotoRequest[]>(`${this._url}/photo`)
+                .pipe(
+                    tap(data => this._cacheRequestService.photoGalleryCache.set(this._url, data))
+                );
+        }
+
+        return of(this._cacheRequestService.photoGalleryCache.get(this._url) || []);
     }
 
     public addPhoto(file: any): Observable<void> {

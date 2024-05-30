@@ -28,6 +28,7 @@ import { AUTHORIZED_COMPANY } from './tokens/authorized-company.token';
 import { Observable, map, of, switchMap } from 'rxjs';
 import { ICompanyV2Request } from './interfaces/company.interface';
 import { SearchPartnersPipe } from '../../pipes/serach-partners.pipe';
+import { CacheRequestService } from './services/cache-request.service';
 
 const components: any[] = [
     LayoutDashboardPage,
@@ -121,6 +122,7 @@ const dashboardRoutes: Routes = [
         RequestVacancyService,
         RequestPhotoGalleryService,
         RequestCompanyService,
+        CacheRequestService,
         {
             provide: AUTHORIZED_COMPANY,
             useFactory: (): Observable<ICompanyV2Request> => {
