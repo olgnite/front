@@ -13,4 +13,8 @@ export class CacheRequestService {
     public vacanciesCache: Map<string, IVacancyCardRequest[]> = new Map<string, IVacancyCardRequest[]>();
 
     public photoGalleryCache: Map<string, IPhotoRequest[]> = new Map<string, IPhotoRequest[]>();
+
+    public photoByIdCache: Map<string, IPhotoRequest> = new Map<string, IPhotoRequest>();
+
+    public vacancyByIdCache: Map<string, IVacancyCardRequest> = new Map<string, IVacancyCardRequest>();
 }

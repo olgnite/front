@@ -4,7 +4,6 @@ import { AuthorizationService } from "../../../../../../services/authorization.s
 import { IVacancyCard } from '../../../../interfaces/vacancy-card.interface';
 import { ICompanyV2Request } from '../../interfaces/company.interface';
 import { IPhotoRequest } from '../../interfaces/photo.interface';
-import { RequestCompanyService } from '../../services/request-company.service';
 import { RequestPhotoGalleryService } from '../../services/request-photogallery.service';
 import { AUTHORIZED_COMPANY } from '../../tokens/authorized-company.token';
 

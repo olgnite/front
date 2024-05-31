@@ -24,7 +24,14 @@ export class RequestVacancyService {
     }
 
     public getVacancyById(id: string): Observable<IVacancyCardRequest> {
-        return this._httpClient.get<IVacancyCardRequest>(`${this._url}/vacancy/${id}`);
+        if (!this._cacheRequestService.vacancyByIdCache.has(id)) {
+            return this._httpClient.get<IVacancyCardRequest>(`${this._url}/vacancy/${id}`)
+                .pipe(
+                    tap(data => this._cacheRequestService.vacancyByIdCache.set(id, data))
+                );
+        }
+
+        return of(this._cacheRequestService.vacancyByIdCache.get(id) || {} as IVacancyCardRequest);
     }
 
     public addVacancy(vacancy: IVacancyCard): Observable<void> {
