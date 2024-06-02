@@ -11,10 +11,10 @@
         </ui-campus-button>
     </div>
     <div class="company__about">
-        <div class="company__main-info" *ngIf="company.field_of_activity; else emptyInfo">
+        <div class="company__main-info">
             <span class="company__title">О компании</span>
             <div class="company__info">
-                <span class="company__company-type">Тип компании: {{company.field_of_activity}}</span>
+                <span class="company__company-type" *ngIf="company.field_of_activity">Тип компании: {{company.field_of_activity}}</span>
                 <span class="company__company-info" *ngIf="company.year_of_foundation">Год основания: {{company.year_of_foundation}}</span>
                 <span class="company__company-info" *ngIf="company.city">Местоположение: г. {{company.city}}, ул. {{company.street}}, д. {{company.house}}</span>
                 <span class="company__company-info" *ngIf="company.number_of_employees">Количество сотрудников: {{company.number_of_employees}}</span>
