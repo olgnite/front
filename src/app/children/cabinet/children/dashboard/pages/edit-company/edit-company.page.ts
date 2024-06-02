@@ -56,7 +56,7 @@ export class EditCompanyPage implements OnInit {
                     return zip(this.requestPhotoGalleryService.getPhotoById('be674599-edd1-4eab-b5e9-24f233944b35'), of(company));
                 }),
                 map(([img, company]) => {
-                    this.img$.next(img.image_url);
+                    this.img$.next(img?.image_url ?? 'https://image-storage-oleg.storage.yandexcloud.net/4c4af7dd-a390-42a1-955e-7c070be70e20.jpg');
 
                     return this.fromBuilder.group({
                         industry: company.field_of_activity,
