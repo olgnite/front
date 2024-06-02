@@ -1,0 +1,6 @@
+{
+    "/api": {
+        "target": "https://front-git-main-olgnites-projects.vercel.app/",
+        "secure": false
+    }
+}
