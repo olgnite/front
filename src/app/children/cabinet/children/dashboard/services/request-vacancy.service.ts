@@ -16,6 +16,7 @@ export class RequestVacancyService {
         if (!this._cacheRequestService.vacanciesCache.has(this._url)) {
             return this._httpClient.get<IVacancyCardRequest[]>(`${this._url}/vacancy`, {
                 headers: {
+                    'Access-Control-Allow-Origin': '*',
                     'rejectUnauthorized': 'false'
                 }
             })

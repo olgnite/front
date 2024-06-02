@@ -27,6 +27,7 @@ export class RequestCompanyService {
         if (!this._cacheRequestService.companiesCache.has(this._url)) {
             return this._httpClient.get<ICompanyV2Request[]>(`${this._url}/company`, {
                 headers: {
+                    'Access-Control-Allow-Origin': '*',
                     'rejectUnauthorized': 'false'
                 }
             })
