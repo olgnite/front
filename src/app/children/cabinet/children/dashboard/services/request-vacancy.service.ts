@@ -13,30 +13,22 @@ export class RequestVacancyService {
     private _cacheRequestService: CacheRequestService = inject(CacheRequestService);
 
     public getVacancyList(): Observable<IVacancyCardRequest[]> {
-        if (!this._cacheRequestService.vacanciesCache.has(this._url)) {
-            return this._httpClient.get<IVacancyCardRequest[]>(`${this._url}/vacancy`, {
-                headers: {
-                    'Access-Control-Allow-Origin': '*',
-                    'rejectUnauthorized': 'false'
-                }
-            })
-                .pipe(
-                    tap(data => this._cacheRequestService.vacanciesCache.set(this._url, data))
-                );
-        }
-
-        return of(this._cacheRequestService.vacanciesCache.get(this._url) || []);
+        return this._httpClient.get<IVacancyCardRequest[]>(`${this._url}/vacancy`, {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'rejectUnauthorized': 'false'
+            }
+        })
+            .pipe(
+                tap(data => this._cacheRequestService.vacanciesCache.set(this._url, data))
+            );
     }
 
     public getVacancyById(id: string): Observable<IVacancyCardRequest> {
-        if (!this._cacheRequestService.vacancyByIdCache.has(id)) {
-            return this._httpClient.get<IVacancyCardRequest>(`${this._url}/vacancy/${id}`)
-                .pipe(
-                    tap(data => this._cacheRequestService.vacancyByIdCache.set(id, data))
-                );
-        }
-
-        return of(this._cacheRequestService.vacancyByIdCache.get(id) || {} as IVacancyCardRequest);
+        return this._httpClient.get<IVacancyCardRequest>(`${this._url}/vacancy/${id}`)
+            .pipe(
+                tap(data => this._cacheRequestService.vacancyByIdCache.set(id, data))
+            );
     }
 
     public addVacancy(vacancy: IVacancyCard): Observable<void> {

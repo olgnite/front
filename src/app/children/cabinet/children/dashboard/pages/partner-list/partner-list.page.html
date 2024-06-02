@@ -24,9 +24,7 @@
                 <ng-container *ngIf="list.length">
                     <div class="partner-list__partner-card-wrapper">
                         <ng-container *ngFor="let parther of list; trackBy: trackByFn">
-                            <ng-container *ngIf="parther.company_name; else empty">
-                                <partner [partnerCard]="parther"></partner>
-                            </ng-container>
+                            <partner [partnerCard]="parther"></partner>
                         </ng-container>
                     </div>
                 </ng-container>

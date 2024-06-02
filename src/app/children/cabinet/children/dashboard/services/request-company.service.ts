@@ -13,30 +13,22 @@ export class RequestCompanyService {
     private _cacheRequestService: CacheRequestService = inject(CacheRequestService);
 
     public getCompanyById(id: string): Observable<ICompanyV2Request> {
-        if (!this._cacheRequestService.companyIdCache.has(id)) {
-            return this._httpClient.get<ICompanyV2Request>(`${this._url}/company/${id}`)
-                .pipe(
-                    tap(data => this._cacheRequestService.companyIdCache.set(id, data))
-                );
-        }
-
-        return of(this._cacheRequestService.companyIdCache.get(id) || {});
+        return this._httpClient.get<ICompanyV2Request>(`${this._url}/company/${id}`)
+            .pipe(
+                tap(data => this._cacheRequestService.companyIdCache.set(id, data))
+            );
     }
 
     public getCompanies(): Observable<ICompanyV2Request[]> {
-        if (!this._cacheRequestService.companiesCache.has(this._url)) {
-            return this._httpClient.get<ICompanyV2Request[]>(`${this._url}/company`, {
-                headers: {
-                    'Access-Control-Allow-Origin': '*',
-                    'rejectUnauthorized': 'false'
-                }
-            })
-                .pipe(
-                    tap(data => this._cacheRequestService.companiesCache.set(this._url, data))
-                );
-        }
-
-        return of(this._cacheRequestService.companiesCache.get(this._url) || []);
+        return this._httpClient.get<ICompanyV2Request[]>(`${this._url}/company`, {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'rejectUnauthorized': 'false'
+            }
+        })
+            .pipe(
+                tap(data => this._cacheRequestService.companiesCache.set(this._url, data))
+            );
     }
 
     public updateCompany(company: ICompanyV2Request): Observable<void> {

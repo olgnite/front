@@ -13,25 +13,17 @@ export class RequestPhotoGalleryService {
     private _cacheRequestService: CacheRequestService = inject(CacheRequestService);
 
     public getPhotoGallery(): Observable<IPhotoRequest[]> {
-        if (!this._cacheRequestService.photoGalleryCache.has(this._url)) {
-            return this._httpClient.get<IPhotoRequest[]>(`${this._url}/photo`)
-                .pipe(
-                    tap(data => this._cacheRequestService.photoGalleryCache.set(this._url, data))
-                );
-        }
-
-        return of(this._cacheRequestService.photoGalleryCache.get(this._url) || []);
+        return this._httpClient.get<IPhotoRequest[]>(`${this._url}/photo`)
+            .pipe(
+                tap(data => this._cacheRequestService.photoGalleryCache.set(this._url, data))
+            );
     }
 
     public getPhotoById(id: string): Observable<IPhotoRequest> {
-        if (!this._cacheRequestService.photoByIdCache.has(id)) {
-            return this._httpClient.get<IPhotoRequest>(`${this._url}/photo/${id}`)
-                .pipe(
-                    tap(data => this._cacheRequestService.photoByIdCache.set(id, data))
-                );
-        }
-
-        return of(this._cacheRequestService.photoByIdCache.get(id) || {} as IPhotoRequest);
+        return this._httpClient.get<IPhotoRequest>(`${this._url}/photo/${id}`)
+            .pipe(
+                tap(data => this._cacheRequestService.photoByIdCache.set(id, data))
+            );
     }
 
     public addPhoto(file: any): Observable<void> {
