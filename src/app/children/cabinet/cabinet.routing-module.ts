@@ -31,7 +31,7 @@ const cabinetRoutes: Routes = [
     providers: [
         {
             provide: URL_TOKEN,
-            useValue: 'http://vacancies-service.onrender.com'
+            useValue: 'https://vacancies-service.onrender.com'
         },
         {
             provide: HTTP_INTERCEPTORS,
