@@ -89,7 +89,6 @@ export class EditCompanyPage implements OnInit {
             phone: company.phone,
             social_network_link: company.link,
             contact_email: company.email,
-            company_name: 'Test company'
         })
             .pipe(
                 tap(() => this.goToBack()),
