@@ -21,10 +21,12 @@
             [ngStyle]="{'width': '100%', 'display': 'block'}">
         <ng-container *ngIf="parthers$ | async as parthers; else loading">
             <ng-container *ngIf="(parthers | searchPartners : name) as list; else empty">
-                <ng-container *ngIf="list.length; else empty">
+                <ng-container *ngIf="list.length">
                     <div class="partner-list__partner-card-wrapper">
                         <ng-container *ngFor="let parther of list; trackBy: trackByFn">
-                            <partner [partnerCard]="parther"></partner>
+                            <ng-container *ngIf="parther.company_name; else empty">
+                                <partner [partnerCard]="parther"></partner>
+                            </ng-container>
                         </ng-container>
                     </div>
                 </ng-container>
