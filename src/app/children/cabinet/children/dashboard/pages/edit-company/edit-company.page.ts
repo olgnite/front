@@ -22,6 +22,7 @@ export class EditCompanyPage implements OnInit {
     public editForm$?: Observable<FormGroup>;
     public photoList$?: Observable<IPhoto[]>;
     public update$: BehaviorSubject<void> = new BehaviorSubject<void>(void 0);
+    public companyData$: BehaviorSubject<ICompanyV2Request | null> = new BehaviorSubject<ICompanyV2Request | null>(null);
 
     private fromBuilder: FormBuilder = inject(FormBuilder);
     private requestCompanyService: RequestCompanyService = inject(RequestCompanyService);
@@ -57,6 +58,7 @@ export class EditCompanyPage implements OnInit {
                 }),
                 map(([img, company]) => {
                     this.img$.next(img?.image_url ?? 'https://image-storage-oleg.storage.yandexcloud.net/4c4af7dd-a390-42a1-955e-7c070be70e20.jpg');
+                    this.companyData$.next(company);
 
                     return this.fromBuilder.group({
                         industry: company.field_of_activity,
@@ -78,6 +80,7 @@ export class EditCompanyPage implements OnInit {
     public onSubmit(form: FormGroup): void {
         const company: ICompany = form.value as ICompany;
         this.requestCompanyService.updateCompany({
+            ...this.companyData$.value,
             description: company.aboutCompany,
             field_of_activity: company.industry,
             year_of_foundation: company.yearOfFoundation,

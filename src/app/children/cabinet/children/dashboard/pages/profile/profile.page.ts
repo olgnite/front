@@ -20,6 +20,7 @@ export class ProfilePage {
     public profileViewModel!: ProfileViewModel;
     public changePasswordViewModel: ChangePasswordViewModel = new ChangePasswordViewModel();
     public isEditData$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    public companyData$: BehaviorSubject<ICompanyV2Request | null> = new BehaviorSubject<ICompanyV2Request | null>(null);
     public company$!: Observable<ICompanyV2Request>;
 
     private authorizationService = inject(AuthorizationService);
@@ -34,6 +35,7 @@ export class ProfilePage {
         this.company$ = this._authorizedCompany
             .pipe(
                 tap((data: ICompanyV2Request) => {
+                    this.companyData$.next(data);
                     this.profileViewModel = new ProfileViewModel(data);
                 })
             );
@@ -45,8 +47,8 @@ export class ProfilePage {
 
     public onSubmit(): void {
         const dto: { name: string, email: string; } = this.profileViewModel.toModel();
-
-        this.requestCompanyService.updateCompany({ company_name: dto.name, email: dto.email })
+        console.log(this.companyData$.value);
+        this.requestCompanyService.updateCompany({ ...this.companyData$.value, company_name: dto.name, email: dto.email })
             .pipe(
                 tap(() => this.isEditData$.next(false)),
                 takeUntil(this.destroy$)
