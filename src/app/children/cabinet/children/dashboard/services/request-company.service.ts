@@ -25,7 +25,11 @@ export class RequestCompanyService {
 
     public getCompanies(): Observable<ICompanyV2Request[]> {
         if (!this._cacheRequestService.companiesCache.has(this._url)) {
-            return this._httpClient.get<ICompanyV2Request[]>(`${this._url}/company`)
+            return this._httpClient.get<ICompanyV2Request[]>(`${this._url}/company`, {
+                headers: {
+                    'rejectUnauthorized': 'false'
+                }
+            })
                 .pipe(
                     tap(data => this._cacheRequestService.companiesCache.set(this._url, data))
                 );

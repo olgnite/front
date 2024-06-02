@@ -14,7 +14,11 @@ export class RequestVacancyService {
 
     public getVacancyList(): Observable<IVacancyCardRequest[]> {
         if (!this._cacheRequestService.vacanciesCache.has(this._url)) {
-            return this._httpClient.get<IVacancyCardRequest[]>(`${this._url}/vacancy`)
+            return this._httpClient.get<IVacancyCardRequest[]>(`${this._url}/vacancy`, {
+                headers: {
+                    'rejectUnauthorized': 'false'
+                }
+            })
                 .pipe(
                     tap(data => this._cacheRequestService.vacanciesCache.set(this._url, data))
                 );
