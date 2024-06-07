@@ -15,8 +15,8 @@ import { UiCampusButtonComponent } from "../../../../ui";
 import { LoginComponent } from "../login/login.component";
 import { takeUntil } from "rxjs";
 import { DestroyService } from "../../../../services/destroy.service";
-import {AuthorizationService} from "../../../../services/authorization.service";
-import {IRegistration, IRegistrationResponse} from "../../interfaces/authorization.interface";
+import { AuthorizationService } from "../../../../services/authorization.service";
+import { IRegistration, IRegistrationResponse } from "../../interfaces/authorization.interface";
 
 
 @Component({
@@ -59,10 +59,12 @@ export class RegistrationComponent implements OnInit {
         return null;
     }
 
-    constructor(@Inject(POLYMORPHEUS_CONTEXT) private readonly context: TuiDialogContext,
+    constructor(
+        @Inject(POLYMORPHEUS_CONTEXT) private readonly context: TuiDialogContext,
         @Inject(TuiDialogService) private readonly dialogs: TuiDialogService,
         @Inject(Injector) private readonly injector: Injector,
-        readonly destroy$: DestroyService) {
+        readonly destroy$: DestroyService
+    ) {
     }
 
     ngOnInit(): void {
@@ -70,6 +72,7 @@ export class RegistrationComponent implements OnInit {
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required, Validators.minLength(8)]],
             confirmPassword: ['', [Validators.required]],
+            companyName: ['', Validators.required],
             agreeToTerms: [false, [Validators.requiredTrue]]
         }, {
             validators: [this.confirmPasswordValidator]
@@ -79,14 +82,19 @@ export class RegistrationComponent implements OnInit {
     register() {
         const data: IRegistration = {
             ...this.registrationForm.value,
-            inn: this.inn.value};
+            inn: this.inn.value,
+            company_name: this.registrationForm.value.companyName
+        };
 
-        this.authorizationService.registration(data).pipe(takeUntil(this.destroy$))
+        this.authorizationService.registration(data)
+            .pipe(
+                takeUntil(this.destroy$)
+            )
             .subscribe((response: IRegistrationResponse) =>
                 alert(`Пользователь ${response.email} успешно зарегистрирован!`),
-            () =>
-                alert('Возникла ошибка!')
-        );
+                () =>
+                    alert('Возникла ошибка!')
+            );
         this.context.completeWith();
     }
 

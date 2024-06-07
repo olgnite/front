@@ -5,6 +5,7 @@ export interface IRegistration {
     is_superuser: boolean,
     is_verified: boolean;
     inn: string;
+    company_name: string;
 }
 
 export interface IRegistrationResponse {

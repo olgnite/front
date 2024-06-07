@@ -21,6 +21,7 @@ export class AuthorizationService {
     public paths$: BehaviorSubject<IPath[]> = new BehaviorSubject<IPath[]>(this.isTokenValid() ? pathsAuth : pathsUnAuth);
 
     public registration(data: IRegistration): Observable<IRegistrationResponse> {
+        console.log(data);
         return this._httpClient.post<IRegistrationResponse>(`${this._url}/auth/register`, data);
     }
 
