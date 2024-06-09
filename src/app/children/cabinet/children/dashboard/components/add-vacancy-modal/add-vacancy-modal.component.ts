@@ -23,6 +23,8 @@ import { takeUntil, tap } from 'rxjs';
 export class AddVacancyModalComponent {
 
     public viewModel: VacancyViewModel = new VacancyViewModel();
+    public employments: string[] = ['Полная занятость', 'Частичная занятость', 'Стажировка'];
+    public experiences: string[] = ['Без опыта', 'Меньше 1 года', 'От 1 до 3 лет', 'Больше 3 лет'];
 
     private _requestVacancyService: RequestVacancyService = inject(RequestVacancyService);
     private _destroy$: DestroyService = inject(DestroyService);

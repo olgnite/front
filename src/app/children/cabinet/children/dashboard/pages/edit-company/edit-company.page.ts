@@ -67,7 +67,7 @@ export class EditCompanyPage implements OnInit {
                         street: company.street,
                         house: company.house,
                         numberOfEmployees: company.number_of_employees,
-                        aboutCompany: [company.description, Validators.required],
+                        aboutCompany: company.description,
                         site: [company.personal_site, Validators.required],
                         phone: [company.phone, [Validators.pattern(/^\+7\d{10}$/)]],
                         email: [company.email, Validators.email],

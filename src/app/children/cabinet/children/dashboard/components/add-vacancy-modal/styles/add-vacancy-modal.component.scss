@@ -39,4 +39,27 @@
             margin-bottom: 24px;
         }
     }
+
+    &__select-wrapper {
+        border-radius: 16px;
+        height: 64px;
+        width: 100%;
+        background-color: #E0D9FB;
+    }
+
+    &__select-control {
+        border: none;
+        font-size: 16px;
+        background-color: #E0D9FB;
+        border-radius: 16px;
+        width: 95%;
+        height: 64px;
+        padding: 12px;
+    }
+
+    &__select-control option {}
+}
+
+select:focus {
+    outline: none;
 }
