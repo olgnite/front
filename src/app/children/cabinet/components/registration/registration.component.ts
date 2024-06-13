@@ -17,6 +17,7 @@ import { takeUntil } from "rxjs";
 import { DestroyService } from "../../../../services/destroy.service";
 import { AuthorizationService } from "../../../../services/authorization.service";
 import { IRegistration, IRegistrationResponse } from "../../interfaces/authorization.interface";
+import { getErrorMessages } from '../../../../utils/get-error-messages';
 
 
 @Component({
@@ -41,14 +42,7 @@ export class RegistrationComponent implements OnInit {
     registrationForm!: FormGroup;
     nextStep: boolean = false;
 
-    private errors: Record<string, string> = {
-        required: 'Это поле обязательно',
-        minlength: 'Минимальная длина 8 символов',
-        pattern: 'Поле не валидно',
-        email: 'Неверный формат почты'
-    };
-
-    confirmPasswordValidator(formGroup: FormGroup) {
+    public confirmPasswordValidator(formGroup: FormGroup) {
         const password = formGroup.get('password')?.value;
         const confirmPassword = formGroup.get('confirmPassword')?.value;
 
@@ -67,7 +61,7 @@ export class RegistrationComponent implements OnInit {
     ) {
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.registrationForm = this.formBuilder.group({
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required, Validators.minLength(8)]],
@@ -79,7 +73,7 @@ export class RegistrationComponent implements OnInit {
         });
     }
 
-    register() {
+    public register() {
         const data: IRegistration = {
             ...this.registrationForm.value,
             inn: this.inn.value,
@@ -98,28 +92,20 @@ export class RegistrationComponent implements OnInit {
         this.context.completeWith();
     }
 
-    validateINN() {
+    public validateINN() {
         console.log(this.inn.value);
         this.nextStep = true;
     }
 
-    validationElementMethod(controlName: string): boolean {
+    public validationElementMethod(controlName: string): boolean {
         return !!(this.registrationForm.get(controlName)?.invalid && this.registrationForm.get(controlName)?.touched);
     }
 
-    getErrorMessages<T>(control: AbstractControl<T>): string[] {
-        const messages: string[] = [];
-        if (control.errors) {
-            for (const errorName in control.errors) {
-                const mesValue: string = this.errors[errorName] || 'Ввод не валиден';
-                messages.push(mesValue);
-            }
-        }
-
-        return messages;
+    public getErrorMessages<T, R extends T>(control: AbstractControl<T, R>): string[] {
+        return getErrorMessages(control);
     }
 
-    openLogin(): void {
+    public openLogin(): void {
         this.dialogs.open(new PolymorpheusComponent(LoginComponent, this.injector), { size: 'auto' }).pipe(
             takeUntil(this.destroy$)
         ).subscribe();

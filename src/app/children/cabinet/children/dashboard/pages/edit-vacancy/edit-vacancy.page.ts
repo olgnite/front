@@ -1,14 +1,15 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { AbstractControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Observable, map, of, switchMap, takeUntil, tap } from 'rxjs';
 import { DestroyService } from '../../../../../../services/destroy.service';
-import { IVacancyCard, IVacancyCardRequest } from '../../../../interfaces/vacancy-card.interface';
+import { getErrorMessages } from '../../../../../../utils/get-error-messages';
+import { IVacancyCardRequest } from '../../../../interfaces/vacancy-card.interface';
+import { EmploymentsType } from '../../enums/employments.enum';
+import { ExperiencesType } from '../../enums/experiences.enum';
 import { RequestVacancyService } from '../../services/request-vacancy.service';
 import { VacancyViewModel } from '../../view-model/vacancy.view-model';
-import { RequestCompanyService } from '../../services/request-company.service';
-import { RequestPhotoGalleryService } from '../../services/request-photogallery.service';
-import { IPhotoRequest } from '../../interfaces/photo.interface';
-
+ 
 @Component({
     templateUrl: './edit-vacancy.page.html',
     styleUrls: ['./styles/edit-vacancy.page.scss'],
@@ -18,6 +19,8 @@ export class EditVacancyPage {
 
     public viewModel$!: Observable<VacancyViewModel>;
     public vacancy$!: Observable<IVacancyCardRequest>;
+    public employments: string[] = Object.values(EmploymentsType);
+    public experiences: string[] = Object.values(ExperiencesType);
 
     private _requestVacancyService: RequestVacancyService = inject(RequestVacancyService);
     private _activatedRoute: ActivatedRoute = inject(ActivatedRoute);
@@ -43,6 +46,10 @@ export class EditVacancyPage {
                 takeUntil(this._destroy$)
             )
             .subscribe();
+    }
+
+    public getErrorMessages<T, R extends T>(control: AbstractControl<T, R>): string[] {
+        return getErrorMessages(control);
     }
 
     public goToBack(): void {

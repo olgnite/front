@@ -27,10 +27,6 @@
         width: 100%;
         padding: 22px 24px;
         box-sizing: border-box;
-
-        &:last-child {
-            height: 320px;
-        }
     }
 
     &__submit {
@@ -57,7 +53,10 @@
         padding: 12px;
     }
 
-    &__select-control option {}
+    &__invalid {
+        color: red;
+        font-size: 14px;
+    }
 }
 
 select:focus {

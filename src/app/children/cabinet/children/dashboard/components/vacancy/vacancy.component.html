@@ -1,6 +1,6 @@
 <div class="vacancy__container">
     <div class="vacancy__vacancy-avatar">
-        <div class="vacancy__avatar" *ngIf="imageCompany$ | async as image; empty">
+        <div class="vacancy__avatar" *ngIf="imageCompany$ | async as image; else empty">
             <img class="vacancy__photo" [src]="image.image_url">
         </div>
         <ui-campus-button *ngIf="isLoggedIn$ | async" class="vacancy__btn-edit" [type]="'edit'"
@@ -29,5 +29,7 @@
 </div>
 
 <ng-template #empty>
-    <img class="vacancy__photo" src="assets/icons/photo.svg">
+    <div class="vacancy__avatar">
+        <img class="vacancy__photo" src="assets/icons/logo.svg">
+    </div>
 </ng-template>

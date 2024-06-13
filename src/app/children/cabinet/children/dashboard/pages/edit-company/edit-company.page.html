@@ -27,24 +27,37 @@
             <form [formGroup]="editForm" style="width: 632px">
                 <div class="edit-company__topic">О компании</div>
                 <div class="edit-company__options">
-                    <input formControlName="industry" class="edit-company__option" placeholder="Сфера деятельности*">
+                    <div class="edit-company__input">
+                        <input formControlName="industry" class="edit-company__option" placeholder="Сфера деятельности*">
+                        <ng-container *ngTemplateOutlet="validation; context: { $implicit: editForm.get('industry') }"></ng-container>
+                    </div>
                     <input formControlName="yearOfFoundation" class="edit-company__option" placeholder="Год основания">
                     <div class="edit-company__address">
                         <input formControlName="city" class="edit-company__option" placeholder="Город">
                         <input formControlName="street" class="edit-company__option" placeholder="Улица">
                         <input formControlName="house" class="edit-company__option" placeholder="Дом">
                     </div>
-                    <input formControlName="numberOfEmployees" class="edit-company__option"
-                        placeholder="Количество сотрудников">
+                    <div class="edit-company__input">
+                        <input formControlName="numberOfEmployees" class="edit-company__option" placeholder="Количество сотрудников">
+                        <ng-container *ngTemplateOutlet="validation; context: { $implicit: editForm.get('numberOfEmployees') }"></ng-container>
+                    </div>
                     <textarea formControlName="aboutCompany" class="edit-company__option"
-                        placeholder="Расскажите о компании"></textarea>
+                        placeholder="Расскажите о компании*"></textarea>
                 </div>
                 <div class="edit-company__options" style="margin-top: 80px">
                     <div class="edit-company__topic">Контакты и соцсети</div>
-                    <input formControlName="site" class="edit-company__option" placeholder="Личный сайт*">
-                    <input formControlName="phone" class="edit-company__option" placeholder="Телефон*">
-                    <input formControlName="email" class="edit-company__option" placeholder="Email">
-                    <input formControlName="link" class="edit-company__option" placeholder="Ссылка на сайт">
+                    <div class="edit-company__input">
+                        <input formControlName="site" class="edit-company__option" placeholder="Личный сайт*">
+                        <ng-container *ngTemplateOutlet="validation; context: { $implicit: editForm.get('site') }"></ng-container>
+                    </div>
+                    <div class="edit-company__input">
+                        <input formControlName="phone" class="edit-company__option" placeholder="Телефон*">
+                        <ng-container *ngTemplateOutlet="validation; context: { $implicit: editForm.get('phone') }"></ng-container>
+                    </div>
+                    <div class="edit-company__input">
+                        <input formControlName="email" class="edit-company__option" placeholder="Email">
+                        <ng-container *ngTemplateOutlet="validation; context: { $implicit: editForm.get('email') }"></ng-container>
+                    </div>
                 </div>
                 <div class="edit-company__buttons-block">
                     <ui-campus-button type="primary" [disabled]="editForm.invalid" (click)="onSubmit(editForm)"
@@ -63,7 +76,7 @@
                 <div class="edit-company__photo-add-wrapper">
                     <div class="edit-company__photo-preview" *ngIf="photoList$ | async as photoList">
                         <ng-container *ngIf="!photoList.length; else gallery">
-                            <img class="edit-company__photo-img" src="assets/icons/photo.svg">
+                            <img class="edit-company__photo-img" src="assets/icons/logo.svg">
                             <span class="edit-company__photo-title">Вы еще не загружали фото</span>
                         </ng-container>
                     </div>
@@ -96,5 +109,14 @@
 <ng-template #loading>
     <div class="edit-company__loader">
         Loading form...
+    </div>
+</ng-template>
+
+<ng-template #validation let-control>
+    <div class="edit-company__invalid"
+        *ngIf="control?.invalid && control?.touched">
+        <div *ngFor="let error of getErrorMessages(control)">
+            {{ error }}
+        </div>
     </div>
 </ng-template>

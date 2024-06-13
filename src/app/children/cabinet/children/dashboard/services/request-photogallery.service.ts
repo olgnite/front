@@ -26,8 +26,8 @@ export class RequestPhotoGalleryService {
             );
     }
 
-    public addPhoto(file: any): Observable<void> {
-        return this._httpClient.post<void>(`${this._url}/photo`, file);
+    public addPhoto(file: any, isCompanyPhoto: boolean = false): Observable<void> {
+        return this._httpClient.post<void>(`${this._url}/photo?is_company_photo=${isCompanyPhoto}`, file);
     }
 
     public removePhoto(id: string): Observable<void> {

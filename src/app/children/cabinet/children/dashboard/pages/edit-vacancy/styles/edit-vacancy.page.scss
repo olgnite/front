@@ -53,10 +53,6 @@
         width: 100%;
         padding: 22px 24px;
         box-sizing: border-box;
-
-        &:last-child {
-            height: 320px;
-        }
     }
 
     &__submit {
@@ -69,5 +65,27 @@
     &__danger {
         color: red;
         font-size: 12px;
+    }
+
+    &__select-wrapper {
+        border-radius: 16px;
+        height: 64px;
+        width: 100%;
+        background-color: #E0D9FB;
+    }
+
+    &__select-control {
+        border: none;
+        font-size: 16px;
+        background-color: #E0D9FB;
+        border-radius: 16px;
+        width: 95%;
+        height: 64px;
+        padding: 12px;
+    }
+    
+    &__invalid {
+        color: red;
+        font-size: 14px;
     }
 }

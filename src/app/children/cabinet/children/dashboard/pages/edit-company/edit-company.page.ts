@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit, ViewChild, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, Observable, map, of, switchMap, takeUntil, tap, zip } from 'rxjs';
 import { DestroyService } from '../../../../../../services/destroy.service';
 import { ICompany, ICompanyV2Request } from '../../interfaces/company.interface';
@@ -7,6 +7,7 @@ import { IPhoto, IPhotoRequest } from '../../interfaces/photo.interface';
 import { RequestCompanyService } from '../../services/request-company.service';
 import { RequestPhotoGalleryService } from '../../services/request-photogallery.service';
 import { AUTHORIZED_COMPANY } from '../../tokens/authorized-company.token';
+import { getErrorMessages } from '../../../../../../utils/get-error-messages';
 
 @Component({
     templateUrl: './edit-company.page.html',
@@ -36,7 +37,7 @@ export class EditCompanyPage implements OnInit {
 
     public ngOnInit(): void {
         this.initialize();
-        this.photoList$ = this.getGalleryList();
+        this.getGalleryList();
     }
 
     public initialize(): void {
@@ -49,7 +50,6 @@ export class EditCompanyPage implements OnInit {
                         numberOfEmployees: company.number_of_employees,
                         aboutCompany: '',
                         site: company.personal_site,
-                        link: company.social_network_link,
                         ...company
                     };
                 }),
@@ -61,20 +61,35 @@ export class EditCompanyPage implements OnInit {
                     this.companyData$.next(company);
 
                     return this.fromBuilder.group({
-                        industry: company.field_of_activity,
+                        industry: [company.field_of_activity, Validators.required],
                         yearOfFoundation: company.year_of_foundation,
                         city: company.city,
                         street: company.street,
                         house: company.house,
-                        numberOfEmployees: company.number_of_employees,
+                        numberOfEmployees: [company.number_of_employees, Validators.pattern(/[0-9]|\./)],
                         aboutCompany: company.description,
                         site: [company.personal_site, Validators.required],
                         phone: [company.phone, [Validators.pattern(/^\+7\d{10}$/)]],
                         email: [company.email, Validators.email],
-                        link: company.social_network_link
                     })
                 })
             );
+    }
+
+    public trackByFn(index: number, item: IPhoto): string {
+        return `${item.id}`;
+    }
+
+    public getErrorMessages<T, R extends T>(control: AbstractControl<T, R>): string[] {
+        return getErrorMessages(control);
+    }
+
+    public uploadImage(): void {
+        this.fileInput.nativeElement.click();
+    }
+
+    public uploadPhoto(): void {
+        this.photoInput.nativeElement.click();
     }
 
     public onSubmit(form: FormGroup): void {
@@ -113,8 +128,8 @@ export class EditCompanyPage implements OnInit {
             .subscribe();
     }
 
-    public getGalleryList(): Observable<IPhoto[]> {
-        return this.update$
+    public getGalleryList(): void {
+        this.photoList$ = this.update$
             .pipe(
                 switchMap(() => this.requestPhotoGalleryService.getPhotoGallery()),
                 map((data: IPhotoRequest[]) => {
@@ -125,7 +140,7 @@ export class EditCompanyPage implements OnInit {
                         id: item.id
                     }))
                 })
-            )
+            );
     }
 
     public removeImageGallery(id: string): void {
@@ -136,30 +151,29 @@ export class EditCompanyPage implements OnInit {
             )
             .subscribe();
     }
-
-    public uploadImage(): void {
-        this.fileInput.nativeElement.click();
-    }
-
-    public uploadPhoto(): void {
-        this.photoInput.nativeElement.click();
-    }
-
+    
+    // todo: переделать добавление и удаление аватарки
     public deleteImage(): void {
-        // this.img$.next(this.editService.deleteImg(this.id));
+        this.requestPhotoGalleryService.removePhoto('')
+            .pipe(
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
     }
 
-    public async pushMainImage(event: any): Promise<void> {
+    public pushMainImage(event: any): void {
         const file = event.target.files[0];
+        const form: FormData = new FormData();
+        form.append('file', new File([file], file.name));
 
-        // this.img$.next(await this.editService.setMainImg(file, this.id));
+        this.requestPhotoGalleryService.addPhoto(form, true)
+            .pipe(
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
     }
 
     public goToBack(): void {
         history.back();
-    }
-
-    public trackByFn(index: number, item: IPhoto): string {
-        return `${item.id}`;
     }
 }

@@ -15,13 +15,38 @@
         <form [formGroup]="viewModel.form">
             <p class="edit-vacancy__about-title">О вакансии</p>
             <div class="edit-vacancy__form">
-                <input formControlName="name" class="edit-vacancy__control" placeholder="Название вакансии">
-                <input formControlName="salary" class="edit-vacancy__control" placeholder="Зарплата">
-                <input formControlName="city" class="edit-vacancy__control" placeholder="Город">
-                <input formControlName="employment" class="edit-vacancy__control" placeholder="Занятость">
-                <input formControlName="experience" class="edit-vacancy__control" placeholder="Опыт работы">
+                <div class="edit-vacancy__input">
+                    <input formControlName="name" class="edit-vacancy__control" placeholder="Название вакансии">
+                    <ng-container *ngTemplateOutlet="validation; context: { $implicit: viewModel.form.get('name') }"></ng-container>
+                </div>
+                <div class="edit-vacancy__input">
+                    <input formControlName="salary" class="edit-vacancy__control" placeholder="Зарплата">
+                    <ng-container *ngTemplateOutlet="validation; context: { $implicit: viewModel.form.get('salary') }"></ng-container>
+                </div>
+                <div class="edit-vacancy__input">
+                    <input formControlName="city" class="edit-vacancy__control" placeholder="Город">
+                    <ng-container *ngTemplateOutlet="validation; context: { $implicit: viewModel.form.get('city') }"></ng-container>
+                </div>
+                <div class="edit-vacancy__select">
+                    <div class="edit-vacancy__select-wrapper">
+                        <select class="edit-vacancy__select-control" formControlName="employment">
+                            <option value="" disabled>Занятость</option>
+                            <option *ngFor="let item of employments" [value]="item">{{item}}</option>
+                        </select>
+                    </div>
+                    <ng-container *ngTemplateOutlet="validation; context: { $implicit: viewModel.form.get('employment') }"></ng-container>
+                </div>
+                <div class="edit-vacancy__select">
+                    <div class="edit-vacancy__select-wrapper">
+                        <select class="edit-vacancy__select-control" formControlName="experience">
+                            <option value="" disabled>Опыт работы</option>
+                            <option *ngFor="let item of experiences" [value]="item">{{item}}</option>
+                        </select>
+                    </div>
+                    <ng-container *ngTemplateOutlet="validation; context: { $implicit: viewModel.form.get('experience') }"></ng-container>
+                </div>
                 <textarea formControlName="description" class="edit-vacancy__control"
-                    placeholder="Расскажите о вакансии"></textarea>
+                    placeholder="Расскажите о вакансии" [ngStyle]="{'height': '320px'}"></textarea>
             </div>
         </form>
         <div class="edit-vacancy__wrapper-btn">
@@ -31,6 +56,15 @@
         </div>
     </div>
 </div>
+
+<ng-template #validation let-control>
+    <div class="edit-vacancy__invalid"
+        *ngIf="control?.invalid && control?.touched">
+        <div *ngFor="let error of getErrorMessages(control)">
+            {{ error }}
+        </div>
+    </div>
+</ng-template>
 
 <ng-template #skeleton>
     <h2>Loading form...</h2>

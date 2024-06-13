@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Inject, inject, Input, OnInit, Output } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthorizationService } from "../../../../../../services/authorization.service";
 import { IVacancyCard } from '../../../../interfaces/vacancy-card.interface';
 import { ICompanyV2Request } from '../../interfaces/company.interface';
@@ -21,13 +21,12 @@ export class VacancyComponent implements OnInit {
     public showDialogRemove: EventEmitter<string> = new EventEmitter<string>();
 
     public company$?: Observable<ICompanyV2Request>;
-
-    private authorizationService = inject(AuthorizationService);
-    private _requestPhotoGalleryService = inject(RequestPhotoGalleryService);
-    readonly isLoggedIn$ = this.authorizationService.isLoggedIn$;
     public imageCompany$?: Observable<IPhotoRequest>;
+    public readonly isLoggedIn$: BehaviorSubject<boolean> = this._authorizationService.isLoggedIn$;
 
     constructor(
+        @Inject(AuthorizationService) private _authorizationService: AuthorizationService,
+        @Inject(RequestPhotoGalleryService) private _requestPhotoGalleryService: RequestPhotoGalleryService,
         @Inject(AUTHORIZED_COMPANY) private _autorizedCompany: Observable<ICompanyV2Request>
     ) {
     }

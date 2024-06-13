@@ -7,7 +7,7 @@
         <ui-campus-button *ngIf="isLoggedIn$ | async" class="company__btn-edit" [type]="'edit'"
             [routerLink]="['/dashboard/edit-company']">Редактировать</ui-campus-button>
         <ui-campus-button class="company__btn" [type]="'primary'">
-            <a [href]="company.personal_site" [ngStyle]="{'text-decoration': 'none', 'color': 'white'}">Перейти на сайт</a>
+            <a (click)="redirectToSite(company.personal_site!)" [ngStyle]="{'text-decoration': 'none', 'color': 'white'}">Перейти на сайт</a>
         </ui-campus-button>
     </div>
     <div class="company__about">
@@ -34,6 +34,6 @@
 
 <ng-template #emptyAvatar>
     <div class="company__avatar">
-        <img class="company__photo" src="assets/icons/avatar">
+        <img class="company__photo" src="assets/icons/logo.svg">
     </div>
 </ng-template>

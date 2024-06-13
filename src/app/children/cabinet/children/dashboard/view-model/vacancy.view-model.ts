@@ -29,7 +29,7 @@ export class VacancyViewModel extends FormBaseViewModel<IVacancyCard> {
 
         this.form = new FormGroup<IVacancyModel>({
             name: new FormControl(vacancyCard?.name || '', { nonNullable: true, validators: [Validators.required] }),
-            salary: new FormControl(vacancyCard?.salary || null, { nonNullable: false, validators: [Validators.required] }),
+            salary: new FormControl(vacancyCard?.salary || null, { nonNullable: false, validators: [Validators.required, Validators.pattern(/[0-9]|\./)] }),
             city: new FormControl(vacancyCard?.city || '', { nonNullable: true, validators: [Validators.required] }),
             employment: new FormControl(vacancyCard?.employment || '', { nonNullable: true, validators: [Validators.required] }),
             experience: new FormControl(vacancyCard?.experience || '', { nonNullable: true, validators: [Validators.required] }),

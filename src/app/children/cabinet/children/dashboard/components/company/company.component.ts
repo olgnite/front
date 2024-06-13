@@ -38,4 +38,8 @@ export class CompanyComponent implements OnInit {
             );
         this.img$ = this.requestPhotoGalleryService.getPhotoById('be674599-edd1-4eab-b5e9-24f233944b35');
     }
+
+    public redirectToSite(url: string): void {
+        window.open(url);
+    }
 }
