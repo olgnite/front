@@ -36,19 +36,13 @@ import { pathsAuth } from '../../consts/paths';
     standalone: true
 })
 export class LoginComponent implements OnInit {
+    public loginForm!: FormGroup;
+    
     private formBuilder: FormBuilder = inject(FormBuilder);
     private authorizationService = inject(AuthorizationService);
     private router: Router = inject(Router);
-    loginForm!: FormGroup;
 
-    private errors: Record<string, string> = {
-        required: 'Это поле обязательно',
-        minlength: 'Минимальная длина 8 символов',
-        pattern: 'Поле не валидно',
-        email: 'Неверный формат почты'
-    };
-
-    confirmPasswordValidator(formGroup: FormGroup) {
+    public confirmPasswordValidator(formGroup: FormGroup) {
         const password = formGroup.get('password')?.value;
         const confirmPassword = formGroup.get('confirmPassword')?.value;
 
@@ -65,14 +59,14 @@ export class LoginComponent implements OnInit {
         readonly destroy$: DestroyService) {
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.loginForm = this.formBuilder.group({
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required, Validators.minLength(8)]],
         });
     }
 
-    login() {
+    public login() {
         const data: ILogin = { username: this.loginForm.value.email, password: this.loginForm.value.password };
 
         this.authorizationService.login(data).pipe(takeUntil(this.destroy$)).subscribe(
@@ -89,23 +83,15 @@ export class LoginComponent implements OnInit {
         this.context.completeWith();
     }
 
-    validationElementMethod(controlName: string): boolean {
+    public validationElementMethod(controlName: string): boolean {
         return !!(this.loginForm.get(controlName)?.invalid && this.loginForm.get(controlName)?.touched);
     }
 
-    getErrorMessages<T>(control: AbstractControl<T>): string[] {
-        const messages: string[] = [];
-        if (control.errors) {
-            for (const errorName in control.errors) {
-                const mesValue: string = this.errors[errorName] || 'Ввод не валиден';
-                messages.push(mesValue);
-            }
-        }
-
-        return messages;
+    public getErrorMessages<T, R extends T>(control: AbstractControl<T, R>): string[] {
+        return this.getErrorMessages<T, R>(control);
     }
 
-    openRegistration(): void {
+    public openRegistration(): void {
         this.dialogs.open(new PolymorpheusComponent(RegistrationComponent, this.injector), { size: 'auto' }).pipe(
             takeUntil(this.destroy$)
         ).subscribe();

@@ -29,6 +29,9 @@ import { Observable, map, of, switchMap } from 'rxjs';
 import { ICompanyV2Request } from './interfaces/company.interface';
 import { SearchPartnersPipe } from '../../pipes/serach-partners.pipe';
 import { CacheRequestService } from './services/cache-request.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TestAnimateComponent } from './components/test-animate/test-animate.component';
+import { BrowserModule } from '@angular/platform-browser';
 
 const components: any[] = [
     LayoutDashboardPage,
@@ -45,7 +48,8 @@ const components: any[] = [
     EditVacancyPage,
     ProfilePage,
     PartnerListPage,
-    PartnerCardComponent
+    PartnerCardComponent,
+    TestAnimateComponent
 ];
 
 const dashboardRoutes: Routes = [
@@ -98,6 +102,10 @@ const dashboardRoutes: Routes = [
             {
                 path: 'partners',
                 component: PartnerListPage,
+            },
+            {
+                path: 'test-animate',
+                component: TestAnimateComponent
             }
         ]
     }

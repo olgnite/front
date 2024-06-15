@@ -1,12 +1,10 @@
 import { ChangeDetectionStrategy, Component, Inject, inject, OnInit } from '@angular/core';
-import { Observable, switchMap } from "rxjs";
+import { ActivatedRoute, Params } from '@angular/router';
+import { BehaviorSubject, Observable, switchMap, tap } from "rxjs";
 import { AuthorizationService } from "../../../../../../services/authorization.service";
 import { ICompanyV2Request } from "../../interfaces/company.interface";
-import { IPhotoRequest } from '../../interfaces/photo.interface';
 import { RequestCompanyService } from '../../services/request-company.service';
-import { RequestPhotoGalleryService } from '../../services/request-photogallery.service';
 import { AUTHORIZED_COMPANY } from '../../tokens/authorized-company.token';
-import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
     selector: 'company',
@@ -16,12 +14,11 @@ import { ActivatedRoute, Params } from '@angular/router';
 })
 export class CompanyComponent implements OnInit {
     public company$!: Observable<ICompanyV2Request>;
-    public img$!: Observable<IPhotoRequest>;
+    public img$: BehaviorSubject<{ id: string, url: string } | null> = new BehaviorSubject<{ id: string, url: string } | null>(null);
 
-    private authorizationService = inject(AuthorizationService);
-    private requestPhotoGalleryService = inject(RequestPhotoGalleryService);
+    private authorizationService: AuthorizationService = inject(AuthorizationService);
     private requestCompanyService: RequestCompanyService = inject(RequestCompanyService);
-    isLoggedIn$ = this.authorizationService.isLoggedIn$;
+    public isLoggedIn$: BehaviorSubject<boolean> = this.authorizationService.isLoggedIn$;
 
     constructor(
         @Inject(AUTHORIZED_COMPANY) private _authorizedCompany: Observable<ICompanyV2Request>,
@@ -32,11 +29,9 @@ export class CompanyComponent implements OnInit {
     public ngOnInit(): void {
         this.company$ = this._route.params
             .pipe(
-                switchMap((params: Params) => params['id']
-                    ? this.requestCompanyService.getCompanyById(params['id'])
-                    : this._authorizedCompany),
+                switchMap((params: Params) => params['id'] ? this.requestCompanyService.getCompanyById(params['id']) : this._authorizedCompany),
+                tap(company => this.img$.next({ id: company.image_id || '', url: company.image_url || '' }))
             );
-        this.img$ = this.requestPhotoGalleryService.getPhotoById('be674599-edd1-4eab-b5e9-24f233944b35');
     }
 
     public redirectToSite(url: string): void {

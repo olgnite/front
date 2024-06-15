@@ -51,6 +51,7 @@ export interface ICompanyV2Request {
     house?: string;
     number_of_employees?: string;
     image_id?: string;
+    image_url?: string;
     personal_site?: string;
     phone?: string;
     contact_email?: string;

@@ -10,20 +10,20 @@
         <img class="edit-company__down-vector-img" src="assets/vectors/vector 6.png">
     </div>
     <ng-container *ngIf="editForm$ | async as editForm; else loading">
-        <div *ngIf="img$ | async as src" class="edit-company__block">
+        <div class="edit-company__block">
             <div class="edit-company__left-block">
                 <div style="display: flex; justify-content: center">
-                    <img [src]="src" class="edit-company__avatar">
+                    <img [src]="(img$ | async)?.url || 'assets/icons/logo.svg'" class="edit-company__avatar">
                 </div>
                 <div class="edit-company__btn">
                     <ui-campus-button type="primary" (click)="uploadImage()">Загрузить</ui-campus-button>
                 </div>
                 <div class="edit-company__btn">
-                    <ui-campus-button type="edit" (click)="deleteImage()">Удалить</ui-campus-button>
+                    <ui-campus-button type="edit" (click)="removeAvatar()">Удалить</ui-campus-button>
                 </div>
             </div>
             <input type="file" style="display: none" #fileInput class="edit-company__options"
-                (change)="pushMainImage($event)">
+                (change)="pushMainImageAvatar($event)">
             <form [formGroup]="editForm" style="width: 632px">
                 <div class="edit-company__topic">О компании</div>
                 <div class="edit-company__options">
@@ -83,7 +83,7 @@
                 </div>
             </div>
             <input type="file" style="display: none" #photoInput class="edit-company__options"
-                (change)="pushImageGallery($event)">
+                (change)="pushMainImageGallery($event)">
             <ui-campus-button class="edit-company__photo-btn" [type]="'active'" (click)="uploadPhoto()">Добавить
                 фотографии</ui-campus-button>
         </div>

@@ -1,8 +1,7 @@
 <div class="company__container" *ngIf="company$ | async as company">
     <div class="company__company-avatar">
-        <div class="company__avatar" style="display: flex; justify-content: center"
-            *ngIf="img$ | async as img; else emptyAvatar">
-            <img class="company__photo" [src]="img.image_url">
+        <div class="company__avatar" style="display: flex; justify-content: center">
+            <img class="company__photo" [src]="(img$ | async)?.url || 'assets/icons/logo.svg'">
         </div>
         <ui-campus-button *ngIf="isLoggedIn$ | async" class="company__btn-edit" [type]="'edit'"
             [routerLink]="['/dashboard/edit-company']">Редактировать</ui-campus-button>
@@ -29,11 +28,5 @@
 <ng-template #emptyInfo>
     <div class="company__empty-info">
         <span class="company__empty-info-title">Информация о компании не найдена</span>
-    </div>
-</ng-template>
-
-<ng-template #emptyAvatar>
-    <div class="company__avatar">
-        <img class="company__photo" src="assets/icons/logo.svg">
     </div>
 </ng-template>

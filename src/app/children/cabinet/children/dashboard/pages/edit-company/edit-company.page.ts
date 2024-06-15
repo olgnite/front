@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit, ViewChild, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, Observable, map, of, switchMap, takeUntil, tap, zip } from 'rxjs';
+import { BehaviorSubject, Observable, map, switchMap, takeUntil, tap } from 'rxjs';
 import { DestroyService } from '../../../../../../services/destroy.service';
+import { getErrorMessages } from '../../../../../../utils/get-error-messages';
 import { ICompany, ICompanyV2Request } from '../../interfaces/company.interface';
 import { IPhoto, IPhotoRequest } from '../../interfaces/photo.interface';
 import { RequestCompanyService } from '../../services/request-company.service';
 import { RequestPhotoGalleryService } from '../../services/request-photogallery.service';
 import { AUTHORIZED_COMPANY } from '../../tokens/authorized-company.token';
-import { getErrorMessages } from '../../../../../../utils/get-error-messages';
 
 @Component({
     templateUrl: './edit-company.page.html',
@@ -18,8 +18,7 @@ export class EditCompanyPage implements OnInit {
     @ViewChild('fileInput', { static: false }) fileInput: any;
     @ViewChild('photoInput', { static: false }) photoInput: any;
 
-    public id: string = '4';
-    public img$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+    public img$: BehaviorSubject<{ id: string, url: string } | null> = new BehaviorSubject<{ id: string, url: string } | null>(null);
     public editForm$?: Observable<FormGroup>;
     public photoList$?: Observable<IPhoto[]>;
     public update$: BehaviorSubject<void> = new BehaviorSubject<void>(void 0);
@@ -43,21 +42,16 @@ export class EditCompanyPage implements OnInit {
     public initialize(): void {
         this.editForm$ = this._authorizedCompany
             .pipe(
-                map((company: ICompanyV2Request) => {
-                    return {
-                        industry: company.field_of_activity,
-                        yearOfFoundation: company.field_of_activity,
-                        numberOfEmployees: company.number_of_employees,
-                        aboutCompany: '',
-                        site: company.personal_site,
-                        ...company
-                    };
-                }),
-                switchMap(company => {
-                    return zip(this.requestPhotoGalleryService.getPhotoById('be674599-edd1-4eab-b5e9-24f233944b35'), of(company));
-                }),
-                map(([img, company]) => {
-                    this.img$.next(img?.image_url ?? 'https://image-storage-oleg.storage.yandexcloud.net/4c4af7dd-a390-42a1-955e-7c070be70e20.jpg');
+                map(company => ({
+                    industry: company.field_of_activity,
+                    yearOfFoundation: company.field_of_activity,
+                    numberOfEmployees: company.number_of_employees,
+                    aboutCompany: '',
+                    site: company.personal_site,
+                    ...company
+                })),
+                map(company => {
+                    this.img$.next({ id: company.image_id || '', url: company.image_url || '' });
                     this.companyData$.next(company);
 
                     return this.fromBuilder.group({
@@ -74,22 +68,6 @@ export class EditCompanyPage implements OnInit {
                     })
                 })
             );
-    }
-
-    public trackByFn(index: number, item: IPhoto): string {
-        return `${item.id}`;
-    }
-
-    public getErrorMessages<T, R extends T>(control: AbstractControl<T, R>): string[] {
-        return getErrorMessages(control);
-    }
-
-    public uploadImage(): void {
-        this.fileInput.nativeElement.click();
-    }
-
-    public uploadPhoto(): void {
-        this.photoInput.nativeElement.click();
     }
 
     public onSubmit(form: FormGroup): void {
@@ -115,12 +93,8 @@ export class EditCompanyPage implements OnInit {
             .subscribe();
     }
 
-    public pushImageGallery(event: any): void {
-        const file = event.target.files[0];
-        const form: FormData = new FormData();
-        form.append('file', new File([file], file.name));
-
-        this.requestPhotoGalleryService.addPhoto(form)
+    public removeImageGallery(id: string): void {
+        this.requestPhotoGalleryService.removePhoto(id)
             .pipe(
                 tap(() => this.update$.next()),
                 takeUntil(this.destroy$)
@@ -128,7 +102,55 @@ export class EditCompanyPage implements OnInit {
             .subscribe();
     }
 
-    public getGalleryList(): void {
+    public removeAvatar(): void {
+        this.requestPhotoGalleryService.removePhoto(this.img$.value?.id || '')
+            .pipe(
+                tap(() => this.img$.next(null)),
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
+    }
+
+    public pushMainImageGallery(event: any): void {
+        this.requestPhotoGalleryService.addPhoto(this.getFormDataFile(event))
+            .pipe(
+                tap(() => this.update$.next()),
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
+    }
+
+    public pushMainImageAvatar(event: any): void {
+        this.requestPhotoGalleryService.addPhoto(this.getFormDataFile(event), true)
+            .pipe(
+                switchMap(() => this._authorizedCompany),
+                tap(company => this.img$.next({ id: company.image_id || '', url: company.image_url || '' })),
+                takeUntil(this.destroy$)
+            )
+            .subscribe();
+    }
+    
+    public trackByFn(index: number, item: IPhoto): string {
+        return `${item.id}`;
+    }
+
+    public getErrorMessages<T, R extends T>(control: AbstractControl<T, R>): string[] {
+        return getErrorMessages(control);
+    }
+
+    public uploadImage(): void {
+        this.fileInput.nativeElement.click();
+    }
+
+    public uploadPhoto(): void {
+        this.photoInput.nativeElement.click();
+    }
+
+    public goToBack(): void {
+        history.back();
+    }
+
+    private getGalleryList(): void {
         this.photoList$ = this.update$
             .pipe(
                 switchMap(() => this.requestPhotoGalleryService.getPhotoGallery()),
@@ -143,37 +165,11 @@ export class EditCompanyPage implements OnInit {
             );
     }
 
-    public removeImageGallery(id: string): void {
-        this.requestPhotoGalleryService.removePhoto(id)
-            .pipe(
-                tap(() => this.update$.next()),
-                takeUntil(this.destroy$)
-            )
-            .subscribe();
-    }
-    
-    // todo: переделать добавление и удаление аватарки
-    public deleteImage(): void {
-        this.requestPhotoGalleryService.removePhoto('')
-            .pipe(
-                takeUntil(this.destroy$)
-            )
-            .subscribe();
-    }
-
-    public pushMainImage(event: any): void {
+    private getFormDataFile(event: any): FormData {
         const file = event.target.files[0];
         const form: FormData = new FormData();
         form.append('file', new File([file], file.name));
 
-        this.requestPhotoGalleryService.addPhoto(form, true)
-            .pipe(
-                takeUntil(this.destroy$)
-            )
-            .subscribe();
-    }
-
-    public goToBack(): void {
-        history.back();
+        return form;
     }
 }

@@ -8,19 +8,17 @@
         <div class="modal-dialog__step">
             <form [formGroup]="loginForm" class="modal-dialog__step__inputs">
                 <div style="position: relative">
-                    <input type="text" placeholder="Email" formControlName="email" class="modal-dialog__step__input"/>
-                    <div class="modal-dialog__invalid" *ngIf="validationElementMethod('email')">
-                        <div *ngFor="let error of getErrorMessages(loginForm.get('email')!)">
-                            {{error}}
-                        </div>
+                    <div class="modal-dialog__input">
+                        <input type="text" placeholder="Email" formControlName="email" class="modal-dialog__step__input"/>
+                        <ng-container *ngTemplateOutlet="validation; context: { $implicit: loginForm.get('email') }"></ng-container>
                     </div>
                 </div>
                 <div style="position: relative">
-                    <input type="password" placeholder="Пароль" formControlName="password" class="modal-dialog__step__input"/>
-                    <div class="modal-dialog__invalid" *ngIf="validationElementMethod('password')">
-                        <div *ngFor="let error of getErrorMessages(loginForm.get('password')!)">
-                            {{error}}
-                        </div>
+                    <div class="modal-dialog__input"> 
+                        <input type="password" placeholder="Пароль" formControlName="password" class="modal-dialog__step__input"/>
+                        <ng-container *ngIf="validationElementMethod('password')">
+                            <ng-container *ngTemplateOutlet="validation; context: { $implicit: loginForm.get('password') }"></ng-container>
+                        </ng-container>
                     </div>
                 </div>
                 <ui-campus-button [disabled]="loginForm.invalid" [type]="'primary'" class="modal-dialog__btn"
@@ -31,3 +29,10 @@
     </div>
 </div>
 
+<ng-template #validation let-control>
+    <div class="modal-dialog__invalid" *ngIf="control?.invalid && control?.touched">
+        <div *ngFor="let error of getErrorMessages(control)">
+            {{error}}
+        </div>
+    </div>
+</ng-template>
