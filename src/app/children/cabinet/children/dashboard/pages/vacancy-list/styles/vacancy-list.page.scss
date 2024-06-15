@@ -32,6 +32,7 @@
     &__options {
         display: flex;
         height: 56px;
+        gap: 16px;
         padding: 48px 64px 40px 64px;
     }
 
@@ -116,5 +117,16 @@
                 transform: rotate(360deg);
             }
         }
+    }
+
+    &__filter-icon {
+        width: 56px;
+        height: 56px;
+    }
+
+    &__search-vacancies {
+        max-width: 243px;
+        padding: 0 64px;
+        margin-bottom: 40px;
     }
 }

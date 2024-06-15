@@ -1,0 +1,48 @@
+@import '../../../../../../../styles/variables';
+
+.filters-form {
+    font-family: 'Giga Sans';
+    display: flex;
+    flex-direction: column;
+    padding: 56px 48px;
+    max-width: 1088px;
+
+    &__title {
+        font-size: 54px;
+        color: #21201F;
+        font-weight: 400;
+        line-height: 70px;
+        margin-bottom: 40px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    &__select {
+        width: 320px;
+        ::ng-deep {
+            .tui-autofill {
+                background-color: $purple-light-v2;
+            }
+            .t-placeholder {
+                color: $purple;
+            }
+        }
+    }
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    width: 396px;
+    gap: 16px;
+    margin-top: 40px;
+
+    .button {
+        min-width: 190px;
+    }
+}

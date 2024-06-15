@@ -1,0 +1,60 @@
+<div class="filters-form">
+    <div class="filters-form__title">Фильтры</div>
+    <form [formGroup]="form">
+        <tui-select [formControlName]="'name'" class="filters-form__select">
+            Название
+            <input
+                tuiTextfield
+            />
+            <tui-data-list-wrapper
+                *tuiDataList
+                [items]="filterOptions.name"
+            ></tui-data-list-wrapper>
+        </tui-select>
+        <tui-select [formControlName]="'city'" class="filters-form__select">
+            Город
+            <input
+                tuiTextfield
+            />
+            <tui-data-list-wrapper
+                *tuiDataList
+                [items]="filterOptions.city"
+            ></tui-data-list-wrapper>
+        </tui-select>
+        <tui-select [formControlName]="'experience'" class="filters-form__select">
+            Опыт работы
+            <input
+                tuiTextfield
+            />
+            <tui-data-list-wrapper
+                *tuiDataList
+                [items]="filterOptions.experience"
+            ></tui-data-list-wrapper>
+        </tui-select>
+
+        <tui-select [formControlName]="'employment'" class="filters-form__select">
+            Занятость
+            <input
+                tuiTextfield
+            />
+            <tui-data-list-wrapper
+                *tuiDataList
+                [items]="filterOptions.employment"
+            ></tui-data-list-wrapper>
+        </tui-select>
+        <tui-select [formControlName]="'salary'" class="filters-form__select">
+            Зарплата
+            <input
+                tuiTextfield
+            />
+            <tui-data-list-wrapper
+                *tuiDataList
+                [items]="filterOptions.salary"
+            ></tui-data-list-wrapper>
+        </tui-select>
+    </form>
+    <div class="buttons">
+        <ui-campus-button class="button" [type]="'primary'" (click)="onSubmit()">Применить</ui-campus-button>
+        <ui-campus-button class="button" [type]="'edit'"  (click)="clearFilters()">Отчистить</ui-campus-button>
+    </div>
+</div>
