@@ -1,9 +1,10 @@
 import { Injectable, inject } from '@angular/core';
 import { URL_TOKEN } from '../tokens/url.token';
-import { Observable, of, tap } from 'rxjs';
+import {catchError, Observable, of, tap} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { IVacancyCard, IVacancyCardRequest } from '../../../interfaces/vacancy-card.interface';
 import { CacheRequestService } from './cache-request.service';
+import {IVacanciesAppliedFilters} from "../interfaces/vacancies-filters.interface";
 
 @Injectable()
 export class RequestVacancyService {
@@ -41,5 +42,33 @@ export class RequestVacancyService {
 
     public removeVacancyById(id: string): Observable<void> {
         return this._httpClient.delete<void>(`${this._url}/vacancy/${id}`);
+    }
+
+    public getVacancyListWithFilters(filters: IVacanciesAppliedFilters): Observable<IVacancyCardRequest[]> {
+        const nonEmptyFieldsFilters = {};
+
+        for (const field in filters) {
+            // @ts-ignore
+            if (filters[field] !== '' && filters[field] !== null && filters[field] !== undefined) {
+                // @ts-ignore
+                nonEmptyFieldsFilters[field] = filters[field];
+            }
+        }
+
+        return this._httpClient.get<IVacancyCardRequest[]>(`${this._url}/vacancy`, {
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'rejectUnauthorized': 'false'
+            },
+            params: {...nonEmptyFieldsFilters}
+        })
+            .pipe(
+                catchError(() => {
+                    alert('Возникла ошибка!');
+
+                    return this.getVacancyList();
+                }),
+                tap(data => this._cacheRequestService.vacanciesCache.set(this._url, data))
+            );
     }
 }

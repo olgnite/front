@@ -10,6 +10,8 @@ import { AddVacancyModalComponent } from '../../components/add-vacancy-modal/add
 import { AuthorizationService } from "../../../../../../services/authorization.service";
 import { AUTHORIZED_COMPANY } from '../../tokens/authorized-company.token';
 import { ICompanyV2Request } from '../../interfaces/company.interface';
+import { VacanciesFilterComponent } from "../../components/vacancies-filter/vacancies-filter.component";
+import { FiltersCacheService } from "../../services/filters-cache.service";
 
 @Component({
     templateUrl: './vacancy-list.page.html',
@@ -20,7 +22,7 @@ export class VacancyListPage {
     public name: string = '';
     public vacancyList$: Observable<IVacancyCardRequest[]>;
     public readonly isLoggedIn$ = this._authorizationService.isLoggedIn$;
-    
+
     private _requestVacancyService: RequestVacancyService = inject(RequestVacancyService);
     private _destroy$: DestroyService = inject(DestroyService);
     private _update$: BehaviorSubject<void | null> = new BehaviorSubject<void | null>(null);
@@ -29,7 +31,8 @@ export class VacancyListPage {
         @Inject(TuiDialogService) public readonly dialogs: TuiDialogService,
         @Inject(Injector) private readonly injector: Injector,
         @Inject(AuthorizationService) private readonly _authorizationService: AuthorizationService,
-        @Inject(AUTHORIZED_COMPANY) private _authorizedCompany: Observable<ICompanyV2Request>
+        @Inject(AUTHORIZED_COMPANY) private _authorizedCompany: Observable<ICompanyV2Request>,
+        @Inject(FiltersCacheService) public _filtersCacheService: FiltersCacheService
     ) {
         this.vacancyList$ = this.getVacancyList()
             .pipe(
@@ -69,5 +72,25 @@ export class VacancyListPage {
 
     public trackByFn(index: number, item: IVacancyCardRequest): string {
         return `${item.id}`;
+    }
+
+    public openFilter(vacancies: IVacancyCardRequest[]): void {
+        this.dialogs.open(new PolymorpheusComponent(VacanciesFilterComponent, this.injector), { size: 'auto', data: { list: vacancies } })
+            .pipe(
+                takeUntil(this._destroy$)
+            )
+            .subscribe();
+    }
+
+    public getVacancyListWithFilters(): void {
+        const filters = this._filtersCacheService.appliedFilters$.value;
+
+        this.vacancyList$ = this._requestVacancyService.getVacancyListWithFilters(filters)
+            .pipe(
+                switchMap(data => zip(this._authorizedCompany, of(data))),
+                map(([company, list]: [ICompanyV2Request, IVacancyCardRequest[]]) => {
+                    return this.isLoggedIn$.value ? list.filter(item => item.company_id === company.id) : list;
+                })
+            );;
     }
 }
