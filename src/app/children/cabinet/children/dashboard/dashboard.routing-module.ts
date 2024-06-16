@@ -32,6 +32,8 @@ import { CacheRequestService } from './services/cache-request.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TestAnimateComponent } from './components/test-animate/test-animate.component';
 import { BrowserModule } from '@angular/platform-browser';
+import {VacanciesFilterComponent} from "./components/vacancies-filter/vacancies-filter.component";
+import {TuiDataListWrapperModule, TuiSelectModule} from "@taiga-ui/kit";
 
 const components: any[] = [
     LayoutDashboardPage,
@@ -49,7 +51,8 @@ const components: any[] = [
     ProfilePage,
     PartnerListPage,
     PartnerCardComponent,
-    TestAnimateComponent
+    TestAnimateComponent,
+    VacanciesFilterComponent
 ];
 
 const dashboardRoutes: Routes = [
@@ -124,6 +127,8 @@ const dashboardRoutes: Routes = [
         ReactiveFormsModule,
         FormsModule,
         UiCampusButtonComponent,
+        TuiSelectModule,
+        TuiDataListWrapperModule,
     ],
     providers: [
         CurrentPathService,
