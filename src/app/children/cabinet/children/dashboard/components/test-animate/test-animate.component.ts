@@ -1,9 +1,9 @@
 import { Component } from "@angular/core";
-import { fadeIn, fadeOut } from "./animations";
+import { fadeInOut } from "./animations";
 
 @Component({
     templateUrl: './test-animate.component.html',
-    animations: [fadeIn, fadeOut]
+    animations: [fadeInOut]
 })
 export class TestAnimateComponent {
 

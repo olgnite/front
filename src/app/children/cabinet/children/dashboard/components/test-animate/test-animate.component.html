@@ -1,5 +1,3 @@
-<div *ngIf="isShow">
-    <h1 @fadeIn @fadeOut>Hello world!</h1>
-</div>
+<h1 [@fadeInOut]="isShow ? 'open' : 'close'">Hello world!</h1>
 
 <button (click)="toggle()">Click</button>

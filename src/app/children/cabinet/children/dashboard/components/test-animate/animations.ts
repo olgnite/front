@@ -1,13 +1,14 @@
-import { AnimationTransitionMetadata, transition, style, animate, AnimationTriggerMetadata, trigger } from "@angular/animations";
+import { AnimationTriggerMetadata, animate, state, style, transition, trigger } from "@angular/animations";
 
-const enterTransition: AnimationTransitionMetadata = transition(':enter', [
-    style({ opacity: 0 }),
-    animate('1s ease-in', style({ opacity: 1 })),
+export const fadeInOut: AnimationTriggerMetadata = trigger('fadeInOut', [
+    state(
+        'open',
+        style({ opacity: 1 })
+    ),
+    state(
+        'close',
+        style({ opacity: 0 })
+    ),
+    transition('open => close', [animate('1s ease-out')]),
+    transition('close => open', [animate('1s ease-in')])
 ]);
-const leaveTransition: AnimationTransitionMetadata = transition(':leave', [
-    style({ opacity: 1 }),
-    animate('1s ease-in', style({ opacity: 0 })),
-]);
-
-export const fadeIn: AnimationTriggerMetadata = trigger('fadeIn', [enterTransition]);
-export const fadeOut: AnimationTriggerMetadata = trigger('fadeOut', [leaveTransition]);

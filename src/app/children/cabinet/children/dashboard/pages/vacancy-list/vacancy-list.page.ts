@@ -17,18 +17,18 @@ import { ICompanyV2Request } from '../../interfaces/company.interface';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VacancyListPage {
-    private authorizationService = inject(AuthorizationService);
     public name: string = '';
     public vacancyList$: Observable<IVacancyCardRequest[]>;
-
+    public readonly isLoggedIn$ = this._authorizationService.isLoggedIn$;
+    
     private _requestVacancyService: RequestVacancyService = inject(RequestVacancyService);
     private _destroy$: DestroyService = inject(DestroyService);
     private _update$: BehaviorSubject<void | null> = new BehaviorSubject<void | null>(null);
-    readonly isLoggedIn$ = this.authorizationService.isLoggedIn$;
 
     constructor(
         @Inject(TuiDialogService) public readonly dialogs: TuiDialogService,
         @Inject(Injector) private readonly injector: Injector,
+        @Inject(AuthorizationService) private readonly _authorizationService: AuthorizationService,
         @Inject(AUTHORIZED_COMPANY) private _authorizedCompany: Observable<ICompanyV2Request>
     ) {
         this.vacancyList$ = this.getVacancyList()
